@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FeriaDesktop.Services;
+using FeriaDesktop.Services.Interfaces;
+using FeriaDesktop.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +24,8 @@ namespace FeriaDesktop.View
         public Login()
         {
             InitializeComponent();
+            //var files = new IObservable<ILoginService>();
+            //DataContext = new LoginViewModel(log);
         }
     }
 }

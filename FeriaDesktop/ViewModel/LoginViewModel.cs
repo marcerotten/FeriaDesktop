@@ -57,11 +57,22 @@ namespace FeriaDesktop.ViewModel
                 getInCommand = value;
             }
         }
+        //public ILoginService LoginService
+        //{
+        //    get
+        //    {
+        //        return loginService;
+        //    }
+        //    set
+        //    {
+        //        loginService = value;
+        //    }
+        //}
         #endregion
 
         #region Constructores       
-        public LoginViewModel()
-        {//ILoginService loginService
+        public LoginViewModel(ILoginService loginService)
+        {
             this.loginService = loginService;
             GetInCommand = new CommandBase(param => this.GetInSesion());
         }
@@ -69,7 +80,6 @@ namespace FeriaDesktop.ViewModel
 
         #region Interface
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
@@ -82,12 +92,16 @@ namespace FeriaDesktop.ViewModel
         #region Metodos/Funciones
         private void GetInSesion()
         {
-            var result = loginService.GetLogin();
+            
             
             User vlClient = new User();
             vlClient.usuario = user;
             vlClient.contrasena = password;
             this.Add(vlClient);
+        }
+        private void GetLogin()
+        {
+            var result = this.loginService.GetLogin();
         }
         #endregion
     }
