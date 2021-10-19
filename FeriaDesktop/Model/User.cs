@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FeriaDesktop.Model
 {
-    class User : NotifyBase
+    public class User : NotifyBase
     {
         public int idUsuario { get; set; }
         public string nombre { get; set; }
@@ -23,7 +23,7 @@ namespace FeriaDesktop.Model
         public int terminosCondiciones { get; set; }
     }
 
-    class User_info : NotifyBase
+    public class User_info : NotifyBase
     {
         public string nombre { get; set; }
         public string apPaterno { get; set; }

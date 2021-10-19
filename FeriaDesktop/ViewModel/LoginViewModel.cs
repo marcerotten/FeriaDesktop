@@ -1,5 +1,6 @@
 ﻿using FeriaDesktop.Model;
 using FeriaDesktop.MVVM.ViewModel;
+using FeriaDesktop.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ namespace FeriaDesktop.ViewModel
         private string user;
         private string password;
         private ICommand getInCommand;
+        private readonly ILoginService loginService;
         #endregion
 
         #region Propiedades
@@ -57,9 +59,10 @@ namespace FeriaDesktop.ViewModel
         }
         #endregion
 
-        #region Constructores
+        #region Constructores       
         public LoginViewModel()
-        {
+        {//ILoginService loginService
+            this.loginService = loginService;
             GetInCommand = new CommandBase(param => this.GetInSesion());
         }
         #endregion
@@ -79,6 +82,8 @@ namespace FeriaDesktop.ViewModel
         #region Metodos/Funciones
         private void GetInSesion()
         {
+            var result = loginService.GetLogin();
+            
             User vlClient = new User();
             vlClient.usuario = user;
             vlClient.contrasena = password;
