@@ -1,26 +1,17 @@
-﻿using FeriaDesktop.Model;
-using FeriaDesktop.MVVM.ViewModel;
+﻿using FeriaDesktop.Services;
 using FeriaDesktop.Services.Interfaces;
-using FeriaDesktop.View;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Net.Http;
-using System.Text;
-using System.Windows;
 using System.Windows.Input;
 
 namespace FeriaDesktop.ViewModel
 {
-    internal class LoginViewModel : ObservableCollection<User>, INotifyPropertyChanged
+    public class LoginViewModel : ViewModelBase
     {
         #region Atributos
         private string user;
         private string password;
         private ICommand getInCommand;
-        private readonly ILoginService loginService;
+        
         #endregion
 
         #region Propiedades
@@ -54,21 +45,36 @@ namespace FeriaDesktop.ViewModel
         {
             get
             {
+                if (getInCommand == null)
+                {
+                    getInCommand = new RelayCommand(param => this.GetInCommandExecute(), null);
+                }
                 return getInCommand;
+
             }
             set
             {
                 getInCommand = value;
             }
         }
+
+        private void GetInCommandExecute()
+        {
+
+            var loginService = new LoginService();
+            var login = loginService.GetLogin(user,password);
+
+
+        }
         #endregion
 
         #region Constructores       
+        /*
         public LoginViewModel()
         {//ILoginService loginService
             this.loginService = loginService;
             GetInCommand = new CommandBase(param => this.GetInSesion());
-        }
+        }*/
         #endregion
 
         #region Interface
@@ -84,6 +90,7 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Metodos/Funciones
+        /*
         private async void GetInSesion()
         {
             //var result = loginService.GetLogin();
@@ -128,7 +135,7 @@ namespace FeriaDesktop.ViewModel
             }
 
             //this.Add(vlClient);
-        }
+        }*/
         #endregion
     }
 }

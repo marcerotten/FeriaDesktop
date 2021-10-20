@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FeriaDesktop.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -20,12 +21,7 @@ namespace FeriaDesktop.View
         public Menu()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Clients win_clients = new Clients();
-            win_clients.Show();
+          
         }
     }
 }

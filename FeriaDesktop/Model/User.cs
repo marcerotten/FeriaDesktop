@@ -1,11 +1,6 @@
-﻿using FeriaDesktop.MVVM.Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FeriaDesktop.Model
+﻿namespace FeriaDesktop.Model
 {
-    public class User : NotifyBase
+    public class User
     {
         public int idUsuario { get; set; }
         public string nombre { get; set; }
@@ -23,7 +18,7 @@ namespace FeriaDesktop.Model
         public int terminosCondiciones { get; set; }
     }
 
-    public class User_info : NotifyBase
+    public class User_info
     {
         public string nombre { get; set; }
         public string apPaterno { get; set; }

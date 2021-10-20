@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FeriaDesktop.View"
+        xmlns:local="clr-namespace:FeriaDesktop.View"  xmlns:viewmodel="clr-namespace:FeriaDesktop.ViewModel"
         mc:Ignorable="d"
         Title="Clients" Height="599.362" Width="1032.978">
     <Grid>
         <Label Content="INFORMACIÓN DE CLIENTES" HorizontalAlignment="Left" Margin="424,18,0,0" VerticalAlignment="Top" Width="218" FontSize="16"/>
-        <DataGrid x:Name="dgClients" HorizontalAlignment="Left" Height="311" Margin="539,142,0,0" VerticalAlignment="Top" Width="456" IsReadOnly="True"/>
+        <DataGrid ItemsSource="{Binding dgClients}" HorizontalAlignment="Left" Height="311" Margin="539,142,0,0" VerticalAlignment="Top" Width="456" IsReadOnly="True"/>
 
     </Grid>
 </Window>

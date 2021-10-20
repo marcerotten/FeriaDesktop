@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FeriaDesktop.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -21,6 +22,7 @@ namespace FeriaDesktop.View
         public Login()
         {
             InitializeComponent();
+            DataContext = new LoginViewModel();
         }
     }
 }
