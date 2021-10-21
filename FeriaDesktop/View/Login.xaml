@@ -38,7 +38,16 @@
                     </components:BindablePasswordBox>
                 </Grid>
             </Border>
-            <Image Margin="73,4,10,296" Source="/Images/fruits.png" Stretch="Fill" Grid.Column="3"/>
+            <Image Margin="28,19,72,289" Source="/Images/fruits.png" Stretch="Fill" Grid.Column="3" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.863"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
             <!--<Image Margin="0,370,-22.279,-29" Source="highcontrast-icon-darkgray.png" Stretch="Fill" HorizontalAlignment="Right" Width="34" Grid.Column="3"/>-->
             <!--<Button Name="HighContrast" ToolTip="Boton para cambiar a modo de Alto Contraste" Content="" Grid.Column="3" HorizontalAlignment="Right" Height="34" Margin="0,370,-22.279,-29" VerticalAlignment="Top" Width="34" Background="{x:Null}" Click="HighContrast_Click"/>-->
         </Grid>
