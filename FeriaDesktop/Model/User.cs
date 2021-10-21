@@ -27,9 +27,9 @@
         public string direccion { get; set; }
         public string codPostal { get; set; }
         public string correo { get; set; }
-        public int idPais { get; set; }
-        public int idRol { get; set; }
-        public int idEstado { get; set; }
+        public string pais { get; set; }
+        public string rol { get; set; }
+        public string estado { get; set; }
         public int terminosCondiciones { get; set; }
     }
 }
