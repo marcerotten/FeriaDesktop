@@ -11,24 +11,16 @@ using System.Data;
 
 namespace FeriaDesktop.ViewModel
 {
-    public class ClientsViewModel : ViewModelBase
+    public class ClientsViewModel : ObservableCollection<User_info>
     {
         private string gridclients;
 
-        public string dgClients
+        public ClientsViewModel()
         {
-            get
-            {
-                return gridclients;
-            }
-            set
-            {
-                gridclients = value;
-                
-                //OnPropertyChanged("dgClients");
-            }
+            this.mostrarClientes();
         }
-        private async void mostrarClientes(List<Clients> listaClientes)
+
+        private async void mostrarClientes()
         {
             
 
@@ -57,10 +49,10 @@ namespace FeriaDesktop.ViewModel
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
                 {
-                    //List<Usuario_info> usuarios = new List<Usuario_info>();
+                    List<User_info> usuarios = new List<User_info>();
                     var res = await response.Content.ReadAsStringAsync();
-                    //var userList = JsonConvert.DeserializeObject<List<Usuario_info>>(res);
-                    var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                    var userList = JsonConvert.DeserializeObject<List<User_info>>(res);
+                    //var userList = JsonConvert.DeserializeObject<dynamic>(res);
 
                     //message.Content = historyname;
 
@@ -81,7 +73,7 @@ namespace FeriaDesktop.ViewModel
                         row["Pais"] = dato.pais;
                         row["Rol"] = dato.rol;
                         row["Estado"] = dato.estado;
-                        var terminos = dato.terminosCondiciones.ToObject<int>();
+                        var terminos = dato.terminosCondiciones;
                         if (terminos != 0)
                         {
                             row["Términos y Condiciones"] = "Rechazado";
@@ -93,6 +85,7 @@ namespace FeriaDesktop.ViewModel
 
 
                         dt.Rows.Add(row);
+                        this.Add(dato);
                     }
 
                     //dgClients.ClearValue(ItemsControl.ItemsSourceProperty);

@@ -6,9 +6,12 @@
         xmlns:local="clr-namespace:FeriaDesktop.View"  xmlns:viewmodel="clr-namespace:FeriaDesktop.ViewModel"
         mc:Ignorable="d"
         Title="Clients" Height="599.362" Width="1032.978">
-    <Grid>
+    <Window.Resources>
+        <viewmodel:ClientsViewModel x:Key="clientsViewModel"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource clientsViewModel}">
         <Label Content="INFORMACIÓN DE CLIENTES" HorizontalAlignment="Left" Margin="424,18,0,0" VerticalAlignment="Top" Width="218" FontSize="16"/>
-        <DataGrid ItemsSource="{Binding dgClients}" HorizontalAlignment="Left" Height="311" Margin="539,142,0,0" VerticalAlignment="Top" Width="456" IsReadOnly="True"/>
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=clientsViewModel}" HorizontalAlignment="Left" Height="311" Margin="539,142,0,0" VerticalAlignment="Top" Width="456" IsReadOnly="True"/>
 
     </Grid>
 </Window>

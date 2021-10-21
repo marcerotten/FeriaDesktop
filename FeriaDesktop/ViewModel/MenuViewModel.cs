@@ -1,4 +1,5 @@
 ﻿using FeriaDesktop.Commands;
+using FeriaDesktop.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,25 +10,29 @@ namespace FeriaDesktop.ViewModel
 {
     public class MenuViewModel : ViewModelBase
     {
-        private ViewModelBase _selectedViewModel;
+        
+        private ICommand getClientsCommand { get; set; }
 
-        public ViewModelBase SelectedViewModel
+        public ICommand GetClientsCommand
         {
-            get { return _selectedViewModel; }
+            get { return getClientsCommand; }
             set
             {
-                _selectedViewModel = value;
-                OnPropertyChanged(nameof(SelectedViewModel));
+                getClientsCommand = value;
             }
         }
 
-            public ICommand ShowClientsCommand { get; set; }
-            
-            public MenuViewModel()
+        public MenuViewModel()
         {
-            ShowClientsCommand = new ShowClientsCommand(this);
-        }
+            GetClientsCommand = new RelayCommand(param => this.getClients());
         }
 
+        private void getClients()
+        {
+            Clients win_menu = new Clients();
+            win_menu.Show();
+        }
     }
+
+}
 

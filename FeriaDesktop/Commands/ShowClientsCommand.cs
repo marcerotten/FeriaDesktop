@@ -23,10 +23,10 @@ namespace FeriaDesktop.Commands
         public void Execute(object parameter)
         {
             Console.WriteLine("dasdasdas");
-            if(parameter.ToString() == "Clients")
-            {
-                viewModel.SelectedViewModel = new ClientsViewModel();
-            }
+            //if(parameter.ToString() == "Clients")
+            //{
+            //    viewModel.SelectedViewModel = new ClientsViewModel();
+            //}
         }
     }
 }

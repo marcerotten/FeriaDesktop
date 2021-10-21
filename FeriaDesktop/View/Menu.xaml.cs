@@ -21,6 +21,7 @@ namespace FeriaDesktop.View
         public Menu()
         {
             InitializeComponent();
+            DataContext = new MenuViewModel();
           
         }
     }
