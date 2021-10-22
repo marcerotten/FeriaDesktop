@@ -6,8 +6,8 @@
              xmlns:viewmodels="clr-namespace:FeriaDesktop.ViewModel"
              StartupUri="View/Login.xaml">
     <Application.Resources>
-        <DataTemplate DataType="{x:Type viewmodels:ClientsViewModel}">
-            <views:Clients/>
+        <DataTemplate DataType="{x:Type viewmodels:UsersViewModel}">
+            <views:Users/>
         </DataTemplate>
     </Application.Resources>
 </Application>

@@ -14,14 +14,14 @@ using System.Windows.Shapes;
 namespace FeriaDesktop.View
 {
     /// <summary>
-    /// Lógica de interacción para Clients.xaml
+    /// Lógica de interacción para Users.xaml
     /// </summary>
-    public partial class Clients : Window
+    public partial class Users : Window
     {
-        public Clients()
+        public Users()
         {
             InitializeComponent();
-            this.DataContext = new ClientsViewModel();
+            //this.DataContext = new UsersViewModel();
 
         }
     }

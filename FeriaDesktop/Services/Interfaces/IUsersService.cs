@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace FeriaDesktop.Services.Interfaces
 {
-    public interface IClientsService
+    public interface IUsersService
     {
-        Task<string> GetClients();
+        Task<string> GetUsers();
     }
 }

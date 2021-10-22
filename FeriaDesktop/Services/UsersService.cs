@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace FeriaDesktop.Services
 {
-    public class ClientsService : IClientsService
+    public class UsersService : IUsersService
     {
-        public async Task<string> GetClients()
+        public async Task<string> GetUsers()
         {
 
-            Clients win_menu = new Clients();
+            Users win_menu = new Users();
             win_menu.Show();
 
             //var response = string.Empty;

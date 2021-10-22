@@ -4,11 +4,11 @@ using System.Windows.Input;
 
 namespace FeriaDesktop.Commands
 {
-    public class ShowClientsCommand : ICommand
+    public class ShowUsersCommand : ICommand
     {
         private MenuViewModel viewModel;
 
-        public ShowClientsCommand(MenuViewModel viewModel)
+        public ShowUsersCommand(MenuViewModel viewModel)
         {
             this.viewModel = viewModel;
         }

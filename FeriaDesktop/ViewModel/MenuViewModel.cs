@@ -11,25 +11,25 @@ namespace FeriaDesktop.ViewModel
     public class MenuViewModel : ViewModelBase
     {
         
-        private ICommand getClientsCommand { get; set; }
+        private ICommand getUsersCommand { get; set; }
 
-        public ICommand GetClientsCommand
+        public ICommand GetUsersCommand
         {
-            get { return getClientsCommand; }
+            get { return getUsersCommand; }
             set
             {
-                getClientsCommand = value;
+                getUsersCommand = value;
             }
         }
 
         public MenuViewModel()
         {
-            GetClientsCommand = new RelayCommand(param => this.getClients());
+            GetUsersCommand = new RelayCommand(param => this.getUsers());
         }
 
-        private void getClients()
+        private void getUsers()
         {
-            Clients win_menu = new Clients();
+            Users win_menu = new Users();
             win_menu.Show();
         }
     }
