@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:FeriaDesktop" xmlns:viewmodel="clr-namespace:FeriaDesktop.ViewModel" xmlns:components="clr-namespace:FeriaDesktop.Components"
+      xmlns:local="clr-namespace:FeriaDesktop.View" xmlns:viewmodel="clr-namespace:FeriaDesktop.ViewModel" xmlns:components="clr-namespace:FeriaDesktop.Components"
       mc:Ignorable="d"
       d:DataContext="{d:DesignInstance Type=viewmodel:LoginViewModel, IsDesignTimeCreatable=True}"
       d:DesignHeight="450" d:DesignWidth="800"
@@ -33,14 +33,22 @@
                     <Label Name="lblIngreso" Content="Ingreso" HorizontalAlignment="Left" Margin="25,20,0,0" VerticalAlignment="Top" FontSize="28" Foreground="#FF1190CB" FontWeight="Bold"/>
                     <Label Name="lblUser" Content="Usuario" HorizontalAlignment="Left" Margin="150,67,0,0" VerticalAlignment="Top" Foreground="#FF1190CB"/>
                     <Label Name="lblPassword" Content="Contraseña" HorizontalAlignment="Left" Margin="130,98,0,0" VerticalAlignment="Top" Foreground="#FF1190CB"/>
-                    <TextBox Name="txtUser" Text="{Binding User}"  HorizontalAlignment="Left" Height="23" Margin="234,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Foreground="LightGray" BorderBrush="#FFEAE6E6"/>
-                    <Button Content="Entrar" Command="{Binding GetInCommand}" HorizontalAlignment="Left" Margin="199,139,0,0" VerticalAlignment="Top" Width="110" Height="32" Foreground="#FF1190CB"/>
+                    <TextBox Name="txtUser" Text="{Binding User}"  HorizontalAlignment="Left" Height="23" Margin="234,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <Button Content="Entrar" Command="{Binding GetInCommand}" HorizontalAlignment="Left" Margin="239,139,0,0" VerticalAlignment="Top" Width="110" Height="32" Foreground="#FF1190CB"/>
                     <components:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Margin="234,98,0,0" VerticalAlignment="Top" Width="120" Height="23">
                     </components:BindablePasswordBox>
-                    <Label x:Name="message" Content="Label" HorizontalAlignment="Left" Margin="25,166,0,0" VerticalAlignment="Top" Foreground="#FF1190CB"/>
                 </Grid>
             </Border>
-            <Image Margin="28,10,10,305" Source="/Images/logoTexto.png" Stretch="Fill" Grid.Column="3"/>
+            <Image Margin="28,19,72,289" Source="/Images/fruits.png" Stretch="Fill" Grid.Column="3" RenderTransformOrigin="0.5,0.5">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-0.863"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
             <!--<Image Margin="0,370,-22.279,-29" Source="highcontrast-icon-darkgray.png" Stretch="Fill" HorizontalAlignment="Right" Width="34" Grid.Column="3"/>-->
             <!--<Button Name="HighContrast" ToolTip="Boton para cambiar a modo de Alto Contraste" Content="" Grid.Column="3" HorizontalAlignment="Right" Height="34" Margin="0,370,-22.279,-29" VerticalAlignment="Top" Width="34" Background="{x:Null}" Click="HighContrast_Click"/>-->
         </Grid>

@@ -1,22 +1,17 @@
-﻿using FeriaDesktop.Model;
-using FeriaDesktop.MVVM.ViewModel;
+﻿using FeriaDesktop.Services;
 using FeriaDesktop.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
 using System.Windows.Input;
 
 namespace FeriaDesktop.ViewModel
 {
-    internal class LoginViewModel : ObservableCollection<User>, INotifyPropertyChanged
+    public class LoginViewModel : ViewModelBase
     {
         #region Atributos
         private string user;
         private string password;
         private ICommand getInCommand;
-        private readonly ILoginService loginService;
+        
         #endregion
 
         #region Propiedades
@@ -50,32 +45,36 @@ namespace FeriaDesktop.ViewModel
         {
             get
             {
+                if (getInCommand == null)
+                {
+                    getInCommand = new RelayCommand(param => this.GetInCommandExecute(), null);
+                }
                 return getInCommand;
+
             }
             set
             {
                 getInCommand = value;
             }
         }
-        //public ILoginService LoginService
-        //{
-        //    get
-        //    {
-        //        return loginService;
-        //    }
-        //    set
-        //    {
-        //        loginService = value;
-        //    }
-        //}
+
+        private void GetInCommandExecute()
+        {
+
+            var loginService = new LoginService();
+            var login = loginService.GetLogin(user,password);
+
+
+        }
         #endregion
 
         #region Constructores       
-        public LoginViewModel(ILoginService loginService)
-        {
+        /*
+        public LoginViewModel()
+        {//ILoginService loginService
             this.loginService = loginService;
             GetInCommand = new CommandBase(param => this.GetInSesion());
-        }
+        }*/
         #endregion
 
         #region Interface
@@ -90,19 +89,52 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Metodos/Funciones
-        private void GetInSesion()
+        /*
+        private async void GetInSesion()
         {
-            
-            
+            //var result = loginService.GetLogin();
+
             User vlClient = new User();
             vlClient.usuario = user;
             vlClient.contrasena = password;
-            this.Add(vlClient);
-        }
-        private void GetLogin()
-        {
-            var result = this.loginService.GetLogin();
-        }
+
+            var userObject = new
+            {
+                correo = user,
+                contrasena = password
+            };
+
+            var json = JsonConvert.SerializeObject(userObject);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = "http://localhost:8080/api/auth";
+
+            using (HttpClient client = new HttpClient())
+
+            {
+                var response = await client.PostAsync(url, data);
+                response.EnsureSuccessStatusCode();
+                var res = await response.Content.ReadAsStringAsync();
+                var userList = JsonConvert.DeserializeObject<dynamic>(res);
+
+                //validacion mientras la api responde el cod correcto
+                var usuario_info = userList.idUsuario.ToObject<int>();
+
+                //if (response.IsSuccessStatusCode)
+                if (usuario_info != 0)
+                {
+                    //message.Content = await response.Content.ReadAsStringAsync();
+                    Menu win_menu = new Menu();
+                    win_menu.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Credenciales Inválidas!");
+                    //message.Content = $"Server error code {response.StatusCode}";
+                }
+            }
+
+            //this.Add(vlClient);
+        }*/
         #endregion
     }
 }

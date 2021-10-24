@@ -9,20 +9,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace FeriaDesktop.View
 {
     /// <summary>
-    /// Lógica de interacción para Login.xaml
+    /// Lógica de interacción para UpdateUser.xaml
     /// </summary>
-    public partial class Login : Window
+    public partial class UpdateUser : Window
     {
-        public Login()
+        public UpdateUser()
         {
             InitializeComponent();
-            DataContext = new LoginViewModel();
+            this.DataContext = new UsersViewModel();
         }
     }
 }
