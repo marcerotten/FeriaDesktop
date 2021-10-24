@@ -9,14 +9,17 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Input;
+using System.Windows;
 
 namespace FeriaDesktop.ViewModel
 {
-    public class UsersViewModel : ObservableCollection<User_info>
+    public class UsersViewModel : ObservableCollection<User_info>, INotifyPropertyChanged
     {
         #region Atribute
         private ICommand upUserCommand;// { get; set; }
+        private ICommand delUserCommand;
         private int selectedIndex;
+        private int idUsuario;
         private string nombre;
         private string apPaterno;
         private string apMaterno;
@@ -31,14 +34,23 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Properties
-        //public ICommand UpUserCommand
-        //{
-        //    get { return upUserCommand; }
-        //    set
-        //    {
-        //        upUserCommand = value;
-        //    }
-        //}
+        public ICommand UpUserCommand
+        {
+            get { return upUserCommand; }
+            set
+            {
+                upUserCommand = value;
+            }
+        }
+
+        public ICommand DelUserCommand
+        {
+            get { return delUserCommand; }
+            set
+            {
+                delUserCommand = value;
+            }
+        }
 
         public int SelectedIndexOfCollection
         {
@@ -62,7 +74,32 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-
+        public int IdUsuario
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].IdUsuario;
+                }
+                else
+                {
+                    return idUsuario;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].IdUsuario = value;
+                }
+                else
+                {
+                    idUsuario = value;
+                }
+                OnPropertyChanged("IdUsuario");
+            }
+        }
         public string Nombre
         {
             get
@@ -111,7 +148,7 @@ namespace FeriaDesktop.ViewModel
                 }
                 else
                 {
-                    nombre = value;
+                    apPaterno = value;
                 }
                 OnPropertyChanged("ApPaterno");
             }
@@ -138,7 +175,7 @@ namespace FeriaDesktop.ViewModel
                 }
                 else
                 {
-                    nombre = value;
+                    apMaterno = value;
                 }
                 OnPropertyChanged("ApMaterno");
             }
@@ -366,7 +403,8 @@ namespace FeriaDesktop.ViewModel
         public UsersViewModel()
         {
             this.showUsers();
-            //UpUserCommand = new RelayCommand(param => this.upUser());
+            UpUserCommand = new RelayCommand(param => this.upUser());
+            DelUserCommand = new RelayCommand(param => this.delUser());
         }
         #endregion
 
@@ -385,8 +423,7 @@ namespace FeriaDesktop.ViewModel
         #region Methods and functions
         private async void showUsers()
         {
-            
-
+            this.Clear();
             DataTable dt = new DataTable();
 
             dt.Columns.Add("Nombre");
@@ -403,7 +440,7 @@ namespace FeriaDesktop.ViewModel
 
             //var json = JsonConvert.SerializeObject(userObject);
             //var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = "http://localhost:8080/api/usuario/1";
+            var url = "http://localhost:8080/api/usuario/3";
 
             using (HttpClient client = new HttpClient())
 
@@ -423,6 +460,7 @@ namespace FeriaDesktop.ViewModel
 
                     foreach (var dato in userList)
                     {
+                       
                         DataRow row = dt.NewRow();
 
                         //actividadEmpresa.Read(dato.IdActividadEmpresa);
@@ -448,7 +486,6 @@ namespace FeriaDesktop.ViewModel
                             row["Términos y Condiciones"] = "Aceptado";
                         }
 
-
                         dt.Rows.Add(row);
                         this.Add(dato);
                     }
@@ -470,11 +507,60 @@ namespace FeriaDesktop.ViewModel
 
         }
 
-        //private void upUser()
-        //{
-        //    UpdateUser win_menu = new UpdateUser();
-        //    win_menu.Show();
-        //}
+        private async void upUser()
+        {
+            var id = this.IdUsuario;
+
+            var userObject = new
+            {
+                nombre = this.Nombre,
+                apPaterno = this.ApPaterno,
+                apMaterno = this.ApMaterno,
+                dni = this.Dni,
+                direccion = this.Direccion,
+                codPostal = this.CodPostal,
+                correo = this.Correo,
+                usuario = "usertest2",
+                contrasena = "test123",
+                idPais = 1,
+                idRol = 1,
+                idEstado = 1,
+                terms = this.Terms
+            };
+
+
+            var json = JsonConvert.SerializeObject(userObject);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = $"http://localhost:8080/api/usuario/{id}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.PutAsync(url, data);
+                response.EnsureSuccessStatusCode();
+                var res = await response.Content.ReadAsStringAsync();
+                var userList = JsonConvert.DeserializeObject<dynamic>(res);
+            }
+
+        }
+
+        private async void delUser()
+        {
+            var id = this.IdUsuario;
+
+            var url = $"http://localhost:8080/api/usuario/{id}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.DeleteAsync(url);
+                response.EnsureSuccessStatusCode();
+                var res = await response.Content.ReadAsStringAsync();
+                //var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                if (response.IsSuccessStatusCode)
+                   
+                    MessageBox.Show("Usuario Desactivado!");
+                    this.showUsers();
+            }
+        }
         #endregion
     }
 

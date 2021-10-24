@@ -21,6 +21,7 @@
     public class User_info : ViewModelBase
     {
         #region Atributes
+        private int idUsuario;
         private string nombre;
         private string apPaterno;
         private string apMaterno;
@@ -34,6 +35,19 @@
         private int terminosCondiciones;
         #endregion
 
+        public int IdUsuario
+        {
+            get
+            {
+                return idUsuario;
+            }
+            set
+            {
+                idUsuario = value;
+                OnPropertyChanged("IdUsuario");
+                OnPropertyChanged("DisplayName");
+            }
+        }
         public string Nombre
         {
             get
