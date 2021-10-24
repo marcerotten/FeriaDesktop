@@ -12,6 +12,7 @@ namespace FeriaDesktop.ViewModel
     {
         
         private ICommand getUsersCommand { get; set; }
+        private ICommand geContractsCommand { get; set; }
 
         public ICommand GetUsersCommand
         {
@@ -21,15 +22,29 @@ namespace FeriaDesktop.ViewModel
                 getUsersCommand = value;
             }
         }
+        public ICommand GetContractsCommand
+        {
+            get { return geContractsCommand; }
+            set
+            {
+                geContractsCommand = value;
+            }
+        }
 
         public MenuViewModel()
         {
             GetUsersCommand = new RelayCommand(param => this.getUsers());
+            GetContractsCommand = new RelayCommand(param => this.getContracts());
         }
 
         private void getUsers()
         {
             Users win_menu = new Users();
+            win_menu.Show();
+        }
+        private void getContracts()
+        {
+            Contracts win_menu = new Contracts();
             win_menu.Show();
         }
     }

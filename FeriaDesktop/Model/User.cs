@@ -21,6 +21,7 @@
     public class User_info : ViewModelBase
     {
         #region Atributes
+        private int idUsuario;
         private string nombre;
         private string apPaterno;
         private string apMaterno;
@@ -28,12 +29,27 @@
         private string direccion;
         private string codPostal;
         private string correo;
+        private string paisName;
         private Country pais;
-        private string rol;
-        private string estado;
+        private string rolName;
+        private Role rol;
+        private string estadoName;
+        private Status estado;
         private int terminosCondiciones;
         #endregion
 
+        public int IdUsuario
+        {
+            get
+            {
+                return idUsuario;
+            }
+            set
+            {
+                idUsuario = value;
+                OnPropertyChanged("IdUsuario");
+            }
+        }
         public string Nombre
         {
             get
@@ -44,7 +60,6 @@
             {
                 nombre = value;
                 OnPropertyChanged("Nombre");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string ApPaterno
@@ -57,7 +72,6 @@
             {
                 apPaterno = value;
                 OnPropertyChanged("ApPaterno");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string ApMaterno
@@ -70,7 +84,6 @@
             {
                 apMaterno = value;
                 OnPropertyChanged("ApMaterno");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string Dni
@@ -83,7 +96,6 @@
             {
                 dni = value;
                 OnPropertyChanged("Dni");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string Direccion
@@ -96,7 +108,6 @@
             {
                 direccion = value;
                 OnPropertyChanged("Direccion");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string CodPostal
@@ -109,7 +120,6 @@
             {
                 codPostal = value;
                 OnPropertyChanged("CodPostal");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string Correo
@@ -122,7 +132,18 @@
             {
                 correo = value;
                 OnPropertyChanged("Correo");
-                OnPropertyChanged("DisplayName");
+            }
+        }
+        public string PaisName
+        {
+            get
+            {
+                return paisName;
+            }
+            set
+            {
+                paisName = value;
+                OnPropertyChanged("PaisName");
             }
         }
         public Country Pais
@@ -137,7 +158,20 @@
                 OnPropertyChanged("Pais");
             }
         }
-        public string Rol
+        public string RolName
+        {
+            get
+            {
+                return rolName;
+            }
+            set
+            {
+                rolName = value;
+                OnPropertyChanged("RolName");
+            }
+        }
+
+        public Role Rol
         {
             get
             {
@@ -147,10 +181,21 @@
             {
                 rol = value;
                 OnPropertyChanged("Rol");
-                OnPropertyChanged("DisplayName");
             }
         }
-        public string Estado
+        public string EstadoName
+        {
+            get
+            {
+                return estadoName;
+            }
+            set
+            {
+                estadoName = value;
+                OnPropertyChanged("EstadoName");
+            }
+        }
+        public Status Estado
         {
             get
             {
@@ -160,7 +205,6 @@
             {
                 estado = value;
                 OnPropertyChanged("Estado");
-                OnPropertyChanged("DisplayName");
             }
         }
         public int Terms
@@ -173,8 +217,9 @@
             {
                 terminosCondiciones = value;
                 OnPropertyChanged("Terms");
-                OnPropertyChanged("DisplayName");
             }
         }
     }
+
+
 }

@@ -1,25 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Xml.Serialization;
 
 namespace FeriaDesktop.Model
 {
-    public class Country : INotifyPropertyChanged
+    public class Status : INotifyPropertyChanged
     {
-        private int idPais;
+        private int idEstado;
         private string descripcion;
-        public int IdPais
+        public int IdEstado
         {
             get
             {
-                return idPais;
+                return idEstado;
             }
             set
             {
-                idPais = value;
-                OnPropertyChanged("IdPais");
+                idEstado = value;
+                OnPropertyChanged("IdEstado");
             }
         }
         [XmlAttribute("Descripcion")]

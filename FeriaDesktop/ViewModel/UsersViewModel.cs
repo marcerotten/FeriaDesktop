@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using FeriaDesktop.View;
 using FeriaDesktop.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Windows.Input;
+using System.Windows;
 using System.Linq;
 
 namespace FeriaDesktop.ViewModel
@@ -17,7 +16,9 @@ namespace FeriaDesktop.ViewModel
     {
         #region Atribute
         private ICommand upUserCommand;// { get; set; }
+        private ICommand delUserCommand;
         private int selectedIndex;
+        private int idUsuario;
         private string nombre;
         private string apPaterno;
         private string apMaterno;
@@ -26,21 +27,32 @@ namespace FeriaDesktop.ViewModel
         private string codPostal;
         private string correo;
         private Country pais;
-        private string rol;
-        private string estado;
+        private Role rol;
+        private Status estado;
         private int terms;
-        private ObservableCollection<Country> _countries = new ObservableCollection<Country>();
+        private ObservableCollection<Role> roles = new ObservableCollection<Role>();
+        private ObservableCollection<Country> countries = new ObservableCollection<Country>();
+        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
         #endregion
 
         #region Properties
-        //public ICommand UpUserCommand
-        //{
-        //    get { return upUserCommand; }
-        //    set
-        //    {
-        //        upUserCommand = value;
-        //    }
-        //}
+        public ICommand UpUserCommand
+        {
+            get { return upUserCommand; }
+            set
+            {
+                upUserCommand = value;
+            }
+        }
+
+        public ICommand DelUserCommand
+        {
+            get { return delUserCommand; }
+            set
+            {
+                delUserCommand = value;
+            }
+        }
 
         public int SelectedIndexOfCollection
         {
@@ -64,6 +76,32 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        public int IdUsuario
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].IdUsuario;
+                }
+                else
+                {
+                    return idUsuario;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].IdUsuario = value;
+                }
+                else
+                {
+                    idUsuario = value;
+                }
+                OnPropertyChanged("IdUsuario");
+            }
+        }
         public string Nombre
         {
             get
@@ -265,6 +303,7 @@ namespace FeriaDesktop.ViewModel
                 {
                     return pais;
                 }
+                //return pais;
             }
             set
             {
@@ -276,11 +315,12 @@ namespace FeriaDesktop.ViewModel
                 {
                     pais = value;
                 }
+                //pais = value;
                 OnPropertyChanged("Pais");
             }
         }
 
-        public string Rol
+        public Role Rol
         {
             get
             {
@@ -307,7 +347,7 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-        public string Estado
+        public Status Estado
         {
             get
             {
@@ -360,9 +400,20 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Terms");
             }
         }
+
         public IEnumerable<Country> Countries
         {
-            get { return _countries; }
+            get { return countries; }
+        }
+
+        public IEnumerable<Role> Roles
+        {
+            get { return roles; }
+        }
+
+        public IEnumerable<Status> Statuses
+        {
+            get { return statuses; }
         }
         #endregion
 
@@ -370,31 +421,11 @@ namespace FeriaDesktop.ViewModel
         public UsersViewModel()
         {
             this.GetCountries();
-
-            User_info vlClient1 = new User_info();
-            vlClient1.Dni = "1";
-            vlClient1.Nombre = "Pablo";
-            vlClient1.ApPaterno = "Gonzalez";
-            vlClient1.Pais = _countries.FirstOrDefault(x => x.Name == "Chile");
-            this.Add(vlClient1);
-
-            User_info vlClient2 = new User_info();
-            vlClient2.Dni = "2";
-            vlClient2.Nombre = "Roberto";
-            vlClient2.ApPaterno = "Herrera";
-            vlClient2.Pais = _countries.FirstOrDefault(x => x.Name == "Argentina");
-            this.Add(vlClient2);
-
-            User_info vlClient3 = new User_info();
-            vlClient3.Dni = "3";
-            vlClient3.Nombre = "Anibal";
-            vlClient3.ApPaterno = "Salazar";
-            vlClient3.Pais = _countries.FirstOrDefault(x => x.Name == "Chile");
-            this.Add(vlClient3);
-
-
-            //this.showUsers();
-            //UpUserCommand = new RelayCommand(param => this.upUser());
+            this.GetRoles();
+            this.GetStatus();
+            this.showUsers();
+            UpUserCommand = new RelayCommand(param => this.upUser());
+            DelUserCommand = new RelayCommand(param => this.delUser());
         }
         #endregion
 
@@ -413,23 +444,8 @@ namespace FeriaDesktop.ViewModel
         #region Methods and functions
         private async void showUsers()
         {
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add("Nombre");
-            dt.Columns.Add("Apellido Paterno");
-            dt.Columns.Add("Apellido Materno");
-            dt.Columns.Add("DNI");
-            dt.Columns.Add("Dirección");
-            dt.Columns.Add("Código Postal");
-            dt.Columns.Add("Correo");
-            dt.Columns.Add("Pais");
-            dt.Columns.Add("Rol");
-            dt.Columns.Add("Estado");
-            dt.Columns.Add("Términos y Condiciones");
-
-            //var json = JsonConvert.SerializeObject(userObject);
-            //var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = "http://localhost:8080/api/usuario/1";
+            this.Clear();
+            var url = "http://localhost:8080/api/usuario/3";
 
             using (HttpClient client = new HttpClient())
 
@@ -442,50 +458,32 @@ namespace FeriaDesktop.ViewModel
                 {
                     List<User_info> usuarios = new List<User_info>();
                     var res = response.Content.ReadAsStringAsync().Result;
-                    var userList = JsonConvert.DeserializeObject<List<User_info>>(res);
-                    //var userList = JsonConvert.DeserializeObject<dynamic>(res);
-
-                    //message.Content = historyname;
+                    var userList = JsonConvert.DeserializeObject<dynamic>(res);
 
                     foreach (var dato in userList)
                     {
-                        DataRow row = dt.NewRow();
+                        User_info usuario = new User_info();
 
-                        //actividadEmpresa.Read(dato.IdActividadEmpresa);
-                        //tipoEmpresa.Read(dato.IdTipoEmpresa);
+                        usuario.IdUsuario = dato.idUsuario;
+                        usuario.Nombre = dato.nombre;
+                        usuario.ApPaterno = dato.apPaterno;
+                        usuario.ApMaterno = dato.apMaterno;
+                        usuario.Dni = dato.dni;
+                        usuario.Direccion = dato.direccion;
+                        usuario.CodPostal = dato.codPostal;
+                        usuario.Correo = dato.correo;
+                        string pais = dato.pais;
+                        usuario.Pais = countries.FirstOrDefault(x => x.Descripcion == pais);//pais.Replace("{", "").Replace("}", "")
+                        usuario.PaisName = usuario.Pais.Descripcion;
+                        string rol = dato.rol;
+                        usuario.Rol = roles.FirstOrDefault(x => x.Descripcion.ToUpper() == rol.ToUpper());
+                        usuario.RolName = usuario.Rol.Descripcion;
+                        string estado = dato.estado;
+                        usuario.Estado = statuses.FirstOrDefault(x => x.Descripcion.ToUpper() == estado.ToUpper());
+                        usuario.EstadoName = usuario.Estado.Descripcion;
 
-                        row["Nombre"] = dato.Nombre;
-                        row["Apellido Paterno"] = dato.ApPaterno;
-                        row["Apellido Materno"] = dato.ApMaterno;
-                        row["DNI"] = dato.Dni;
-                        row["Dirección"] = dato.Direccion;
-                        row["Código Postal"] = dato.CodPostal;
-                        row["Correo"] = dato.Correo;
-                        row["Pais"] = dato.Pais;
-                        row["Rol"] = dato.Rol;
-                        row["Estado"] = dato.Estado;
-                        var terminos = dato.Terms;
-                        if (terminos != 0)
-                        {
-                            row["Términos y Condiciones"] = "Rechazado";
-                        }
-                        else
-                        {
-                            row["Términos y Condiciones"] = "Aceptado";
-                        }
-
-
-                        dt.Rows.Add(row);
-                        this.Add(dato);
+                        this.Add(usuario);
                     }
-
-                    //dgClients.ClearValue(ItemsControl.ItemsSourceProperty);
-                    /*
-                     * Para traerlo desde la clase
-                    dgClientes.ItemsSource = userList; //dt.DefaultView;
-                    */
-                    //dgClients.ItemsSource = dt.DefaultView;
-                    //dgClients.UpdateLayout();
 
                 }
                 else
@@ -496,22 +494,180 @@ namespace FeriaDesktop.ViewModel
 
         }
 
-        //private void upUser()
-        //{
-        //    UpdateUser win_menu = new UpdateUser();
-        //    win_menu.Show();
-        //}
+        private async void upUser()
+        {
+            var id = this.IdUsuario;
+
+            var userObject = new
+            {
+                nombre = this.Nombre,
+                apPaterno = this.ApPaterno,
+                apMaterno = this.ApMaterno,
+                dni = this.Dni,
+                direccion = this.Direccion,
+                codPostal = this.CodPostal,
+                correo = this.Correo,
+                usuario = "usertest2",
+                contrasena = "test123",
+                idPais = this.Pais.IdPais,
+                idRol = 1,
+                idEstado = 1,
+                terms = this.Terms
+            };
+
+
+            var json = JsonConvert.SerializeObject(userObject);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = $"http://localhost:8080/api/usuario/{id}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.PutAsync(url, data);
+                response.EnsureSuccessStatusCode();
+                var res = await response.Content.ReadAsStringAsync();
+                var userList = JsonConvert.DeserializeObject<dynamic>(res);
+            }
+
+            this.showUsers();
+
+        }
+
+        private async void delUser()
+        {
+            var id = this.IdUsuario;
+
+            var url = $"http://localhost:8080/api/usuario/{id}";
+
+            using (HttpClient client = new HttpClient())
+            {
+                var response = await client.DeleteAsync(url);
+                response.EnsureSuccessStatusCode();
+                var res = await response.Content.ReadAsStringAsync();
+                //var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                if (response.IsSuccessStatusCode)
+                   
+                    MessageBox.Show("Usuario Desactivado!");
+                    this.showUsers();
+            }
+        }
 
         private IEnumerable<Country> GetCountries()
         {
+            var url = "http://localhost:8080/api/pais";
 
-            this._countries.Add(new Country { Id = 1, Name = "Chile" });
-            this._countries.Add(new Country { Id = 2, Name = "Argentina" });
-            this._countries.Add(new Country { Id = 3, Name = "Uruguay" });
+            using (HttpClient client = new HttpClient())
 
-            return this._countries;
-        }  
+            {
+                var response = client.GetAsync(url).Result;
+                response.EnsureSuccessStatusCode();
 
+                if (response.IsSuccessStatusCode)
+                {
+                    List<Country> countries = new List<Country>();
+                    var res = response.Content.ReadAsStringAsync().Result;
+                    var countryList = JsonConvert.DeserializeObject<dynamic>(res);
+
+                    foreach (var dato in countryList)
+                    {
+                        Country country = new Country();
+
+                        country.IdPais = dato.idPais;
+                        country.Descripcion = dato.descripcion;
+
+                        this.countries.Add(country);
+                    }
+
+                }
+                else
+                {
+                    //message.Content = $"Server error code {response.StatusCode}";
+                }
+            }
+
+            //this.countries.Add(new Country { Id = 1, Descripcion = "CHILE" });
+            //this.countries.Add(new Country { Id = 2, Descripcion = "ESPAÑA" });
+            //this.countries.Add(new Country { Id = 3, Descripcion = "ITALIA" });
+
+            return this.countries;
+        }
+
+        private IEnumerable<Role> GetRoles()
+        {
+            //var url = "http://localhost:8080/api/pais";
+
+            //using (HttpClient client = new HttpClient())
+
+            //{
+            //    var response = client.GetAsync(url).Result;
+            //    response.EnsureSuccessStatusCode();
+
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        List<Role> roles = new List<Role>();
+            //        var res = response.Content.ReadAsStringAsync().Result;
+            //        var roleList = JsonConvert.DeserializeObject<dynamic>(res);
+
+            //        foreach (var dato in roleList)
+            //        {
+            //            Role role = new Role();
+
+            //            role.IdRol = dato.idRol;
+            //            role.Descripcion = dato.descripcion;
+
+            //            this.roles.Add(role);
+            //        }
+
+            //    }
+            //    else
+            //    {
+            //        //message.Content = $"Server error code {response.StatusCode}";
+            //    }
+            //}
+
+            this.roles.Add(new Role { IdRol = 1, Descripcion = "ADMIN" });
+            this.roles.Add(new Role { IdRol = 2, Descripcion = "PRODUCTOR" });
+
+            return this.roles;
+        }
+
+        private IEnumerable<Status> GetStatus()
+        {
+            //var url = "http://localhost:8080/api/pais";
+
+            //using (HttpClient client = new HttpClient())
+
+            //{
+            //    var response = client.GetAsync(url).Result;
+            //    response.EnsureSuccessStatusCode();
+
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        List<Role> roles = new List<Role>();
+            //        var res = response.Content.ReadAsStringAsync().Result;
+            //        var roleList = JsonConvert.DeserializeObject<dynamic>(res);
+
+            //        foreach (var dato in roleList)
+            //        {
+            //            Role role = new Role();
+
+            //            role.IdRol = dato.idRol;
+            //            role.Descripcion = dato.descripcion;
+
+            //            this.roles.Add(role);
+            //        }
+
+            //    }
+            //    else
+            //    {
+            //        //message.Content = $"Server error code {response.StatusCode}";
+            //    }
+            //}
+
+            this.statuses.Add(new Status { IdEstado = 1, Descripcion = "ACTIVADO" });
+            this.statuses.Add(new Status { IdEstado = 2, Descripcion = "DESACTIVADO" });
+
+            return this.statuses;
+        }
         #endregion
     }
 }

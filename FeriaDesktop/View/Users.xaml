@@ -16,10 +16,10 @@
             <ColumnDefinition Width="45*"/>
         </Grid.ColumnDefinitions>
         <Label Content="INFORMACIÓN DE USUARIOS" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="218" FontSize="16" Grid.Column="1"/>
-        <DataGrid ItemsSource="{StaticResource  ResourceKey=usersViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="501" Margin="334,73,0,0" VerticalAlignment="Top" Width="793" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=usersViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="501" Margin="334,73,0,0" VerticalAlignment="Top" Width="793" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="2" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
         <Button Content="MODIFICAR" Command="{Binding UpUserCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="50,491,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287" Grid.ColumnSpan="2"/>
         <Button Content="CREAR &#xD;&#xA;TRANSPORTISTA" HorizontalAlignment="Left" Margin="24,18,0,0" VerticalAlignment="Top" Height="49" Width="103" RenderTransformOrigin="0.528,-0.887"/>
-        <Button Content="DESACTIVAR" HorizontalAlignment="Left" Margin="177,491,0,0" VerticalAlignment="Top" Height="46" Width="103" Grid.Column="1"/>
+        <Button Content="DESACTIVAR" Command="{Binding DelUserCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="177,491,0,0" VerticalAlignment="Top" Height="46" Width="103" Grid.Column="1"/>
         <Label Content="Nombre:" HorizontalAlignment="Left" Margin="22,114,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="103,118,0,0" Text="{Binding Nombre}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
         <Label Content="Ap. Paterno:" Grid.Column="1" HorizontalAlignment="Left" Margin="100,114,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839"/>
@@ -35,17 +35,11 @@
         <Label Content="Correo:" HorizontalAlignment="Left" Margin="22,235,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="103,239,0,0" Text="{Binding Correo}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
         <Label Content="Pais:" HorizontalAlignment="Left" Margin="100,235,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <!--<ComboBox x:Name="categoryComboBox" ItemsSource="{Binding Paises}" SelectedValuePath="Name" SelectedValue="{Binding Pais, Mode=TwoWay}" HorizontalAlignment="Left" Margin="189,237,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1"/>-->
-        <ComboBox x:Name="categoryComboBox"
-              HorizontalAlignment="Left" Margin="189,237,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1"
-              ItemsSource="{Binding Countries}"
-              DisplayMemberPath="Name"
-              SelectedItem="{Binding Pais}" />
-        <Label Content="{Binding Pais.Name}" />
+        <ComboBox ItemsSource="{Binding Countries}" DisplayMemberPath="Descripcion" SelectedItem="{Binding Pais}" HorizontalAlignment="Left" Margin="189,237,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
         <Label Content="Rol:" HorizontalAlignment="Left" Margin="22,274,0,0" VerticalAlignment="Top"/>
-        <!--<ComboBox ItemsSource="{Binding Roles}" SelectedItem="{Binding Rol}" HorizontalAlignment="Left" Margin="103,276,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>-->
+        <ComboBox ItemsSource="{Binding Roles}" DisplayMemberPath="Descripcion" SelectedItem="{Binding Rol}" HorizontalAlignment="Left" Margin="103,276,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
         <Label Content="Estado:" HorizontalAlignment="Left" Margin="100,274,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <!--<ComboBox ItemsSource="{Binding Estados}" SelectedItem="{Binding Estado}" HorizontalAlignment="Left" Margin="189,276,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1"/>-->
+        <ComboBox ItemsSource="{Binding Statuses}" DisplayMemberPath="Descripcion" SelectedItem="{Binding Estado}" HorizontalAlignment="Left" Margin="189,276,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
         <Label Content="Terms. Cond:" HorizontalAlignment="Left" Margin="24,320,0,0" VerticalAlignment="Top"/>
         <!--<ComboBox ItemsSource="{Binding Termsc}" SelectedItem="{Binding Terms}" HorizontalAlignment="Left" Margin="103,322,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>-->
     </Grid>
