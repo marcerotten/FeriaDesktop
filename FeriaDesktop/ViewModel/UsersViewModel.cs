@@ -31,14 +31,14 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Properties
-        public ICommand UpUserCommand
-        {
-            get { return upUserCommand; }
-            set
-            {
-                upUserCommand = value;
-            }
-        }
+        //public ICommand UpUserCommand
+        //{
+        //    get { return upUserCommand; }
+        //    set
+        //    {
+        //        upUserCommand = value;
+        //    }
+        //}
 
         public int SelectedIndexOfCollection
         {
