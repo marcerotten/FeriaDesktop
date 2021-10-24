@@ -11,7 +11,9 @@
         <ContentControl Content="{Binding SelectedViewModel}"/>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="CLIENTES" HorizontalAlignment="Left" Margin="25,108,0,0" VerticalAlignment="Top" Height="47" Width="109" Command="{Binding GetUsersCommand}" CommandParameter="Users"/>
+            <Button Content="CLIENTES" Height="47" Width="109" Command="{Binding GetUsersCommand}" CommandParameter="Users" RenderTransformOrigin="-1.876,0.649"/>
+            <Button Content="CONTRATOS" Height="47" Width="109" Command="{Binding GetContractsCommand}" CommandParameter="Contracts" RenderTransformOrigin="-1.876,0.649"/>
+
         </StackPanel>
     </Grid>
 </Window>
