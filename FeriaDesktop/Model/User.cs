@@ -29,7 +29,8 @@
         private string direccion;
         private string codPostal;
         private string correo;
-        private string pais;
+        private string paisName;
+        private Country pais;
         private string rol;
         private string estado;
         private int terminosCondiciones;
@@ -131,7 +132,19 @@
                 OnPropertyChanged("Correo");
             }
         }
-        public string Pais
+        public string PaisName
+        {
+            get
+            {
+                return paisName;
+            }
+            set
+            {
+                paisName = value;
+                OnPropertyChanged("PaisName");
+            }
+        }
+        public Country Pais
         {
             get
             {
@@ -180,4 +193,6 @@
             }
         }
     }
+
+
 }

@@ -24,5 +24,17 @@ namespace FeriaDesktop.View
             //this.DataContext = new UsersViewModel();
 
         }
+
+        private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if((string) e.Column.Header == "IdUsuario")
+            {
+                e.Cancel = true;
+            }
+            if ((string)e.Column.Header == "Pais")
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

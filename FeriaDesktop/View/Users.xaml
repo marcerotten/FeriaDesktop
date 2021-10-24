@@ -16,7 +16,7 @@
             <ColumnDefinition Width="45*"/>
         </Grid.ColumnDefinitions>
         <Label Content="INFORMACIÓN DE USUARIOS" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="218" FontSize="16" Grid.Column="1"/>
-        <DataGrid ItemsSource="{StaticResource  ResourceKey=usersViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="501" Margin="334,73,0,0" VerticalAlignment="Top" Width="793" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=usersViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="501" Margin="334,73,0,0" VerticalAlignment="Top" Width="793" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="2" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
         <Button Content="MODIFICAR" Command="{Binding UpUserCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="50,491,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287" Grid.ColumnSpan="2"/>
         <Button Content="CREAR &#xD;&#xA;TRANSPORTISTA" HorizontalAlignment="Left" Margin="24,18,0,0" VerticalAlignment="Top" Height="49" Width="103" RenderTransformOrigin="0.528,-0.887"/>
         <Button Content="DESACTIVAR" Command="{Binding DelUserCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="177,491,0,0" VerticalAlignment="Top" Height="46" Width="103" Grid.Column="1"/>

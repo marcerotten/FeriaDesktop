@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Linq;
 
 namespace FeriaDesktop.ViewModel
 {
@@ -296,27 +297,27 @@ namespace FeriaDesktop.ViewModel
         {
             get
             {
-                //if (this.SelectedIndexOfCollection > -1)
-                //{
-                //    return this.Items[this.SelectedIndexOfCollection].Pais;
-                //}
-                //else
-                //{
-                //    return pais;
-                //}
-                return pais;
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].Pais;
+                }
+                else
+                {
+                    return pais;
+                }
+                //return pais;
             }
             set
             {
-                //if (this.SelectedIndexOfCollection > -1)
-                //{
-                //    this.Items[this.SelectedIndexOfCollection].Pais = value;
-                //}
-                //else
-                //{
-                //    pais = value;
-                //}
-                pais = value;
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].Pais = value;
+                }
+                else
+                {
+                    pais = value;
+                }
+                //pais = value;
                 OnPropertyChanged("Pais");
             }
         }
@@ -434,23 +435,6 @@ namespace FeriaDesktop.ViewModel
         private async void showUsers()
         {
             this.Clear();
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add("Nombre");
-            dt.Columns.Add("Apellido Paterno");
-            dt.Columns.Add("Apellido Materno");
-            dt.Columns.Add("DNI");
-            dt.Columns.Add("Dirección");
-            dt.Columns.Add("Código Postal");
-            dt.Columns.Add("Correo");
-            dt.Columns.Add("Pais");
-            dt.Columns.Add("Rol");
-            dt.Columns.Add("Estado");
-            dt.Columns.Add("Términos y Condiciones");
-
-
-            //var json = JsonConvert.SerializeObject(userObject);
-            //var data = new StringContent(json, Encoding.UTF8, "application/json");
             var url = "http://localhost:8080/api/usuario/3";
 
             using (HttpClient client = new HttpClient())
@@ -464,51 +448,26 @@ namespace FeriaDesktop.ViewModel
                 {
                     List<User_info> usuarios = new List<User_info>();
                     var res = response.Content.ReadAsStringAsync().Result;
-                    var userList = JsonConvert.DeserializeObject<List<User_info>>(res);
-                    //var userList = JsonConvert.DeserializeObject<dynamic>(res);
-
-                    //message.Content = historyname;
+                    var userList = JsonConvert.DeserializeObject<dynamic>(res);
 
                     foreach (var dato in userList)
                     {
-                       
-                        DataRow row = dt.NewRow();
-                        
+                        User_info usuario = new User_info();
 
-                        //actividadEmpresa.Read(dato.IdActividadEmpresa);
-                        //tipoEmpresa.Read(dato.IdTipoEmpresa);
-
-                        row["Nombre"] = dato.Nombre;
-                        row["Apellido Paterno"] = dato.ApPaterno;
-                        row["Apellido Materno"] = dato.ApMaterno;
-                        row["DNI"] = dato.Dni;
-                        row["Dirección"] = dato.Direccion;
-                        row["Código Postal"] = dato.CodPostal;
-                        row["Correo"] = dato.Correo;
-                        row["Pais"] = dato.Pais;
-                        row["Rol"] = dato.Rol;
-                        row["Estado"] = dato.Estado;
-                        var terminos = dato.Terms;
-                        if (terminos != 0)
-                        {
-                            row["Términos y Condiciones"] = "Rechazado";
-                        }
-                        else
-                        {
-                            row["Términos y Condiciones"] = "Aceptado";
-                        }
-
-                        dt.Rows.Add(row);
-                        this.Add(dato);
+                        usuario.IdUsuario = dato.idUsuario;
+                        usuario.Nombre = dato.nombre;
+                        usuario.ApPaterno = dato.apPaterno;
+                        usuario.ApMaterno = dato.apMaterno;
+                        usuario.Dni = dato.dni;
+                        usuario.Direccion = dato.direccion;
+                        usuario.CodPostal = dato.codPostal;
+                        usuario.Correo = dato.correo;
+                        string pais = dato.pais;
+                        usuario.Pais = countries.FirstOrDefault(x => x.Descripcion == pais);//pais.Replace("{", "").Replace("}", "")
+                        usuario.PaisName = usuario.Pais.Descripcion;
+                 
+                        this.Add(usuario);
                     }
-
-                    //dgClients.ClearValue(ItemsControl.ItemsSourceProperty);
-                    /*
-                     * Para traerlo desde la clase
-                    dgClientes.ItemsSource = userList; //dt.DefaultView;
-                    */
-                    //dgClients.ItemsSource = dt.DefaultView;
-                    //dgClients.UpdateLayout();
 
                 }
                 else
@@ -534,7 +493,7 @@ namespace FeriaDesktop.ViewModel
                 correo = this.Correo,
                 usuario = "usertest2",
                 contrasena = "test123",
-                idPais = 1,
+                idPais = this.Pais.IdPais,
                 idRol = 1,
                 idEstado = 1,
                 terms = this.Terms
@@ -552,6 +511,8 @@ namespace FeriaDesktop.ViewModel
                 var res = await response.Content.ReadAsStringAsync();
                 var userList = JsonConvert.DeserializeObject<dynamic>(res);
             }
+
+            this.showUsers();
 
         }
 
@@ -576,9 +537,40 @@ namespace FeriaDesktop.ViewModel
 
         private IEnumerable<Country> GetCountries()
         {
-            this.countries.Add(new Country { Id = 1, Descripcion = "Chile" });
-            this.countries.Add(new Country { Id = 2, Descripcion = "Argentina" });
-            this.countries.Add(new Country { Id = 3, Descripcion = "Uruguay" });
+            var url = "http://localhost:8080/api/pais";
+
+            using (HttpClient client = new HttpClient())
+
+            {
+                var response = client.GetAsync(url).Result;
+                response.EnsureSuccessStatusCode();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    List<Country> countries = new List<Country>();
+                    var res = response.Content.ReadAsStringAsync().Result;
+                    var countryList = JsonConvert.DeserializeObject<dynamic>(res);
+
+                    foreach (var dato in countryList)
+                    {
+                        Country country = new Country();
+
+                        country.IdPais = dato.idPais;
+                        country.Descripcion = dato.descripcion;
+
+                        this.countries.Add(country);
+                    }
+
+                }
+                else
+                {
+                    //message.Content = $"Server error code {response.StatusCode}";
+                }
+            }
+
+            //this.countries.Add(new Country { Id = 1, Descripcion = "CHILE" });
+            //this.countries.Add(new Country { Id = 2, Descripcion = "ESPAÑA" });
+            //this.countries.Add(new Country { Id = 3, Descripcion = "ITALIA" });
 
             return this.countries;
         }

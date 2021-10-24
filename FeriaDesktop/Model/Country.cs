@@ -8,18 +8,18 @@ namespace FeriaDesktop.Model
 {
     public class Country : INotifyPropertyChanged
     {
-        private int id;
+        private int idPais;
         private string descripcion;
-        public int Id
+        public int IdPais
         {
             get
             {
-                return id;
+                return idPais;
             }
             set
             {
-                id = value;
-                OnPropertyChanged("Id");
+                idPais = value;
+                OnPropertyChanged("IdPais");
             }
         }
         [XmlAttribute("Descripcion")]
