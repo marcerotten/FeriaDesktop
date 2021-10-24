@@ -45,7 +45,6 @@
             {
                 idUsuario = value;
                 OnPropertyChanged("IdUsuario");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string Nombre
@@ -58,7 +57,6 @@
             {
                 nombre = value;
                 OnPropertyChanged("Nombre");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string ApPaterno
@@ -71,7 +69,6 @@
             {
                 apPaterno = value;
                 OnPropertyChanged("ApPaterno");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string ApMaterno
@@ -84,7 +81,6 @@
             {
                 apMaterno = value;
                 OnPropertyChanged("ApMaterno");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string Dni
@@ -97,7 +93,6 @@
             {
                 dni = value;
                 OnPropertyChanged("Dni");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string Direccion
@@ -110,7 +105,6 @@
             {
                 direccion = value;
                 OnPropertyChanged("Direccion");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string CodPostal
@@ -123,7 +117,6 @@
             {
                 codPostal = value;
                 OnPropertyChanged("CodPostal");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string Correo
@@ -136,7 +129,6 @@
             {
                 correo = value;
                 OnPropertyChanged("Correo");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string Pais
@@ -149,7 +141,6 @@
             {
                 pais = value;
                 OnPropertyChanged("Pais");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string Rol
@@ -162,7 +153,6 @@
             {
                 rol = value;
                 OnPropertyChanged("Rol");
-                OnPropertyChanged("DisplayName");
             }
         }
         public string Estado
@@ -175,7 +165,6 @@
             {
                 estado = value;
                 OnPropertyChanged("Estado");
-                OnPropertyChanged("DisplayName");
             }
         }
         public int Terms
@@ -188,7 +177,6 @@
             {
                 terminosCondiciones = value;
                 OnPropertyChanged("Terms");
-                OnPropertyChanged("DisplayName");
             }
         }
     }

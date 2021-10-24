@@ -10,6 +10,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Windows.Input;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace FeriaDesktop.ViewModel
 {
@@ -27,10 +29,11 @@ namespace FeriaDesktop.ViewModel
         private string direccion;
         private string codPostal;
         private string correo;
-        private string pais;
+        private Country pais;
         private string rol;
         private string estado;
         private int terms;
+        private ObservableCollection<Country> countries = new ObservableCollection<Country>();
         #endregion
 
         #region Properties
@@ -289,29 +292,31 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-        public string Pais
+        public Country Pais
         {
             get
             {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    return this.Items[this.SelectedIndexOfCollection].Pais;
-                }
-                else
-                {
-                    return pais;
-                }
+                //if (this.SelectedIndexOfCollection > -1)
+                //{
+                //    return this.Items[this.SelectedIndexOfCollection].Pais;
+                //}
+                //else
+                //{
+                //    return pais;
+                //}
+                return pais;
             }
             set
             {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    this.Items[this.SelectedIndexOfCollection].Pais = value;
-                }
-                else
-                {
-                    pais = value;
-                }
+                //if (this.SelectedIndexOfCollection > -1)
+                //{
+                //    this.Items[this.SelectedIndexOfCollection].Pais = value;
+                //}
+                //else
+                //{
+                //    pais = value;
+                //}
+                pais = value;
                 OnPropertyChanged("Pais");
             }
         }
@@ -397,11 +402,16 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        public IEnumerable<Country> Countries
+        {
+            get { return countries; }
+        }
         #endregion
 
         #region Constructors
         public UsersViewModel()
         {
+            this.GetCountries();
             this.showUsers();
             UpUserCommand = new RelayCommand(param => this.upUser());
             DelUserCommand = new RelayCommand(param => this.delUser());
@@ -438,6 +448,7 @@ namespace FeriaDesktop.ViewModel
             dt.Columns.Add("Estado");
             dt.Columns.Add("Términos y Condiciones");
 
+
             //var json = JsonConvert.SerializeObject(userObject);
             //var data = new StringContent(json, Encoding.UTF8, "application/json");
             var url = "http://localhost:8080/api/usuario/3";
@@ -462,6 +473,7 @@ namespace FeriaDesktop.ViewModel
                     {
                        
                         DataRow row = dt.NewRow();
+                        
 
                         //actividadEmpresa.Read(dato.IdActividadEmpresa);
                         //tipoEmpresa.Read(dato.IdTipoEmpresa);
@@ -560,6 +572,15 @@ namespace FeriaDesktop.ViewModel
                     MessageBox.Show("Usuario Desactivado!");
                     this.showUsers();
             }
+        }
+
+        private IEnumerable<Country> GetCountries()
+        {
+            this.countries.Add(new Country { Id = 1, Descripcion = "Chile" });
+            this.countries.Add(new Country { Id = 2, Descripcion = "Argentina" });
+            this.countries.Add(new Country { Id = 3, Descripcion = "Uruguay" });
+
+            return this.countries;
         }
         #endregion
     }
