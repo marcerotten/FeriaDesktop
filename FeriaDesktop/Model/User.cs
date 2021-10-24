@@ -31,8 +31,10 @@
         private string correo;
         private string paisName;
         private Country pais;
-        private string rol;
-        private string estado;
+        private string rolName;
+        private Role rol;
+        private string estadoName;
+        private Status estado;
         private int terminosCondiciones;
         #endregion
 
@@ -156,7 +158,20 @@
                 OnPropertyChanged("Pais");
             }
         }
-        public string Rol
+        public string RolName
+        {
+            get
+            {
+                return rolName;
+            }
+            set
+            {
+                rolName = value;
+                OnPropertyChanged("RolName");
+            }
+        }
+
+        public Role Rol
         {
             get
             {
@@ -168,7 +183,19 @@
                 OnPropertyChanged("Rol");
             }
         }
-        public string Estado
+        public string EstadoName
+        {
+            get
+            {
+                return estadoName;
+            }
+            set
+            {
+                estadoName = value;
+                OnPropertyChanged("EstadoName");
+            }
+        }
+        public Status Estado
         {
             get
             {

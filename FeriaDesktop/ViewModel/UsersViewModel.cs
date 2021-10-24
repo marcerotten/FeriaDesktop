@@ -3,15 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
-using FeriaDesktop.View;
 using FeriaDesktop.Model;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data;
 using System.Windows.Input;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Linq;
 
 namespace FeriaDesktop.ViewModel
@@ -31,10 +27,12 @@ namespace FeriaDesktop.ViewModel
         private string codPostal;
         private string correo;
         private Country pais;
-        private string rol;
-        private string estado;
+        private Role rol;
+        private Status estado;
         private int terms;
+        private ObservableCollection<Role> roles = new ObservableCollection<Role>();
         private ObservableCollection<Country> countries = new ObservableCollection<Country>();
+        private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
         #endregion
 
         #region Properties
@@ -322,7 +320,7 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-        public string Rol
+        public Role Rol
         {
             get
             {
@@ -349,7 +347,7 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-        public string Estado
+        public Status Estado
         {
             get
             {
@@ -407,12 +405,24 @@ namespace FeriaDesktop.ViewModel
         {
             get { return countries; }
         }
+
+        public IEnumerable<Role> Roles
+        {
+            get { return roles; }
+        }
+
+        public IEnumerable<Status> Statuses
+        {
+            get { return statuses; }
+        }
         #endregion
 
         #region Constructors
         public UsersViewModel()
         {
             this.GetCountries();
+            this.GetRoles();
+            this.GetStatus();
             this.showUsers();
             UpUserCommand = new RelayCommand(param => this.upUser());
             DelUserCommand = new RelayCommand(param => this.delUser());
@@ -465,7 +475,13 @@ namespace FeriaDesktop.ViewModel
                         string pais = dato.pais;
                         usuario.Pais = countries.FirstOrDefault(x => x.Descripcion == pais);//pais.Replace("{", "").Replace("}", "")
                         usuario.PaisName = usuario.Pais.Descripcion;
-                 
+                        string rol = dato.rol;
+                        usuario.Rol = roles.FirstOrDefault(x => x.Descripcion.ToUpper() == rol.ToUpper());
+                        usuario.RolName = usuario.Rol.Descripcion;
+                        string estado = dato.estado;
+                        usuario.Estado = statuses.FirstOrDefault(x => x.Descripcion.ToUpper() == estado.ToUpper());
+                        usuario.EstadoName = usuario.Estado.Descripcion;
+
                         this.Add(usuario);
                     }
 
@@ -573,6 +589,84 @@ namespace FeriaDesktop.ViewModel
             //this.countries.Add(new Country { Id = 3, Descripcion = "ITALIA" });
 
             return this.countries;
+        }
+
+        private IEnumerable<Role> GetRoles()
+        {
+            //var url = "http://localhost:8080/api/pais";
+
+            //using (HttpClient client = new HttpClient())
+
+            //{
+            //    var response = client.GetAsync(url).Result;
+            //    response.EnsureSuccessStatusCode();
+
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        List<Role> roles = new List<Role>();
+            //        var res = response.Content.ReadAsStringAsync().Result;
+            //        var roleList = JsonConvert.DeserializeObject<dynamic>(res);
+
+            //        foreach (var dato in roleList)
+            //        {
+            //            Role role = new Role();
+
+            //            role.IdRol = dato.idRol;
+            //            role.Descripcion = dato.descripcion;
+
+            //            this.roles.Add(role);
+            //        }
+
+            //    }
+            //    else
+            //    {
+            //        //message.Content = $"Server error code {response.StatusCode}";
+            //    }
+            //}
+
+            this.roles.Add(new Role { IdRol = 1, Descripcion = "ADMIN" });
+            this.roles.Add(new Role { IdRol = 2, Descripcion = "PRODUCTOR" });
+
+            return this.roles;
+        }
+
+        private IEnumerable<Status> GetStatus()
+        {
+            //var url = "http://localhost:8080/api/pais";
+
+            //using (HttpClient client = new HttpClient())
+
+            //{
+            //    var response = client.GetAsync(url).Result;
+            //    response.EnsureSuccessStatusCode();
+
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        List<Role> roles = new List<Role>();
+            //        var res = response.Content.ReadAsStringAsync().Result;
+            //        var roleList = JsonConvert.DeserializeObject<dynamic>(res);
+
+            //        foreach (var dato in roleList)
+            //        {
+            //            Role role = new Role();
+
+            //            role.IdRol = dato.idRol;
+            //            role.Descripcion = dato.descripcion;
+
+            //            this.roles.Add(role);
+            //        }
+
+            //    }
+            //    else
+            //    {
+            //        //message.Content = $"Server error code {response.StatusCode}";
+            //    }
+            //}
+
+            this.statuses.Add(new Status { IdEstado = 1, Descripcion = "ACTIVADO" });
+            this.statuses.Add(new Status { IdEstado = 2, Descripcion = "DESACTIVADO" });
+
+            return this.statuses;
         }
         #endregion
     }

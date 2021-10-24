@@ -35,6 +35,14 @@ namespace FeriaDesktop.View
             {
                 e.Cancel = true;
             }
+            if ((string)e.Column.Header == "Rol")
+            {
+                e.Cancel = true;
+            }
+            if ((string)e.Column.Header == "Estado")
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
