@@ -9,10 +9,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.Windows.Input;
+using System.Linq;
 
 namespace FeriaDesktop.ViewModel
 {
-    public class UsersViewModel : ObservableCollection<User_info>
+    public class UsersViewModel : ObservableCollection<User_info>, INotifyPropertyChanged
     {
         #region Atribute
         private ICommand upUserCommand;// { get; set; }
@@ -24,10 +25,11 @@ namespace FeriaDesktop.ViewModel
         private string direccion;
         private string codPostal;
         private string correo;
-        private string pais;
+        private Country pais;
         private string rol;
         private string estado;
         private int terms;
+        private ObservableCollection<Country> _countries = new ObservableCollection<Country>();
         #endregion
 
         #region Properties
@@ -61,7 +63,6 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Terms");
             }
         }
-
 
         public string Nombre
         {
@@ -111,7 +112,7 @@ namespace FeriaDesktop.ViewModel
                 }
                 else
                 {
-                    nombre = value;
+                    apPaterno = value;
                 }
                 OnPropertyChanged("ApPaterno");
             }
@@ -138,7 +139,7 @@ namespace FeriaDesktop.ViewModel
                 }
                 else
                 {
-                    nombre = value;
+                    apMaterno = value;
                 }
                 OnPropertyChanged("ApMaterno");
             }
@@ -252,7 +253,7 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-        public string Pais
+        public Country Pais
         {
             get
             {
@@ -359,13 +360,40 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Terms");
             }
         }
-
+        public IEnumerable<Country> Countries
+        {
+            get { return _countries; }
+        }
         #endregion
 
         #region Constructors
         public UsersViewModel()
         {
-            this.showUsers();
+            this.GetCountries();
+
+            User_info vlClient1 = new User_info();
+            vlClient1.Dni = "1";
+            vlClient1.Nombre = "Pablo";
+            vlClient1.ApPaterno = "Gonzalez";
+            vlClient1.Pais = _countries.FirstOrDefault(x => x.Name == "Chile");
+            this.Add(vlClient1);
+
+            User_info vlClient2 = new User_info();
+            vlClient2.Dni = "2";
+            vlClient2.Nombre = "Roberto";
+            vlClient2.ApPaterno = "Herrera";
+            vlClient2.Pais = _countries.FirstOrDefault(x => x.Name == "Argentina");
+            this.Add(vlClient2);
+
+            User_info vlClient3 = new User_info();
+            vlClient3.Dni = "3";
+            vlClient3.Nombre = "Anibal";
+            vlClient3.ApPaterno = "Salazar";
+            vlClient3.Pais = _countries.FirstOrDefault(x => x.Name == "Chile");
+            this.Add(vlClient3);
+
+
+            //this.showUsers();
             //UpUserCommand = new RelayCommand(param => this.upUser());
         }
         #endregion
@@ -385,8 +413,6 @@ namespace FeriaDesktop.ViewModel
         #region Methods and functions
         private async void showUsers()
         {
-            
-
             DataTable dt = new DataTable();
 
             dt.Columns.Add("Nombre");
@@ -475,8 +501,17 @@ namespace FeriaDesktop.ViewModel
         //    UpdateUser win_menu = new UpdateUser();
         //    win_menu.Show();
         //}
+
+        private IEnumerable<Country> GetCountries()
+        {
+
+            this._countries.Add(new Country { Id = 1, Name = "Chile" });
+            this._countries.Add(new Country { Id = 2, Name = "Argentina" });
+            this._countries.Add(new Country { Id = 3, Name = "Uruguay" });
+
+            return this._countries;
+        }  
+
         #endregion
     }
-
-
 }

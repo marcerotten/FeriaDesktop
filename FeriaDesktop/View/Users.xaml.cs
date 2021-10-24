@@ -1,6 +1,9 @@
-﻿using FeriaDesktop.ViewModel;
+﻿using FeriaDesktop.Model;
+using FeriaDesktop.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,8 +24,6 @@ namespace FeriaDesktop.View
         public Users()
         {
             InitializeComponent();
-            //this.DataContext = new UsersViewModel();
-
         }
     }
 }
