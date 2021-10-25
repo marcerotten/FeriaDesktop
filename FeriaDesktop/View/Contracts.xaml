@@ -9,7 +9,22 @@
     <Window.Resources>
         <viewmodel:ContractsViewModel x:Key="contractsViewModel"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource contractsViewModel}">
-        
+    <Grid DataContext="{StaticResource contractsViewModel}" Margin="0,0,-35,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="434*"/>
+            <ColumnDefinition Width="45*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="INFORMACIÓN DE CONTRATOS" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=usersViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="482" Margin="249,72,0,0" VerticalAlignment="Top" Width="455" IsReadOnly="True" Grid.Column="1" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" Grid.ColumnSpan="2"/>
+        <Button Content="MODIFICAR" Command="{Binding UpUserCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="50,491,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287" Grid.ColumnSpan="2"/>
+        <Button Content="CREAR &#xD;&#xA;TRANSPORTISTA" HorizontalAlignment="Left" Margin="24,18,0,0" VerticalAlignment="Top" Height="49" Width="103" RenderTransformOrigin="0.528,-0.887"/>
+        <Button Content="DESACTIVAR" Command="{Binding DelUserCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="177,491,0,0" VerticalAlignment="Top" Height="46" Width="103" Grid.Column="1"/>
+        <Label Content="DNI:" HorizontalAlignment="Left" Margin="13,114,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="66,118,0,0" Text="{Binding Nombre}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+        <Label Content="Vigencia:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839"/>
+        <Label Content="Código:" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.352,0.31"/>
+        <TextBox HorizontalAlignment="Left" Margin="66,150,0,0" Text="{Binding ApMaterno}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Margin="66,181,0,0" Text="{Binding ApMaterno}" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
     </Grid>
 </Window>

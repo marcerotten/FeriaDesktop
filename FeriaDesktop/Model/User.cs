@@ -28,14 +28,15 @@
         private string dni;
         private string direccion;
         private string codPostal;
-        private string correo;
+        private string correo; 
+        private string usuario;
         private string paisName;
         private Country pais;
         private string rolName;
         private Role rol;
         private string estadoName;
         private Status estado;
-        private int terminosCondiciones;
+        private string terms;
         #endregion
 
         public int IdUsuario
@@ -134,6 +135,18 @@
                 OnPropertyChanged("Correo");
             }
         }
+        public string Usuario
+        {
+            get
+            {
+                return usuario;
+            }
+            set
+            {
+                usuario = value;
+                OnPropertyChanged("Usuario");
+            }
+        }
         public string PaisName
         {
             get
@@ -207,15 +220,15 @@
                 OnPropertyChanged("Estado");
             }
         }
-        public int Terms
+        public string Terms
         {
             get
             {
-                return terminosCondiciones;
+                return terms;
             }
             set
             {
-                terminosCondiciones = value;
+                terms = value;
                 OnPropertyChanged("Terms");
             }
         }

@@ -26,10 +26,11 @@ namespace FeriaDesktop.ViewModel
         private string direccion;
         private string codPostal;
         private string correo;
+        private string usuario;
         private Country pais;
         private Role rol;
         private Status estado;
-        private int terms;
+        private string terms;
         private ObservableCollection<Role> roles = new ObservableCollection<Role>();
         private ObservableCollection<Country> countries = new ObservableCollection<Country>();
         private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
@@ -72,7 +73,6 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Pais");
                 OnPropertyChanged("Rol");
                 OnPropertyChanged("Estado");
-                OnPropertyChanged("Terms");
             }
         }
 
@@ -290,7 +290,32 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Correo");
             }
         }
-
+        public string Usuario
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].Usuario;
+                }
+                else
+                {
+                    return usuario;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].Usuario = value;
+                }
+                else
+                {
+                    usuario = value;
+                }
+                OnPropertyChanged("Usuario");
+            }
+        }
         public Country Pais
         {
             get
@@ -374,7 +399,7 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-        public int Terms
+        public string Terms
         {
             get
             {
@@ -415,6 +440,7 @@ namespace FeriaDesktop.ViewModel
         {
             get { return statuses; }
         }
+
         #endregion
 
         #region Constructors
@@ -472,8 +498,9 @@ namespace FeriaDesktop.ViewModel
                         usuario.Direccion = dato.direccion;
                         usuario.CodPostal = dato.codPostal;
                         usuario.Correo = dato.correo;
+                        usuario.Usuario = dato.usuario;
                         string pais = dato.pais;
-                        usuario.Pais = countries.FirstOrDefault(x => x.Descripcion == pais);//pais.Replace("{", "").Replace("}", "")
+                        usuario.Pais = countries.FirstOrDefault(x => x.Descripcion == pais);
                         usuario.PaisName = usuario.Pais.Descripcion;
                         string rol = dato.rol;
                         usuario.Rol = roles.FirstOrDefault(x => x.Descripcion.ToUpper() == rol.ToUpper());
@@ -481,6 +508,7 @@ namespace FeriaDesktop.ViewModel
                         string estado = dato.estado;
                         usuario.Estado = statuses.FirstOrDefault(x => x.Descripcion.ToUpper() == estado.ToUpper());
                         usuario.EstadoName = usuario.Estado.Descripcion;
+                        usuario.Terms = dato.terminosCondiciones == 0 ? "SI":"NO";
 
                         this.Add(usuario);
                     }
@@ -507,13 +535,12 @@ namespace FeriaDesktop.ViewModel
                 direccion = this.Direccion,
                 codPostal = this.CodPostal,
                 correo = this.Correo,
-                usuario = "usertest2",
-                contrasena = "test123",
+                usuario = this.Usuario,
                 idPais = this.Pais.IdPais,
-                idRol = 1,
-                idEstado = 1,
-                terms = this.Terms
-            };
+                idRol = this.Rol.IdRol,
+                idEstado = this.Estado.IdEstado,
+                terminosCondiciones = this.Terms == "SI" ? 0 : 1
+        };
 
 
             var json = JsonConvert.SerializeObject(userObject);
@@ -526,6 +553,9 @@ namespace FeriaDesktop.ViewModel
                 response.EnsureSuccessStatusCode();
                 var res = await response.Content.ReadAsStringAsync();
                 var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                string message = userList.msg;
+                MessageBox.Show(message);
+             
             }
 
             this.showUsers();
@@ -668,7 +698,9 @@ namespace FeriaDesktop.ViewModel
 
             return this.statuses;
         }
-        #endregion
+
+
+            #endregion
     }
 
 

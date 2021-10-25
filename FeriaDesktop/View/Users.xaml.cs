@@ -43,6 +43,10 @@ namespace FeriaDesktop.View
             {
                 e.Cancel = true;
             }
+            if ((string)e.Column.Header == "Usuario")
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
