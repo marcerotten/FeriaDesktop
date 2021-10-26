@@ -37,6 +37,16 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Properties
+        private ICommand getCreateUserCommand { get; set; }
+
+        public ICommand GetCreateUserCommand
+        {
+            get { return getCreateUserCommand; }
+            set
+            {
+                getCreateUserCommand = value;
+            }
+        }
         public ICommand UpUserCommand
         {
             get { return upUserCommand; }

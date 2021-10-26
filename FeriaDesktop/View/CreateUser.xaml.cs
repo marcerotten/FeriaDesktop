@@ -1,5 +1,4 @@
-﻿using FeriaDesktop.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -14,14 +13,13 @@ using System.Windows.Shapes;
 namespace FeriaDesktop.View
 {
     /// <summary>
-    /// Lógica de interacción para UpdateUser.xaml
+    /// Lógica de interacción para CreateUser.xaml
     /// </summary>
-    public partial class UpdateUser : Window
+    public partial class CreateUser : Window
     {
-        public UpdateUser()
+        public CreateUser()
         {
             InitializeComponent();
-            this.DataContext = new UsersViewModel();
         }
     }
 }

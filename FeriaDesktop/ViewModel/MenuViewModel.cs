@@ -12,7 +12,7 @@ namespace FeriaDesktop.ViewModel
     {
         
         private ICommand getUsersCommand { get; set; }
-        private ICommand geContractsCommand { get; set; }
+        private ICommand getContractsCommand { get; set; }
 
         public ICommand GetUsersCommand
         {
@@ -24,10 +24,10 @@ namespace FeriaDesktop.ViewModel
         }
         public ICommand GetContractsCommand
         {
-            get { return geContractsCommand; }
+            get { return getContractsCommand; }
             set
             {
-                geContractsCommand = value;
+                getContractsCommand = value;
             }
         }
 
