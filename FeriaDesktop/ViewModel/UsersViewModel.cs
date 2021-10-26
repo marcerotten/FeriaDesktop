@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows;
 using System.Linq;
+using FeriaDesktop.View;
 
 namespace FeriaDesktop.ViewModel
 {
@@ -462,6 +463,7 @@ namespace FeriaDesktop.ViewModel
             this.showUsers();
             UpUserCommand = new RelayCommand(param => this.upUser());
             DelUserCommand = new RelayCommand(param => this.delUser());
+            GetCreateUserCommand = new RelayCommand(param => this.getCreateUsers());
         }
         #endregion
 
@@ -666,6 +668,7 @@ namespace FeriaDesktop.ViewModel
 
             this.roles.Add(new Role { IdRol = 1, Descripcion = "ADMIN" });
             this.roles.Add(new Role { IdRol = 2, Descripcion = "PRODUCTOR" });
+            this.roles.Add(new Role { IdRol = 3, Descripcion = "TRANSPORTISTA" });
 
             return this.roles;
         }
@@ -709,8 +712,12 @@ namespace FeriaDesktop.ViewModel
             return this.statuses;
         }
 
-
-            #endregion
+        private void getCreateUsers()
+        {
+            CreateUser win_menu = new CreateUser();
+            win_menu.Show();
+        }
+        #endregion
     }
 
 
