@@ -343,8 +343,8 @@ namespace FeriaDesktop.ViewModel
                         fechaini = fechaini.Replace("00:00:00", "");
                         contract.FechaIni = fechaini;
                         string fechafin = dato.fechaIni;
-                        fechaini = fechaini.Replace("00:00:00", "");
-                        contract.FechaFin = fechaini;
+                        fechafin = fechafin.Replace("00:00:00", "");
+                        contract.FechaFin = fechafin;
 
                         this.Add(contract);
                     }

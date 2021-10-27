@@ -183,61 +183,6 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Pais");
             }
         }
-
-        //public Role Rol
-        //{
-        //    get
-        //    {
-        //        if (this.SelectedIndexOfCollection > -1)
-        //        {
-        //            return this.Items[this.SelectedIndexOfCollection].Rol;
-        //        }
-        //        else
-        //        {
-        //            return rol;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        if (this.SelectedIndexOfCollection > -1)
-        //        {
-        //            this.Items[this.SelectedIndexOfCollection].Rol = value;
-        //        }
-        //        else
-        //        {
-        //            rol = value;
-        //        }
-        //        OnPropertyChanged("Rol");
-        //    }
-        //}
-
-        //public Status Estado
-        //{
-        //    get
-        //    {
-        //        if (this.SelectedIndexOfCollection > -1)
-        //        {
-        //            return this.Items[this.SelectedIndexOfCollection].Estado;
-        //        }
-        //        else
-        //        {
-        //            return estado;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        if (this.SelectedIndexOfCollection > -1)
-        //        {
-        //            this.Items[this.SelectedIndexOfCollection].Estado = value;
-        //        }
-        //        else
-        //        {
-        //            estado = value;
-        //        }
-        //        OnPropertyChanged("Estado");
-        //    }
-        //}
-
         public string Terms
         {
             get
@@ -260,11 +205,6 @@ namespace FeriaDesktop.ViewModel
         public CreateUserViewModel()
         {
             this.GetCountries();
-            //this.GetRoles();
-            //this.GetStatus();
-            //this.showUsers();
-            //UpUserCommand = new RelayCommand(param => this.upUser());
-            //DelUserCommand = new RelayCommand(param => this.delUser());
             CreateUserCommand = new RelayCommand(param => this.createUser());
         }
 

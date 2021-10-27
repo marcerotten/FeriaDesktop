@@ -27,8 +27,8 @@
         <Label Content="Emisión:" HorizontalAlignment="Left" Margin="13,220,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839"/>
         <Label Content="Vencimiento:" HorizontalAlignment="Left" Margin="13,251,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839" Grid.ColumnSpan="2"/>
         <Button Content="Buscar"  Command="{Binding FindClientCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="285,121,0,0" VerticalAlignment="Top"/>
-        <DatePicker Grid.Column="1" Text="{Binding FechaFin}" HorizontalAlignment="Left" Margin="16,251,0,0" VerticalAlignment="Top" Width="235"/>
-        <DatePicker Grid.Column="1" Text="{Binding FechaIni}" HorizontalAlignment="Left" Margin="17,221,0,0" VerticalAlignment="Top" Width="234"/>
+        <DatePicker Grid.Column="1" SelectedDate="{Binding FechaFin}" HorizontalAlignment="Left" Margin="16,251,0,0" VerticalAlignment="Top" Width="235"/>
+        <DatePicker Grid.Column="1" SelectedDate="{Binding FechaIni}" HorizontalAlignment="Left" Margin="17,221,0,0" VerticalAlignment="Top" Width="234"/>
         <Button Content="CREAR"  Command="{Binding GetCreateContractCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="56,430,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
     </Grid>
 </Window>
