@@ -17,7 +17,7 @@
         </Grid.ColumnDefinitions>
         <Label Content="INFORMACIÓN DE CONTRATOS" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
         <DataGrid ItemsSource="{StaticResource  ResourceKey=contractsViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="352" Margin="392,72,0,0" VerticalAlignment="Top" Width="550" IsReadOnly="True" Grid.Column="1" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
-        <Button Content="MODIFICAR" Command="{Binding UpContractCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="13,327,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287" Grid.ColumnSpan="2"/>
+        <Button Content="MODIFICAR" Command="{Binding UpContractCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="13,430,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287"/>
         <Label Content="DNI:" HorizontalAlignment="Left" Margin="13,118,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="16,122,0,0" Text="{Binding Dni}" TextWrapping="Wrap" VerticalAlignment="Top" Width="235" Grid.Column="1"/>
         <Label Content="Cliente:" HorizontalAlignment="Left" Margin="13,158,0,0" VerticalAlignment="Top"/>
@@ -29,5 +29,6 @@
         <Button Content="Buscar"  Command="{Binding FindClientCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="285,121,0,0" VerticalAlignment="Top"/>
         <DatePicker Grid.Column="1" Text="{Binding FechaFin}" HorizontalAlignment="Left" Margin="16,251,0,0" VerticalAlignment="Top" Width="235"/>
         <DatePicker Grid.Column="1" Text="{Binding FechaIni}" HorizontalAlignment="Left" Margin="17,221,0,0" VerticalAlignment="Top" Width="234"/>
+        <Button Content="CREAR"  Command="{Binding GetCreateContractCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="56,430,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
     </Grid>
 </Window>

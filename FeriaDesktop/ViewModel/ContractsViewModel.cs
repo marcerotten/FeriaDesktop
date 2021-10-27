@@ -1,4 +1,5 @@
 ﻿using FeriaDesktop.Model;
+using FeriaDesktop.View;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -31,12 +32,14 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Properties
-        public ICommand CreateContractCommand
+        private ICommand getCreateContractCommand { get; set; }
+
+        public ICommand GetCreateContractCommand
         {
-            get { return createContractCommand; }
+            get { return getCreateContractCommand; }
             set
             {
-                createContractCommand = value;
+                getCreateContractCommand = value;
             }
         }
         public ICommand UpContractCommand
@@ -290,7 +293,7 @@ namespace FeriaDesktop.ViewModel
         {
             this.showContracts();
             UpContractCommand = new RelayCommand(param => this.upContract());
-            CreateContractCommand = new RelayCommand(param => this.createContract());
+            GetCreateContractCommand = new RelayCommand(param => this.getCreateContract());
             FindClientCommand = new RelayCommand(param => this.findClient());
         }
         #endregion
@@ -444,7 +447,13 @@ namespace FeriaDesktop.ViewModel
             return this.users.FirstOrDefault(x => x.Dni == this.dni);
         }
 
-        
+        private void getCreateContract()
+        {
+            CreateContract win_menu = new CreateContract();
+            win_menu.Show();
+        }
+
+
         #endregion
     } 
 }
