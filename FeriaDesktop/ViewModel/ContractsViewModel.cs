@@ -311,15 +311,13 @@ namespace FeriaDesktop.ViewModel
         private async void showContracts()
         {
             this.Clear();
-            var url = "http://localhost:8080/api/usuario/3";
+            var url = "http://localhost:8080/api/contrato/3";
 
             using (HttpClient client = new HttpClient())
 
             {
                 var response = client.GetAsync(url).Result;
-                Console.WriteLine("antes de status code");
                 response.EnsureSuccessStatusCode();
-                Console.WriteLine("despues de status code");
                 if (response.IsSuccessStatusCode)
                 {
                     List<Contract> contracts = new List<Contract>();
@@ -330,11 +328,20 @@ namespace FeriaDesktop.ViewModel
                     {
                         Contract contract = new Contract();
 
-                        contract.IdUsuario = dato.idUsuario;
-                        //contract.Nombre = dato.nombre;
-                        //contract.ApPaterno = dato.apPaterno;
-                        //contract.ApMaterno = dato.apMaterno;
                         contract.Dni = dato.dni;
+                        string nom = Convert.ToString(dato.nombre);
+                        string app1 = dato.apPaterno;
+                        string app2 = dato.apMaterno;
+                        string disp = nom + " " + app1 + " " + app2;
+                        contract.DisplayName = disp;
+                        contract.Firmado = dato.firmado;
+                        contract.Codigo = dato.codigo;
+                        string fechaini = dato.fechaIni;
+                        fechaini = fechaini.Replace("00:00:00", "");
+                        contract.FechaIni = fechaini;
+                        string fechafin = dato.fechaIni;
+                        fechaini = fechaini.Replace("00:00:00", "");
+                        contract.FechaFin = fechaini;
 
                         this.Add(contract);
                     }

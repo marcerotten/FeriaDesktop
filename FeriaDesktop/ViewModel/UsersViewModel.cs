@@ -489,9 +489,7 @@ namespace FeriaDesktop.ViewModel
 
             {
                 var response = client.GetAsync(url).Result;
-                Console.WriteLine("antes de status code");
                 response.EnsureSuccessStatusCode();
-                Console.WriteLine("despues de status code");
                 if (response.IsSuccessStatusCode)
                 {
                     List<User_info> usuarios = new List<User_info>();

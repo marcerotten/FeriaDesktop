@@ -7,14 +7,14 @@ namespace FeriaDesktop.Model
     public class Contract : ViewModelBase
     {
         #region Atributes
-        public string dni { get; set; }
-        public string displayName { get; set; }
-        public string codigo { get; set; }
-        public string fechaIni { get; set; }
-        public string fechaFin { get; set; }
-        public int idContrato { get; set; }
-        public int firmado { get; set; }
-        public int idUsuario { get; set; }
+        private string dni;
+        private string displayName;
+        private string codigo;
+        private string fechaIni;
+        private string fechaFin;
+        private int idContrato;
+        private int firmado;
+        private int idUsuario;
         #endregion
         #region Properties
         public string Dni
