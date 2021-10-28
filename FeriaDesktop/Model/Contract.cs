@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FeriaDesktop.Model
+﻿namespace FeriaDesktop.Model
 {
     public class Contract : ViewModelBase
     {

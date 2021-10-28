@@ -1,5 +1,4 @@
 ﻿using FeriaDesktop.Services;
-using FeriaDesktop.Services.Interfaces;
 using System.ComponentModel;
 using System.Windows.Input;
 

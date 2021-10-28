@@ -1,7 +1,5 @@
 ﻿using FeriaDesktop.Model;
-using FeriaDesktop.View;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
