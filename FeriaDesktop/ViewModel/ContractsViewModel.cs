@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -17,8 +18,7 @@ namespace FeriaDesktop.ViewModel
     {
         #region Atribute
         private ICommand upContractCommand;
-        private ICommand findClientCommand;
-        private ICommand createContractCommand;
+        private ICommand delContractCommand;
         private int selectedIndex;
         private string dni;
         private string displayName;
@@ -50,12 +50,12 @@ namespace FeriaDesktop.ViewModel
                 upContractCommand = value;
             }
         }
-        public ICommand FindClientCommand
+        public ICommand DelContractCommand
         {
-            get { return findClientCommand; }
+            get { return delContractCommand; }
             set
             {
-                findClientCommand = value;
+                delContractCommand = value;
             }
         }
         public int SelectedIndexOfCollection
@@ -187,7 +187,7 @@ namespace FeriaDesktop.ViewModel
                 }
                 else
                 {
-                    return dni;
+                    return fechaFin;
                 }
             }
             set
@@ -198,7 +198,7 @@ namespace FeriaDesktop.ViewModel
                 }
                 else
                 {
-                    dni = value;
+                    fechaFin = value;
                 }
                 OnPropertyChanged("FechaFin");
             }
@@ -294,7 +294,7 @@ namespace FeriaDesktop.ViewModel
             this.showContracts();
             UpContractCommand = new RelayCommand(param => this.upContract());
             GetCreateContractCommand = new RelayCommand(param => this.getCreateContract());
-            FindClientCommand = new RelayCommand(param => this.findClient());
+            DelContractCommand = new RelayCommand(param => this.delContract());
         }
         #endregion
 
@@ -331,6 +331,8 @@ namespace FeriaDesktop.ViewModel
                     {
                         Contract contract = new Contract();
 
+                        contract.IdContrato = dato.idContrato;
+                        contract.IdUsuario = dato.idUsuario;
                         contract.Dni = dato.dni;
                         string nom = Convert.ToString(dato.nombre);
                         string app1 = dato.apPaterno;
@@ -339,12 +341,8 @@ namespace FeriaDesktop.ViewModel
                         contract.DisplayName = disp;
                         contract.Firmado = dato.firmado;
                         contract.Codigo = dato.codigo;
-                        string fechaini = dato.fechaIni;
-                        fechaini = fechaini.Replace("00:00:00", "");
-                        contract.FechaIni = fechaini;
-                        string fechafin = dato.fechaIni;
-                        fechafin = fechafin.Replace("00:00:00", "");
-                        contract.FechaFin = fechafin;
+                        contract.FechaIni = dato.fechaIni;
+                        contract.FechaFin = dato.fechaFin;
 
                         this.Add(contract);
                     }
@@ -357,10 +355,14 @@ namespace FeriaDesktop.ViewModel
         }
         private async void upContract()
         {
+            
+            //DateTime date = DateTime.ParseExact(this.FechaIni, "M/dd/yyyy hh:mm:ss tt", null);
             var id = this.IdContrato;
 
             var userObject = new
             {
+                idUsuario = this.IdUsuario,
+                codigo = this.Codigo,
                 fechaIni = this.FechaIni,
                 fechaFin = this.FechaFin,
                 firmado = this.Firmado
@@ -369,7 +371,7 @@ namespace FeriaDesktop.ViewModel
 
             var json = JsonConvert.SerializeObject(userObject);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"http://localhost:8080/api/usuario/{id}";//CAMBIAR API
+            var url = $"http://localhost:8080/api/contrato/{id}";
 
             using (HttpClient client = new HttpClient())
             {
@@ -386,65 +388,23 @@ namespace FeriaDesktop.ViewModel
 
         }
 
-        private async void createContract()
+        private async void delContract()
         {
-            var id = this.IdUsuario;
-
-            var url = $"http://localhost:8080/api/usuario/{id}";//CAMBIAR API
-
+            var id = this.IdContrato;
+            
+            var url = $"http://localhost:8080/api/contrato/{id}";
+                
             using (HttpClient client = new HttpClient())
             {
                 var response = await client.DeleteAsync(url);
                 response.EnsureSuccessStatusCode();
                 var res = await response.Content.ReadAsStringAsync();
-                //var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                
                 if (response.IsSuccessStatusCode)
 
-                    MessageBox.Show("Usuario Desactivado!");
+                    MessageBox.Show("Contrato Eliminado!");
                 this.showContracts();
             }
-        }
-
-        private User_info findClient()
-        {
-            //List<User_info> users = new List<User_info>();
-            this.Clear();
-            var url = "http://localhost:8080/api/usuario/3";
-
-            using (HttpClient client = new HttpClient())
-
-            {
-                var response = client.GetAsync(url).Result;
-                Console.WriteLine("antes de status code");
-                response.EnsureSuccessStatusCode();
-                Console.WriteLine("despues de status code");
-                if (response.IsSuccessStatusCode)
-                {
-                    List<User_info> usuarios = new List<User_info>();
-                    var res = response.Content.ReadAsStringAsync().Result;
-                    var userList = JsonConvert.DeserializeObject<dynamic>(res);
-
-                    foreach (var dato in userList)
-                    {
-                        User_info usuario = new User_info();
-
-                        usuario.IdUsuario = dato.idUsuario;
-                        usuario.Nombre = dato.nombre;
-                        usuario.ApPaterno = dato.apPaterno;
-                        usuario.ApMaterno = dato.apMaterno;
-                        usuario.Dni = dato.dni;
-
-                        this.users.Add(usuario);
-                    }
-
-                }
-                else
-                {
-                    //message.Content = $"Server error code {response.StatusCode}";
-                }
-            }
-
-            return this.users.FirstOrDefault(x => x.Dni == this.dni);
         }
 
         private void getCreateContract()

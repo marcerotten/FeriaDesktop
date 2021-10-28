@@ -301,14 +301,14 @@ namespace FeriaDesktop.ViewModel
         {
            this.Nombre = string.Empty;
            this.ApPaterno = string.Empty;
-            this.ApMaterno = string.Empty;
-            this.Dni = string.Empty;
+           this.ApMaterno = string.Empty;
+           this.Dni = string.Empty;
             this.Direccion = string.Empty;
             this.CodPostal = string.Empty;
             this.Correo = string.Empty;
             this.Usuario = string.Empty;
             this.Contrasena = string.Empty;
-            this.Pais.IdPais = 0;
+            //this.Pais.IdPais = 0;
 
         }
     }

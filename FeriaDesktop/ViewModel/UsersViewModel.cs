@@ -16,7 +16,7 @@ namespace FeriaDesktop.ViewModel
     public class UsersViewModel : ObservableCollection<User_info>, INotifyPropertyChanged
     {
         #region Atribute
-        private ICommand upUserCommand;// { get; set; }
+        private ICommand upUserCommand;
         private ICommand delUserCommand;
         private int selectedIndex;
         private int idUsuario;
@@ -548,7 +548,7 @@ namespace FeriaDesktop.ViewModel
                 usuario = this.Usuario,
                 idPais = this.Pais.IdPais,
                 idRol = this.Rol.IdRol,
-                idEstado = this.Estado.IdEstado,
+                //idEstado = this.Estado.IdEstado,
                 terminosCondiciones = this.Terms == "SI" ? 0 : 1
         };
 
@@ -575,8 +575,20 @@ namespace FeriaDesktop.ViewModel
         private async void delUser()
         {
             var id = this.IdUsuario;
+            var estado = this.Estado.IdEstado;
+            string url;
+            string msg;
 
-            var url = $"http://localhost:8080/api/usuario/{id}";
+            if(estado == 1)
+            {
+                url = $"http://localhost:8080/api/usuario/{id}/2";
+                msg = "Usuario Desactivado!";
+            }
+            else
+            {
+                url = $"http://localhost:8080/api/usuario/{id}/1";
+                msg = "Usuario Activado!";
+            }
 
             using (HttpClient client = new HttpClient())
             {
@@ -586,7 +598,7 @@ namespace FeriaDesktop.ViewModel
                 //var userList = JsonConvert.DeserializeObject<dynamic>(res);
                 if (response.IsSuccessStatusCode)
                    
-                    MessageBox.Show("Usuario Desactivado!");
+                    MessageBox.Show(msg);
                     this.showUsers();
             }
         }

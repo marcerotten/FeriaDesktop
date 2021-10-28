@@ -22,7 +22,7 @@ namespace FeriaDesktop.ViewModel
         private int idUsuario;
         private string codigo;
         private string firmado;
-        //private string fechaIni;
+        private string fechaIni;
         private string fechaFin;
         private ObservableCollection<User_info> users = new ObservableCollection<User_info>();
         #endregion
@@ -129,7 +129,7 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("FechaFin");
             }
         }
-        private string fechaIni = null;
+        
         public string FechaIni
         {
             get
@@ -154,6 +154,7 @@ namespace FeriaDesktop.ViewModel
 
         private async void createContract()
         {
+            
             var userObject = new
             {
                 idUsuario = this.IdUsuario,

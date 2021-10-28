@@ -10,7 +10,7 @@
         <viewmodel:CreateContractViewModel x:Key="createContractViewModel"/>
     </Window.Resources>
     <Grid DataContext="{StaticResource createContractViewModel}">
-        <Label Content="CREAR TRANSPORTISTA" HorizontalAlignment="Center" Margin="0,27,0,0" VerticalAlignment="Top" Width="196" FontSize="16"/>
+        <Label Content="CREAR CONTRATO" HorizontalAlignment="Center" Margin="0,27,0,0" VerticalAlignment="Top" Width="196" FontSize="16"/>
         <Button Content="CREAR" Command="{Binding CreateContractCommand}" CommandParameter="Contract" HorizontalAlignment="Center" Margin="0,359,0,0" VerticalAlignment="Top" Height="47" Width="104" RenderTransformOrigin="0.455,4.287"/>
         <Label Content="DNI:" HorizontalAlignment="Left" Margin="144,117,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="240,119,0,0" Text="{Binding Dni}" TextWrapping="Wrap" VerticalAlignment="Top" Width="235"/>
@@ -21,7 +21,7 @@
         <TextBox HorizontalAlignment="Left" Margin="241,189,0,0" Text="{Binding Codigo}" TextWrapping="Wrap" VerticalAlignment="Top" Width="234"/>
         <Label Content="Emisión:" HorizontalAlignment="Left" Margin="141,216,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839"/>
         <Label Content="Vencimiento:" HorizontalAlignment="Left" Margin="141,247,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839"/>
-        <DatePicker Text="{Binding FechaFin}" HorizontalAlignment="Left" Margin="241,247,0,0" VerticalAlignment="Top" Width="235"/>
+        <DatePicker Text="{Binding FechaFin, Mode=TwoWay}" HorizontalAlignment="Left" Margin="241,247,0,0" VerticalAlignment="Top" Width="235"/>
         <DatePicker Text="{Binding FechaIni, Mode=TwoWay}" HorizontalAlignment="Left" Margin="240,217,0,0" VerticalAlignment="Top" Width="234"/>
 
     </Grid>
