@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows;
 using System.Linq;
 using FeriaDesktop.View;
+using System.ComponentModel.DataAnnotations;
 
 namespace FeriaDesktop.ViewModel
 {
@@ -113,6 +114,9 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("IdUsuario");
             }
         }
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Ingrese sólo letras")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Ingrese al menos 2 carácteres")]
         public string Nombre
         {
             get
@@ -130,6 +134,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "Nombre");
                     this.Items[this.SelectedIndexOfCollection].Nombre = value;
                 }
                 else
@@ -139,7 +144,10 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Nombre");
             }
         }
-
+        
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Ingrese sólo letras")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Ingrese al menos 2 carácteres")]
         public string ApPaterno
         {
             get
@@ -157,6 +165,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "ApPaterno");
                     this.Items[this.SelectedIndexOfCollection].ApPaterno = value;
                 }
                 else
@@ -167,6 +176,9 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Ingrese sólo letras")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Ingrese al menos 2 carácteres")]
         public string ApMaterno
         {
             get
@@ -184,6 +196,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "ApMaterno");
                     this.Items[this.SelectedIndexOfCollection].ApMaterno = value;
                 }
                 else
@@ -194,6 +207,8 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "Ingrese al menos 8 carácteres")]
         public string Dni
         {
             get
@@ -211,6 +226,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "Dni");
                     this.Items[this.SelectedIndexOfCollection].Dni = value;
                 }
                 else
@@ -221,6 +237,8 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Ingrese al menos 5 carácteres")]
         public string Direccion
         {
             get
@@ -238,6 +256,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "Direccion");
                     this.Items[this.SelectedIndexOfCollection].Direccion = value;
                 }
                 else
@@ -248,6 +267,8 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string CodPostal
         {
             get
@@ -265,6 +286,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "CodPostal");
                     this.Items[this.SelectedIndexOfCollection].CodPostal = value;
                 }
                 else
@@ -275,6 +297,8 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Ingrese al menos 5 carácteres")]
         public string Correo
         {
             get
@@ -727,6 +751,15 @@ namespace FeriaDesktop.ViewModel
             CreateUser win_menu = new CreateUser();
             win_menu.Show();
         }
+
+        private void ValidateProperty<T>(T value, string name)
+        {
+            Validator.ValidateProperty(value, new ValidationContext(this, null, null)
+            {
+                MemberName = name
+            });
+        }
+
         #endregion
     }
 

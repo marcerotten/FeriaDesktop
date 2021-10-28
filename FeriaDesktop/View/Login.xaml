@@ -32,9 +32,9 @@
                     <Label Name="lblIngreso" Content="Ingreso" HorizontalAlignment="Left" Margin="25,20,0,0" VerticalAlignment="Top" FontSize="28" Foreground="#FF1190CB" FontWeight="Bold"/>
                     <Label Name="lblUser" Content="Usuario" HorizontalAlignment="Left" Margin="150,67,0,0" VerticalAlignment="Top" Foreground="#FF1190CB"/>
                     <Label Name="lblPassword" Content="Contraseña" HorizontalAlignment="Left" Margin="130,98,0,0" VerticalAlignment="Top" Foreground="#FF1190CB"/>
-                    <TextBox Name="txtUser" Text="{Binding User}"  HorizontalAlignment="Left" Height="23" Margin="234,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                    <TextBox Name="txtUser" Text="{Binding User, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}"  HorizontalAlignment="Left" Height="23" Margin="234,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="231"/>
                     <Button Content="Entrar" Command="{Binding GetInCommand}" HorizontalAlignment="Left" Margin="239,139,0,0" VerticalAlignment="Top" Width="110" Height="32" Foreground="#FF1190CB"/>
-                    <components:BindablePasswordBox Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" HorizontalAlignment="Left" Margin="234,98,0,0" VerticalAlignment="Top" Width="120" Height="23">
+                    <components:BindablePasswordBox Password="{Binding Password, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Validation.ErrorTemplate="{StaticResource errorTemplate}" HorizontalAlignment="Left" Margin="234,98,0,0" VerticalAlignment="Top" Width="231" Height="23">
                     </components:BindablePasswordBox>
                 </Grid>
             </Border>
