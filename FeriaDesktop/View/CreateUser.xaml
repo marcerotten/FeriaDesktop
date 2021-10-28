@@ -31,7 +31,6 @@
         <TextBox HorizontalAlignment="Left" Margin="546,238,0,0" Text="{Binding Usuario}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
         <Label Content="Contraseña:" HorizontalAlignment="Left" Margin="133,270,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="240,274,0,0" Text="{Binding Contrasena}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Button Content="CREAR" Command="{Binding CreateUserCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="385,362,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287"/>
-
+        <Button Content="CREAR" Command="{Binding CreateUserCommand}" HorizontalAlignment="Left" Margin="385,362,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287"/>
     </Grid>
 </Window>

@@ -1,9 +1,4 @@
-﻿using FeriaDesktop.Commands;
-using FeriaDesktop.View;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using FeriaDesktop.View;
 using System.Windows.Input;
 
 namespace FeriaDesktop.ViewModel

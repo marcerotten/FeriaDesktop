@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeriaDesktop.View"  xmlns:viewmodel="clr-namespace:FeriaDesktop.ViewModel"
         mc:Ignorable="d"
-        Title="Users" Height="600.362" Width="1272.978">
+        Title="Users" Height="600.362" Width="1372.978">
     <Window.Resources>
         <viewmodel:UsersViewModel x:Key="usersViewModel"/>
     </Window.Resources>
@@ -16,7 +16,7 @@
             <ColumnDefinition Width="45*"/>
         </Grid.ColumnDefinitions>
         <Label Content="INFORMACIÓN DE USUARIOS" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="280" FontSize="16" Grid.Column="1"/>
-        <DataGrid ItemsSource="{StaticResource  ResourceKey=usersViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="501" Margin="334,73,0,0" VerticalAlignment="Top" Width="793" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="2" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=usersViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="501" Margin="318,73,0,0" VerticalAlignment="Top" Width="902" IsReadOnly="True" Grid.Column="1" Grid.ColumnSpan="2" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
         <Button Content="MODIFICAR" Command="{Binding UpUserCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="50,491,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287" Grid.ColumnSpan="2"/>
         <Button Content="CREAR &#xD;&#xA;TRANSPORTISTA" Command="{Binding GetCreateUserCommand}" CommandParameter="CreateUser" HorizontalAlignment="Left" Margin="24,18,0,0" VerticalAlignment="Top" Height="49" Width="103" RenderTransformOrigin="0.528,-0.887"/>
         <Button Content="ACTIVAR/DESACTIVAR" Command="{Binding DelUserCommand}" CommandParameter="Users" HorizontalAlignment="Left" Margin="147,492,0,0" VerticalAlignment="Top" Height="46" Width="142" Grid.Column="1"/>

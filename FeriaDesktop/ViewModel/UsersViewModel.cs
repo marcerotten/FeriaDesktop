@@ -16,6 +16,7 @@ namespace FeriaDesktop.ViewModel
     public class UsersViewModel : ObservableCollection<User_info>, INotifyPropertyChanged
     {
         #region Atribute
+        private ICommand getCreateUserCommand;
         private ICommand upUserCommand;
         private ICommand delUserCommand;
         private int selectedIndex;
@@ -38,7 +39,7 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Properties
-        private ICommand getCreateUserCommand { get; set; }
+        
 
         public ICommand GetCreateUserCommand
         {
