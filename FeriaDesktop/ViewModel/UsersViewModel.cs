@@ -299,6 +299,7 @@ namespace FeriaDesktop.ViewModel
 
         [Required(ErrorMessage = "No debe ir vacío")]
         [StringLength(50, MinimumLength = 5, ErrorMessage = "Ingrese al menos 5 carácteres")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail no valido")]
         public string Correo
         {
             get
@@ -316,6 +317,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "Correo");
                     this.Items[this.SelectedIndexOfCollection].Correo = value;
                 }
                 else

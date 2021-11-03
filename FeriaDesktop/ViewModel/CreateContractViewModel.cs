@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -81,6 +82,8 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("IdUsuario");
             }
         }
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string Codigo
         {
             get
@@ -89,6 +92,7 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "Codigo");
                 codigo = value;
                 OnPropertyChanged("Codigo");
             }
@@ -105,18 +109,7 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Firmado");
             }
         }
-        //public string FechaIni
-        //{
-        //    get
-        //    {
-        //        return fechaIni;
-        //    }
-        //    set
-        //    {
-        //        fechaIni = value;
-        //        OnPropertyChanged("FechaIni");
-        //    }
-        //}
+        [Required(ErrorMessage = "Requerido          ")]
         public string FechaFin
         {
             get
@@ -125,11 +118,13 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "FechaFin");
                 fechaFin = value;
                 OnPropertyChanged("FechaFin");
             }
         }
-        
+
+        [Required(ErrorMessage = "Requerido          ")]
         public string FechaIni
         {
             get
@@ -139,6 +134,7 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "FechaIni");
                 fechaIni = value;
                 OnPropertyChanged("FechaIni");
             }
@@ -187,6 +183,13 @@ namespace FeriaDesktop.ViewModel
             //this.Add(vlClient);
         }
 
+        private void ValidateProperty<T>(T value, string name)
+        {
+            Validator.ValidateProperty(value, new ValidationContext(this, null, null)
+            {
+                MemberName = name
+            });
+        }
 
         private User_info findClient()
         {

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Text;
 using System.Windows;
@@ -52,6 +53,9 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("IdUsuario");
             }
         }
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Ingrese sólo letras")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Ingrese al menos 2 carácteres")]
         public string Nombre
         {
             get
@@ -60,11 +64,15 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "Nombre");
                 nombre = value;
                 OnPropertyChanged("Nombre");
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Ingrese sólo letras")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Ingrese al menos 2 carácteres")]
         public string ApPaterno
         {
             get
@@ -74,11 +82,15 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "ApPaterno");
                 apPaterno = value;
                 OnPropertyChanged("ApPaterno");
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Ingrese sólo letras")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Ingrese al menos 2 carácteres")]
         public string ApMaterno
         {
             get
@@ -88,11 +100,14 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "ApMaterno");
                 apMaterno = value;
                 OnPropertyChanged("ApMaterno");
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "Ingrese al menos 8 carácteres")]
         public string Dni
         {
             get
@@ -102,11 +117,14 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "Dni");
                 dni = value;
                 OnPropertyChanged("Dni");
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Ingrese al menos 5 carácteres")]
         public string Direccion
         {
             get
@@ -115,11 +133,14 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "Direccion");
                 direccion = value;
                 OnPropertyChanged("Direccion");
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string CodPostal
         {
             get
@@ -128,11 +149,15 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "CodPostal");
                 codPostal = value;
                 OnPropertyChanged("CodPostal");
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Ingrese al menos 5 carácteres")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail no valido")]
         public string Correo
         {
             get
@@ -141,10 +166,13 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "Correo");
                 correo = value;
                 OnPropertyChanged("Correo");
             }
         }
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string Usuario
         {
             get
@@ -153,11 +181,14 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "Usuario");
                 usuario = value;
                 OnPropertyChanged("Usuario");
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string Contrasena
         {
             get
@@ -166,6 +197,7 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "Contrasena");
                 contrasena = value;
                 OnPropertyChanged("Contrasena");
             }
@@ -309,6 +341,14 @@ namespace FeriaDesktop.ViewModel
             this.Contrasena = string.Empty;
             //this.Pais.IdPais = 0;
 
+        }
+
+        private void ValidateProperty<T>(T value, string name)
+        {
+            Validator.ValidateProperty(value, new ValidationContext(this, null, null)
+            {
+                MemberName = name
+            });
         }
     }
 }

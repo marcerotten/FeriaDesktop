@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Text;
 using System.Windows;
@@ -123,6 +124,8 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("DisplayName");
             }
         }
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string Codigo
         {
             get
@@ -140,6 +143,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "Codigo");
                     this.Items[this.SelectedIndexOfCollection].Codigo = value;
                 }
                 else
@@ -149,6 +153,7 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Codigo");
             }
         }
+        [Required(ErrorMessage = "Requerido          ")]
         public string FechaIni
         {
             get
@@ -166,6 +171,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "FechaIni");
                     this.Items[this.SelectedIndexOfCollection].FechaIni = value;
                 }
                 else
@@ -175,6 +181,7 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("FechaIni");
             }
         }
+        [Required(ErrorMessage = "Requerido          ")]
         public string FechaFin
         {
             get
@@ -192,6 +199,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "FechaFin");
                     this.Items[this.SelectedIndexOfCollection].FechaFin = value;
                 }
                 else
@@ -409,6 +417,14 @@ namespace FeriaDesktop.ViewModel
         {
             CreateContract win_menu = new CreateContract();
             win_menu.Show();
+        }
+
+        private void ValidateProperty<T>(T value, string name)
+        {
+            Validator.ValidateProperty(value, new ValidationContext(this, null, null)
+            {
+                MemberName = name
+            });
         }
 
 

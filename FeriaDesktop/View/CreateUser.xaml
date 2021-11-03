@@ -11,26 +11,26 @@
     </Window.Resources>
     <Grid  DataContext="{StaticResource createUserViewModel}">
         <Label Content="CREAR TRANSPORTISTA" HorizontalAlignment="Center" Margin="0,27,0,0" VerticalAlignment="Top" Width="196" FontSize="16"/>
-        <Label Content="Nombre:" HorizontalAlignment="Left" Margin="438,117,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="546,121,0,0" Text="{Binding Nombre}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Label Content="Apellido. Paterno:" HorizontalAlignment="Left" Margin="429,153,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839"/>
-        <TextBox HorizontalAlignment="Left" Margin="546,157,0,0" Text="{Binding ApPaterno}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Label Content="Apellido Materno:" HorizontalAlignment="Left" Margin="129,153,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="240,157,0,0" Text="{Binding ApMaterno}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Label Content="DNI:" HorizontalAlignment="Left" Margin="130,117,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.356,0.502"/>
-        <TextBox HorizontalAlignment="Left" Margin="240,121,0,0" Text="{Binding Dni}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Label Content="Dirección:" HorizontalAlignment="Left" Margin="132,189,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="240,198,0,0" Text="{Binding Direccion}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Label Content="Cod Postal:" HorizontalAlignment="Left" Margin="436,193,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="546,197,0,0" Text="{Binding CodPostal}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Label Content="Correo:" HorizontalAlignment="Left" Margin="133,234,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="240,238,0,0" Text="{Binding Correo}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Label Content="Pais:" HorizontalAlignment="Left" Margin="437,272,0,0" VerticalAlignment="Top"/>
-        <ComboBox ItemsSource="{Binding Countries}" DisplayMemberPath="Descripcion" SelectedItem="{Binding Pais}" HorizontalAlignment="Left" Margin="546,274,0,0" VerticalAlignment="Top" Width="160"/>
-        <Label Content="Usuario:" HorizontalAlignment="Left" Margin="437,234,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="546,238,0,0" Text="{Binding Usuario}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
-        <Label Content="Contraseña:" HorizontalAlignment="Left" Margin="133,270,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Margin="240,274,0,0" Text="{Binding Contrasena}" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"/>
+        <Label Content="Nombre:" HorizontalAlignment="Left" Margin="377,115,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="485,119,0,0" Text="{Binding Nombre, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Height="22"/>
+        <Label Content="Apellido. Paterno:" HorizontalAlignment="Left" Margin="368,151,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839"/>
+        <TextBox HorizontalAlignment="Left" Margin="485,155,0,0" Text="{Binding ApPaterno, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Height="22"/>
+        <Label Content="Apellido Materno:" HorizontalAlignment="Left" Margin="22,151,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="133,155,0,0" Text="{Binding ApMaterno, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Height="22"/>
+        <Label Content="DNI:" HorizontalAlignment="Left" Margin="23,115,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.356,0.502"/>
+        <TextBox HorizontalAlignment="Left" Margin="133,119,0,0" Text="{Binding Dni, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Height="22"/>
+        <Label Content="Dirección:" HorizontalAlignment="Left" Margin="25,187,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="133,196,0,0" Text="{Binding Direccion, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Height="21"/>
+        <Label Content="Cod Postal:" HorizontalAlignment="Left" Margin="375,191,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="485,195,0,0" Text="{Binding CodPostal, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Height="22"/>
+        <Label Content="Correo:" HorizontalAlignment="Left" Margin="26,232,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="133,236,0,0" Text="{Binding Correo, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Height="22"/>
+        <Label Content="Pais:" HorizontalAlignment="Left" Margin="376,270,0,0" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding Countries}" DisplayMemberPath="Descripcion" SelectedItem="{Binding Pais}" HorizontalAlignment="Left" Margin="485,272,0,0" VerticalAlignment="Top" Width="211"/>
+        <Label Content="Usuario:" HorizontalAlignment="Left" Margin="376,232,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="485,236,0,0" Text="{Binding Usuario, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Height="22"/>
+        <Label Content="Contraseña:" HorizontalAlignment="Left" Margin="26,268,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="133,272,0,0" Text="{Binding Contrasena, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Height="22"/>
         <Button Content="CREAR" Command="{Binding CreateUserCommand}" HorizontalAlignment="Left" Margin="385,362,0,0" VerticalAlignment="Top" Height="47" Width="103" RenderTransformOrigin="0.455,4.287"/>
     </Grid>
 </Window>
