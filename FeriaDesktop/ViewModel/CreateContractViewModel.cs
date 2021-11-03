@@ -162,7 +162,7 @@ namespace FeriaDesktop.ViewModel
 
             var json = JsonConvert.SerializeObject(userObject);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = "http://localhost:8080/api/contrato";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/contrato";
 
             using (HttpClient client = new HttpClient())
 
@@ -195,7 +195,7 @@ namespace FeriaDesktop.ViewModel
         {
             //List<User_info> users = new List<User_info>();
             //this.Clear();
-            var url = "http://localhost:8080/api/usuario/3";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
 
             using (HttpClient client = new HttpClient())
 

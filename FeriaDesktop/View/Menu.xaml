@@ -7,12 +7,22 @@
         mc:Ignorable="d"
         Title="FERIA VIRTUAL" Height="450" Width="800">
 
-    <Grid>
-        <ContentControl Content="{Binding SelectedViewModel}"/>
+    <Grid RenderTransformOrigin="0.604,0.501">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="299*"/>
+            <RowDefinition Height="135*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="349*"/>
+            <ColumnDefinition Width="451*"/>
+        </Grid.ColumnDefinitions>
+        <ContentControl Content="{Binding SelectedViewModel}" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Button Content="CLIENTES" Command="{Binding GetUsersCommand}" CommandParameter="Users" RenderTransformOrigin="-1.876,0.649" Margin="174,222,40,14"/>
+        <Button Content="CONTRATOS" Command="{Binding GetContractsCommand}" CommandParameter="Contracts" RenderTransformOrigin="-1.876,0.649" Margin="139,222,180,14" Grid.Column="1"/>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="CLIENTES" Height="47" Width="109" Command="{Binding GetUsersCommand}" CommandParameter="Users" RenderTransformOrigin="-1.876,0.649"/>
-            <Button Content="CONTRATOS" Height="47" Width="109" Command="{Binding GetContractsCommand}" CommandParameter="Contracts" RenderTransformOrigin="-1.876,0.649"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="1" Margin="57,0,0,0" Width="0" Grid.RowSpan="2">
+            <!--<Button Content="CLIENTES" Height="47" Width="109" Command="{Binding GetUsersCommand}" CommandParameter="Users" RenderTransformOrigin="-1.876,0.649"/>
+            <Button Content="CONTRATOS" Height="47" Width="109" Command="{Binding GetContractsCommand}" CommandParameter="Contracts" RenderTransformOrigin="-1.876,0.649"/>-->
 
         </StackPanel>
     </Grid>

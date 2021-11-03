@@ -253,7 +253,7 @@ namespace FeriaDesktop.ViewModel
 
         private IEnumerable<Country> GetCountries()
         {
-            var url = "http://localhost:8080/api/pais";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/pais";
 
             using (HttpClient client = new HttpClient())
 
@@ -307,7 +307,7 @@ namespace FeriaDesktop.ViewModel
 
             var json = JsonConvert.SerializeObject(userObject);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = "http://localhost:8080/api/usuario";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario";
 
             using (HttpClient client = new HttpClient())
 

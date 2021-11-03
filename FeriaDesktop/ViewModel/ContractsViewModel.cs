@@ -320,7 +320,7 @@ namespace FeriaDesktop.ViewModel
         private async void showContracts()
         {
             this.Clear();
-            var url = "http://localhost:8080/api/contrato/3";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/contrato/3";
 
             using (HttpClient client = new HttpClient())
 
@@ -377,7 +377,7 @@ namespace FeriaDesktop.ViewModel
 
             var json = JsonConvert.SerializeObject(userObject);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"http://localhost:8080/api/contrato/{id}";
+            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}";
 
             using (HttpClient client = new HttpClient())
             {
@@ -398,7 +398,7 @@ namespace FeriaDesktop.ViewModel
         {
             var id = this.IdContrato;
             
-            var url = $"http://localhost:8080/api/contrato/{id}";
+            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}";
                 
             using (HttpClient client = new HttpClient())
             {

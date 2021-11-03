@@ -509,7 +509,7 @@ namespace FeriaDesktop.ViewModel
         private async void showUsers()
         {
             this.Clear();
-            var url = "http://localhost:8080/api/usuario/3";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
 
             using (HttpClient client = new HttpClient())
 
@@ -581,7 +581,7 @@ namespace FeriaDesktop.ViewModel
 
             var json = JsonConvert.SerializeObject(userObject);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"http://localhost:8080/api/usuario/{id}";
+            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}";
 
             using (HttpClient client = new HttpClient())
             {
@@ -607,12 +607,12 @@ namespace FeriaDesktop.ViewModel
 
             if(estado == 1)
             {
-                url = $"http://localhost:8080/api/usuario/{id}/2";
+                url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}/2";
                 msg = "Usuario Desactivado!";
             }
             else
             {
-                url = $"http://localhost:8080/api/usuario/{id}/1";
+                url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}/1";
                 msg = "Usuario Activado!";
             }
 
@@ -631,7 +631,7 @@ namespace FeriaDesktop.ViewModel
 
         private IEnumerable<Country> GetCountries()
         {
-            var url = "http://localhost:8080/api/pais";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/pais";
 
             using (HttpClient client = new HttpClient())
 
@@ -661,50 +661,41 @@ namespace FeriaDesktop.ViewModel
                     //message.Content = $"Server error code {response.StatusCode}";
                 }
             }
-
-            //this.countries.Add(new Country { Id = 1, Descripcion = "CHILE" });
-            //this.countries.Add(new Country { Id = 2, Descripcion = "ESPAÑA" });
-            //this.countries.Add(new Country { Id = 3, Descripcion = "ITALIA" });
-
             return this.countries;
         }
 
         private IEnumerable<Role> GetRoles()
         {
-            //var url = "http://localhost:8080/api/pais";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/rol";
 
-            //using (HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient())
 
-            //{
-            //    var response = client.GetAsync(url).Result;
-            //    response.EnsureSuccessStatusCode();
+            {
+                var response = client.GetAsync(url).Result;
+                response.EnsureSuccessStatusCode();
 
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        List<Role> roles = new List<Role>();
-            //        var res = response.Content.ReadAsStringAsync().Result;
-            //        var roleList = JsonConvert.DeserializeObject<dynamic>(res);
+                if (response.IsSuccessStatusCode)
+                {
+                    List<Role> roles = new List<Role>();
+                    var res = response.Content.ReadAsStringAsync().Result;
+                    var roleList = JsonConvert.DeserializeObject<dynamic>(res);
 
-            //        foreach (var dato in roleList)
-            //        {
-            //            Role role = new Role();
+                    foreach (var dato in roleList)
+                    {
+                        Role role = new Role();
 
-            //            role.IdRol = dato.idRol;
-            //            role.Descripcion = dato.descripcion;
+                        role.IdRol = dato.idRol;
+                        role.Descripcion = dato.descripcion;
 
-            //            this.roles.Add(role);
-            //        }
+                        this.roles.Add(role);
+                    }
 
-            //    }
-            //    else
-            //    {
-            //        //message.Content = $"Server error code {response.StatusCode}";
-            //    }
-            //}
-
-            this.roles.Add(new Role { IdRol = 1, Descripcion = "ADMIN" });
-            this.roles.Add(new Role { IdRol = 2, Descripcion = "PRODUCTOR" });
-            this.roles.Add(new Role { IdRol = 3, Descripcion = "TRANSPORTISTA" });
+                }
+                else
+                {
+                    //message.Content = $"Server error code {response.StatusCode}";
+                }
+            }
 
             return this.roles;
         }

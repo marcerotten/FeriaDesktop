@@ -22,7 +22,7 @@ namespace FeriaDesktop.Services
             };
             var json = JsonConvert.SerializeObject(userObject);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = "http://localhost:8080/api/auth";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/auth";
 
             using (HttpClient client = new HttpClient())
 
