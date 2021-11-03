@@ -11,12 +11,13 @@ namespace FeriaDesktop.ViewModel
         private string user;
         private string password;
         private ICommand getInCommand;
-        
+
         #endregion
 
         #region Propiedades
-        [Required(ErrorMessage ="No debe ir vacío")]
-        [StringLength(50, MinimumLength=5, ErrorMessage ="Ingrese al menos 5 carácteres")]
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Ingrese al menos 5 carácteres")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail no valido")]
         public string User
         {
             get
