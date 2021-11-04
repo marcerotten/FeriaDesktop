@@ -46,6 +46,8 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "Ingrese al menos 8 carácteres")]
         public string Dni
         {
             get
@@ -109,7 +111,7 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Firmado");
             }
         }
-        [Required(ErrorMessage = "Requerido          ")]
+        //[Required(ErrorMessage = "Requerido          ")]
         public string FechaFin
         {
             get
@@ -124,7 +126,7 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-        [Required(ErrorMessage = "Requerido          ")]
+        //[Required(ErrorMessage = "Requerido          ")]
         public string FechaIni
         {
             get
