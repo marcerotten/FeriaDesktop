@@ -10,14 +10,15 @@ using System.Net.Http;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using Application = FeriaDesktop.Model.Application;
 
 namespace FeriaDesktop.ViewModel
 {
-    public class ApplicationViewModel : ObservableCollection<Contract>, INotifyPropertyChanged
+    public class ApplicationViewModel : ObservableCollection<Model.Application>, INotifyPropertyChanged
     {
         #region Atribute
-        private ICommand upContractCommand;
-        private ICommand delContractCommand;
+        private ICommand upApplicationCommand;
+        private ICommand delApplicationCommand;
         private int selectedIndex;
         private string dni;
         private string displayName;
@@ -31,30 +32,30 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Properties
-        private ICommand getCreateContractCommand { get; set; }
+        private ICommand getCreateApplicationCommand { get; set; }
 
-        public ICommand GetCreateContractCommand
+        public ICommand GetCreateApplicationCommand
         {
-            get { return getCreateContractCommand; }
+            get { return getCreateApplicationCommand; }
             set
             {
-                getCreateContractCommand = value;
+                getCreateApplicationCommand = value;
             }
         }
-        public ICommand UpContractCommand
+        public ICommand UpApplicationCommand
         {
-            get { return upContractCommand; }
+            get { return upApplicationCommand; }
             set
             {
-                upContractCommand = value;
+                upApplicationCommand = value;
             }
         }
         public ICommand DelContractCommand
         {
-            get { return delContractCommand; }
+            get { return delApplicationCommand; }
             set
             {
-                delContractCommand = value;
+                delApplicationCommand = value;
             }
         }
         public int SelectedIndexOfCollection
@@ -297,9 +298,9 @@ namespace FeriaDesktop.ViewModel
         #region Constructors
         public ApplicationViewModel()
         {
-            this.showContracts();
-            UpContractCommand = new RelayCommand(param => this.upContract());
-            GetCreateContractCommand = new RelayCommand(param => this.getCreateContract());
+            this.showApplications();
+            UpApplicationCommand = new RelayCommand(param => this.upApplication());
+            GetCreateApplicationCommand = new RelayCommand(param => this.getCreateContract());
             DelContractCommand = new RelayCommand(param => this.delContract());
         }
         #endregion
@@ -317,7 +318,7 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Methods and functions
-        private async void showContracts()
+        private async void showApplications()
         {
             this.Clear();
             var url = "https://feriavirtual-endpoints.herokuapp.com/api/contrato/3";
@@ -329,28 +330,28 @@ namespace FeriaDesktop.ViewModel
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
                 {
-                    List<Contract> contracts = new List<Contract>();
+                    List<Application> contracts = new List<Application>();
                     var res = response.Content.ReadAsStringAsync().Result;
-                    var contractList = JsonConvert.DeserializeObject<dynamic>(res);
+                    var applicationList = JsonConvert.DeserializeObject<dynamic>(res);
 
-                    foreach (var dato in contractList)
+                    foreach (var dato in applicationList)
                     {
-                        Contract contract = new Contract();
+                        Application application = new Application();
 
-                        contract.IdContrato = dato.idContrato;
-                        contract.IdUsuario = dato.idUsuario;
-                        contract.Dni = dato.dni;
+                        application.IdContrato = dato.idContrato;
+                        application.IdUsuario = dato.idUsuario;
+                        application.Dni = dato.dni;
                         string nom = Convert.ToString(dato.nombre);
                         string app1 = dato.apPaterno;
                         string app2 = dato.apMaterno;
                         string disp = nom + " " + app1 + " " + app2;
-                        contract.DisplayName = disp;
-                        contract.Firmado = dato.firmado;
-                        contract.Codigo = dato.codigo;
-                        contract.FechaIni = dato.fechaIni;
-                        contract.FechaFin = dato.fechaFin;
+                        application.DisplayName = disp;
+                        application.Firmado = dato.firmado;
+                        application.Codigo = dato.codigo;
+                        application.FechaIni = dato.fechaIni;
+                        application.FechaFin = dato.fechaFin;
 
-                        this.Add(contract);
+                        this.Add(application);
                     }
                 }
                 else
@@ -359,7 +360,7 @@ namespace FeriaDesktop.ViewModel
                 }
             }
         }
-        private async void upContract()
+        private async void upApplication()
         {
             
             //DateTime date = DateTime.ParseExact(this.FechaIni, "M/dd/yyyy hh:mm:ss tt", null);
@@ -390,11 +391,11 @@ namespace FeriaDesktop.ViewModel
 
             }
 
-            this.showContracts();
+            this.showApplications();
 
         }
 
-        private async void delContract()
+        private async void delApplication()
         {
             var id = this.IdContrato;
             
@@ -409,11 +410,11 @@ namespace FeriaDesktop.ViewModel
                 if (response.IsSuccessStatusCode)
 
                     MessageBox.Show("Contrato Eliminado!");
-                this.showContracts();
+                this.showApplications();
             }
         }
 
-        private void getCreateContract()
+        private void getCreateContract() //ver si aplica modificacion para Solicitudes
         {
             CreateContract win_menu = new CreateContract();
             win_menu.Show();
