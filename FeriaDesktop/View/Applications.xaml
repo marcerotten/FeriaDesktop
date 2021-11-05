@@ -7,18 +7,17 @@
         mc:Ignorable="d"
         Title="Contracts" Height="600.362" Width="1150.978">
     <Window.Resources>
-        <viewmodel:ContractsViewModel x:Key="contractsViewModel"/>
+        <viewmodel:ContractsViewModel x:Key="applicationViewModel"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource contractsViewModel}" Margin="0,0,-35,4">
+    <Grid DataContext="{StaticResource applicationViewModel}" Margin="0,0,-35,4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="55*"/>
             <ColumnDefinition Width="434*"/>
             <ColumnDefinition Width="45*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="INFORMACIÓN DE SOLICITUDES" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
-        <DataGrid ItemsSource="{StaticResource  ResourceKey=contractsViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="352" Margin="318,76,0,0" VerticalAlignment="Top" Width="621" IsReadOnly="True" Grid.Column="1" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
-        <Button Content="MODIFICAR" Command="{Binding UpContractCommand}" HorizontalAlignment="Left" Margin="13,374,0,0" VerticalAlignment="Top" Height="50" Width="103" RenderTransformOrigin="0.455,4.287"/>
-        <Label Content="PRODUCTO:" HorizontalAlignment="Left" Margin="13,118,0,0" VerticalAlignment="Top"/>
+        <Label Content="INFORMACIÓN DE CONTRATOS" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=applicationViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="352" Margin="404,76,0,0" VerticalAlignment="Top" Width="550" IsReadOnly="True" Grid.Column="1" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
+        <Label Content="DNI:" HorizontalAlignment="Left" Margin="13,118,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="16,122,0,0" Text="{Binding Dni}" TextWrapping="Wrap" VerticalAlignment="Top" Width="264" Grid.Column="1" IsEnabled="False" Height="23"/>
         <Label Content="Cliente:" HorizontalAlignment="Left" Margin="13,158,0,0" VerticalAlignment="Top"/>
         <TextBox Grid.Column="1" HorizontalAlignment="Left" Text="{Binding DisplayName}" Margin="16,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="264" IsEnabled="False" Height="23"/>
@@ -28,8 +27,8 @@
         <Label Content="Vencimiento:" HorizontalAlignment="Left" Margin="13,251,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839" Grid.ColumnSpan="2"/>
         <DatePicker Grid.Column="1" Text="{Binding FechaFin, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" HorizontalAlignment="Left" Margin="16,251,0,0" VerticalAlignment="Top" Width="264"/>
         <DatePicker Grid.Column="1" Text="{Binding FechaIni, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" HorizontalAlignment="Left" Margin="17,221,0,0" VerticalAlignment="Top" Width="263"/>
-        <Button Content="    CREAR&#xA; CONTRATO"  Command="{Binding GetCreateContractCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="13,18,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287"/>
-        <Button Content="  ELIMINAR&#xA; CONTRATO"  Command="{Binding DelContractCommand}" HorizontalAlignment="Left" Margin="187,374,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
+        <Button Content="    CREAR&#xA; SOLICITUD"  Command="{Binding GetCreateContractCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="17,374,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
+        <Button Content="  ELIMINAR&#xA; SOLICITUD"  Command="{Binding DelContractCommand}" HorizontalAlignment="Left" Margin="187,374,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
 
     </Grid>
 </Window>
