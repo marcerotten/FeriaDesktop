@@ -702,36 +702,6 @@ namespace FeriaDesktop.ViewModel
 
         private IEnumerable<Status> GetStatus()
         {
-            //var url = "http://localhost:8080/api/pais";
-
-            //using (HttpClient client = new HttpClient())
-
-            //{
-            //    var response = client.GetAsync(url).Result;
-            //    response.EnsureSuccessStatusCode();
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        List<Role> roles = new List<Role>();
-            //        var res = response.Content.ReadAsStringAsync().Result;
-            //        var roleList = JsonConvert.DeserializeObject<dynamic>(res);
-
-            //        foreach (var dato in roleList)
-            //        {
-            //            Role role = new Role();
-
-            //            role.IdRol = dato.idRol;
-            //            role.Descripcion = dato.descripcion;
-
-            //            this.roles.Add(role);
-            //        }
-
-            //    }
-            //    else
-            //    {
-            //        //message.Content = $"Server error code {response.StatusCode}";
-            //    }
-            //}
 
             this.statuses.Add(new Status { IdEstado = 1, Descripcion = "ACTIVADO" });
             this.statuses.Add(new Status { IdEstado = 2, Descripcion = "DESACTIVADO" });

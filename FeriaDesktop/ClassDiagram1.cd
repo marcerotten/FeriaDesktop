@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="FeriaDesktop.Model.Contract">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEBEAQBARAEAAAAAAAAAAAAAAAAAAAAACAIABAgCAA=</HashCode>
+      <FileName>Model\Contract.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeriaDesktop.Model.Country" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAACAAAIAEAAAABgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Country.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.169" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.Model.Role" BaseTypeListCollapsed="true">
+    <Position X="6" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAQIAEAAAABgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Role.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.Model.Status" BaseTypeListCollapsed="true">
+    <Position X="4.25" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAIAEAAAABgAAAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>Model\Status.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.Model.Terms" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAEAAAABgACAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>Model\Terms.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.Model.User">
+    <Position X="4" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>CAAAAEAJABAEIECAAAACAAAAAAAAAASAAAAAAAQAAAA=</HashCode>
+      <FileName>Model\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeriaDesktop.Model.User_info">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAEACAQBQAwEIECEACIAgAACAIAAAgSAAAIEAAQgAAg=</HashCode>
+      <FileName>Model\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeriaDesktop.ViewModel.ContractsViewModel" BaseTypeListCollapsed="true">
+    <Position X="11.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>MQUBkCQBARAEAAgAYAAAAAAAwAEAgAAAICQIABAkCAA=</HashCode>
+      <FileName>ViewModel\ContractsViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.ViewModel.CreateContractViewModel" BaseTypeListCollapsed="true">
+    <Position X="14" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAEBEAQBQRAEAAAAAAAAAgAAQAGAAAAAACAIAAAwCAA=</HashCode>
+      <FileName>ViewModel\CreateContractViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.ViewModel.CreateUserViewModel">
+    <Position X="18.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BAEACAQBQAwEIELEICACgQAAgIkAgASAAAAFABQAAAg=</HashCode>
+      <FileName>ViewModel\CreateUserViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeriaDesktop.ViewModel.LoginViewModel">
+    <Position X="9.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAABAAAAAIAAAAAAAgAUAAAAGAAAAAgAAAQA=</HashCode>
+      <FileName>ViewModel\LoginViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeriaDesktop.ViewModel.MenuViewModel">
+    <Position X="9.25" Y="4.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAABAIAAIQAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\MenuViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FeriaDesktop.ViewModel.UsersViewModel" BaseTypeListCollapsed="true">
+    <Position X="16.25" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>BQEAiAQBQAwEIECEICQCgQAGgoEGggSAAAAEADQACAg=</HashCode>
+      <FileName>ViewModel\UsersViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.View.Contracts" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="8.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>View\Contracts.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.View.CreateContract" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\CreateContract.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.View.CreateUser" BaseTypeListCollapsed="true">
+    <Position X="4" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\CreateUser.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.View.Login" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\Login.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.View.Menu" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\Menu.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.View.Users" BaseTypeListCollapsed="true">
+    <Position X="5" Y="8.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <FileName>View\Users.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="FeriaDesktop.Services.LoginService" BaseTypeListCollapsed="true">
+    <Position X="9" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\LoginService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="FeriaDesktop.Services.Interfaces.ILoginService">
+    <Position X="8" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\ILoginService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="FeriaDesktop.Services.Interfaces.IUsersService">
+    <Position X="10" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\Interfaces\IUsersService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
