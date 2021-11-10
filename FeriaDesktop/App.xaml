@@ -16,8 +16,8 @@
                 </Grid>
             </Border>
         </ControlTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:UsersViewModel}">
+        <!--<DataTemplate DataType="{x:Type viewmodels:UsersViewModel}">
             <views:Users/>
-        </DataTemplate>
+        </DataTemplate>-->
     </Application.Resources>
 </Application>
