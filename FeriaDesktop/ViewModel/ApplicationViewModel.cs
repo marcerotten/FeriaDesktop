@@ -29,10 +29,9 @@ namespace FeriaDesktop.ViewModel
         public int firmado;
         public int idUsuario;
         public int idSolProd;
-
-        public int idTipoSol;
-        public int idEstadoSol
-        private ObservableCollection<User_info> users = new ObservableCollection<User_info>();
+         public int idTipoSol;
+        public int idEstadoSol;
+       // private ObservableCollection<User_info> users = new ObservableCollection<User_info>();
 
         
         #endregion
@@ -74,12 +73,13 @@ namespace FeriaDesktop.ViewModel
 
                 //OnPropertyChanged("Dni");
                 OnPropertyChanged("IdSolProd");
-                OnPropertyChanged("Codigo");
                 OnPropertyChanged("IdUsuario");
-                OnPropertyChanged("FechaIni");
-                OnPropertyChanged("FechaFin");
+                OnPropertyChanged("IdTipoSol");
+                OnPropertyChanged("IdEstadoSol");
 
-                
+                  
+
+
             }
         }
         public string Dni
@@ -389,7 +389,7 @@ namespace FeriaDesktop.ViewModel
             this.showApplications();
             UpApplicationCommand = new RelayCommand(param => this.upApplication());
             GetCreateApplicationCommand = new RelayCommand(param => this.getCreateContract());
-            DelContractCommand = new RelayCommand(param => this.delContract());
+            DelContractCommand = new RelayCommand(param => this.delApplication());
         }
         #endregion
 
