@@ -4,20 +4,20 @@ using System.Xml.Serialization;
 
 namespace FeriaDesktop.Model
 {
-    public class Country : INotifyPropertyChanged
+    public class Terms : INotifyPropertyChanged
     {
-        private int idPais;
+        private int idTerms;
         private string descripcion;
-        public int IdPais
+        public int IdTerms
         {
             get
             {
-                return idPais;
+                return idTerms;
             }
             set
             {
-                idPais = value;
-                OnPropertyChanged("IdPais");
+                idTerms = value;
+                OnPropertyChanged("IdTerms");
             }
         }
         [XmlAttribute("Descripcion")]

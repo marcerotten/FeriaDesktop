@@ -5,11 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeriaDesktop.View"  xmlns:viewmodel="clr-namespace:FeriaDesktop.ViewModel"
         mc:Ignorable="d"
-        Title="Contracts" Height="450" Width="800">
+        Title="Contracts" Height="600.362" Width="1150.978">
     <Window.Resources>
         <viewmodel:ContractsViewModel x:Key="contractsViewModel"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource contractsViewModel}">
-        
+    <Grid DataContext="{StaticResource contractsViewModel}" Margin="0,0,-35,4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="434*"/>
+            <ColumnDefinition Width="45*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="INFORMACIÓN DE CONTRATOS" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=contractsViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="352" Margin="392,72,0,0" VerticalAlignment="Top" Width="550" IsReadOnly="True" Grid.Column="1" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
+        <Button Content="MODIFICAR" Command="{Binding UpContractCommand}" HorizontalAlignment="Left" Margin="13,374,0,0" VerticalAlignment="Top" Height="50" Width="103" RenderTransformOrigin="0.455,4.287"/>
+        <Label Content="DNI:" HorizontalAlignment="Left" Margin="13,118,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="16,122,0,0" Text="{Binding Dni}" TextWrapping="Wrap" VerticalAlignment="Top" Width="264" Grid.Column="1" IsEnabled="False" Height="23"/>
+        <Label Content="Cliente:" HorizontalAlignment="Left" Margin="13,158,0,0" VerticalAlignment="Top"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Text="{Binding DisplayName}" Margin="16,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="264" IsEnabled="False" Height="23"/>
+        <Label Content="Código:" HorizontalAlignment="Left" Margin="10,189,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.352,0.31"/>
+        <TextBox HorizontalAlignment="Left" Margin="17,193,0,0" Text="{Binding Codigo, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="263" Grid.Column="1" Height="23"/>
+        <Label Content="Emisión:" HorizontalAlignment="Left" Margin="13,220,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839"/>
+        <Label Content="Vencimiento:" HorizontalAlignment="Left" Margin="13,251,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839" Grid.ColumnSpan="2"/>
+        <DatePicker Grid.Column="1" Text="{Binding FechaFin, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" HorizontalAlignment="Left" Margin="16,251,0,0" VerticalAlignment="Top" Width="264"/>
+        <DatePicker Grid.Column="1" Text="{Binding FechaIni, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" HorizontalAlignment="Left" Margin="17,221,0,0" VerticalAlignment="Top" Width="263"/>
+        <Button Content="    CREAR&#xA; CONTRATO"  Command="{Binding GetCreateContractCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="13,18,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287"/>
+        <Button Content="  ELIMINAR&#xA; CONTRATO"  Command="{Binding DelContractCommand}" HorizontalAlignment="Left" Margin="187,374,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
+
     </Grid>
 </Window>

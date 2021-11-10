@@ -4,8 +4,18 @@
              xmlns:local="clr-namespace:FeriaDesktop"
              xmlns:views="clr-namespace:FeriaDesktop.View"
              xmlns:viewmodels="clr-namespace:FeriaDesktop.ViewModel"
-             StartupUri="View/Menu.xaml">
+             StartupUri="View/Login.xaml">
     <Application.Resources>
+        <ControlTemplate x:Key="errorTemplate">
+            <Border BorderBrush="OrangeRed" BorderThickness="2">
+                <Grid>
+                    <AdornedElementPlaceholder/>
+                    <TextBlock Text="{Binding [0].ErrorContent}" Foreground="OrangeRed"
+                               VerticalAlignment="Center" HorizontalAlignment="Right"
+                               Margin="0,0,4,0"/>
+                </Grid>
+            </Border>
+        </ControlTemplate>
         <DataTemplate DataType="{x:Type viewmodels:UsersViewModel}">
             <views:Users/>
         </DataTemplate>

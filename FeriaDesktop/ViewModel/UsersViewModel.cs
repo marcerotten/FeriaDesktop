@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -9,13 +8,16 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows;
 using System.Linq;
+using FeriaDesktop.View;
+using System.ComponentModel.DataAnnotations;
 
 namespace FeriaDesktop.ViewModel
 {
     public class UsersViewModel : ObservableCollection<User_info>, INotifyPropertyChanged
     {
         #region Atribute
-        private ICommand upUserCommand;// { get; set; }
+        private ICommand getCreateUserCommand;
+        private ICommand upUserCommand;
         private ICommand delUserCommand;
         private int selectedIndex;
         private int idUsuario;
@@ -26,16 +28,27 @@ namespace FeriaDesktop.ViewModel
         private string direccion;
         private string codPostal;
         private string correo;
+        private string usuario;
         private Country pais;
         private Role rol;
         private Status estado;
-        private int terms;
+        private string terms;
         private ObservableCollection<Role> roles = new ObservableCollection<Role>();
         private ObservableCollection<Country> countries = new ObservableCollection<Country>();
         private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
         #endregion
 
         #region Properties
+        
+
+        public ICommand GetCreateUserCommand
+        {
+            get { return getCreateUserCommand; }
+            set
+            {
+                getCreateUserCommand = value;
+            }
+        }
         public ICommand UpUserCommand
         {
             get { return upUserCommand; }
@@ -72,7 +85,6 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Pais");
                 OnPropertyChanged("Rol");
                 OnPropertyChanged("Estado");
-                OnPropertyChanged("Terms");
             }
         }
 
@@ -102,6 +114,9 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("IdUsuario");
             }
         }
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Ingrese sólo letras")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Ingrese al menos 2 carácteres")]
         public string Nombre
         {
             get
@@ -119,6 +134,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "Nombre");
                     this.Items[this.SelectedIndexOfCollection].Nombre = value;
                 }
                 else
@@ -128,7 +144,10 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Nombre");
             }
         }
-
+        
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Ingrese sólo letras")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Ingrese al menos 2 carácteres")]
         public string ApPaterno
         {
             get
@@ -146,6 +165,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "ApPaterno");
                     this.Items[this.SelectedIndexOfCollection].ApPaterno = value;
                 }
                 else
@@ -156,6 +176,9 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Ingrese sólo letras")]
+        [StringLength(50, MinimumLength = 2, ErrorMessage = "Ingrese al menos 2 carácteres")]
         public string ApMaterno
         {
             get
@@ -173,6 +196,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "ApMaterno");
                     this.Items[this.SelectedIndexOfCollection].ApMaterno = value;
                 }
                 else
@@ -183,6 +207,8 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 8, ErrorMessage = "Ingrese al menos 8 carácteres")]
         public string Dni
         {
             get
@@ -200,6 +226,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "Dni");
                     this.Items[this.SelectedIndexOfCollection].Dni = value;
                 }
                 else
@@ -210,6 +237,8 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Ingrese al menos 5 carácteres")]
         public string Direccion
         {
             get
@@ -227,6 +256,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "Direccion");
                     this.Items[this.SelectedIndexOfCollection].Direccion = value;
                 }
                 else
@@ -237,6 +267,8 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string CodPostal
         {
             get
@@ -254,6 +286,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "CodPostal");
                     this.Items[this.SelectedIndexOfCollection].CodPostal = value;
                 }
                 else
@@ -264,6 +297,9 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        [Required(ErrorMessage = "No debe ir vacío")]
+        [StringLength(50, MinimumLength = 5, ErrorMessage = "Ingrese al menos 5 carácteres")]
+        [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail no valido")]
         public string Correo
         {
             get
@@ -281,6 +317,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
+                    ValidateProperty(value, "Correo");
                     this.Items[this.SelectedIndexOfCollection].Correo = value;
                 }
                 else
@@ -290,7 +327,32 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Correo");
             }
         }
-
+        public string Usuario
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].Usuario;
+                }
+                else
+                {
+                    return usuario;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].Usuario = value;
+                }
+                else
+                {
+                    usuario = value;
+                }
+                OnPropertyChanged("Usuario");
+            }
+        }
         public Country Pais
         {
             get
@@ -374,7 +436,7 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-        public int Terms
+        public string Terms
         {
             get
             {
@@ -415,6 +477,7 @@ namespace FeriaDesktop.ViewModel
         {
             get { return statuses; }
         }
+
         #endregion
 
         #region Constructors
@@ -426,6 +489,7 @@ namespace FeriaDesktop.ViewModel
             this.showUsers();
             UpUserCommand = new RelayCommand(param => this.upUser());
             DelUserCommand = new RelayCommand(param => this.delUser());
+            GetCreateUserCommand = new RelayCommand(param => this.getCreateUsers());
         }
         #endregion
 
@@ -445,15 +509,13 @@ namespace FeriaDesktop.ViewModel
         private async void showUsers()
         {
             this.Clear();
-            var url = "http://localhost:8080/api/usuario/3";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
 
             using (HttpClient client = new HttpClient())
 
             {
                 var response = client.GetAsync(url).Result;
-                Console.WriteLine("antes de status code");
                 response.EnsureSuccessStatusCode();
-                Console.WriteLine("despues de status code");
                 if (response.IsSuccessStatusCode)
                 {
                     List<User_info> usuarios = new List<User_info>();
@@ -472,8 +534,9 @@ namespace FeriaDesktop.ViewModel
                         usuario.Direccion = dato.direccion;
                         usuario.CodPostal = dato.codPostal;
                         usuario.Correo = dato.correo;
+                        usuario.Usuario = dato.usuario;
                         string pais = dato.pais;
-                        usuario.Pais = countries.FirstOrDefault(x => x.Descripcion == pais);//pais.Replace("{", "").Replace("}", "")
+                        usuario.Pais = countries.FirstOrDefault(x => x.Descripcion == pais);
                         usuario.PaisName = usuario.Pais.Descripcion;
                         string rol = dato.rol;
                         usuario.Rol = roles.FirstOrDefault(x => x.Descripcion.ToUpper() == rol.ToUpper());
@@ -481,6 +544,7 @@ namespace FeriaDesktop.ViewModel
                         string estado = dato.estado;
                         usuario.Estado = statuses.FirstOrDefault(x => x.Descripcion.ToUpper() == estado.ToUpper());
                         usuario.EstadoName = usuario.Estado.Descripcion;
+                        usuario.Terms = dato.terminosCondiciones == 0 ? "SI":"NO";
 
                         this.Add(usuario);
                     }
@@ -507,18 +571,17 @@ namespace FeriaDesktop.ViewModel
                 direccion = this.Direccion,
                 codPostal = this.CodPostal,
                 correo = this.Correo,
-                usuario = "usertest2",
-                contrasena = "test123",
+                usuario = this.Usuario,
                 idPais = this.Pais.IdPais,
-                idRol = 1,
-                idEstado = 1,
-                terms = this.Terms
-            };
+                idRol = this.Rol.IdRol,
+                //idEstado = this.Estado.IdEstado,
+                terminosCondiciones = this.Terms == "SI" ? 0 : 1
+        };
 
 
             var json = JsonConvert.SerializeObject(userObject);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"http://localhost:8080/api/usuario/{id}";
+            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}";
 
             using (HttpClient client = new HttpClient())
             {
@@ -526,6 +589,9 @@ namespace FeriaDesktop.ViewModel
                 response.EnsureSuccessStatusCode();
                 var res = await response.Content.ReadAsStringAsync();
                 var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                string message = userList.msg;
+                MessageBox.Show(message);
+             
             }
 
             this.showUsers();
@@ -535,8 +601,20 @@ namespace FeriaDesktop.ViewModel
         private async void delUser()
         {
             var id = this.IdUsuario;
+            var estado = this.Estado.IdEstado;
+            string url;
+            string msg;
 
-            var url = $"http://localhost:8080/api/usuario/{id}";
+            if(estado == 1)
+            {
+                url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}/2";
+                msg = "Usuario Desactivado!";
+            }
+            else
+            {
+                url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}/1";
+                msg = "Usuario Activado!";
+            }
 
             using (HttpClient client = new HttpClient())
             {
@@ -546,14 +624,14 @@ namespace FeriaDesktop.ViewModel
                 //var userList = JsonConvert.DeserializeObject<dynamic>(res);
                 if (response.IsSuccessStatusCode)
                    
-                    MessageBox.Show("Usuario Desactivado!");
+                    MessageBox.Show(msg);
                     this.showUsers();
             }
         }
 
         private IEnumerable<Country> GetCountries()
         {
-            var url = "http://localhost:8080/api/pais";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/pais";
 
             using (HttpClient client = new HttpClient())
 
@@ -583,91 +661,68 @@ namespace FeriaDesktop.ViewModel
                     //message.Content = $"Server error code {response.StatusCode}";
                 }
             }
-
-            //this.countries.Add(new Country { Id = 1, Descripcion = "CHILE" });
-            //this.countries.Add(new Country { Id = 2, Descripcion = "ESPAÑA" });
-            //this.countries.Add(new Country { Id = 3, Descripcion = "ITALIA" });
-
             return this.countries;
         }
 
         private IEnumerable<Role> GetRoles()
         {
-            //var url = "http://localhost:8080/api/pais";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/rol";
 
-            //using (HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient())
 
-            //{
-            //    var response = client.GetAsync(url).Result;
-            //    response.EnsureSuccessStatusCode();
+            {
+                var response = client.GetAsync(url).Result;
+                response.EnsureSuccessStatusCode();
 
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        List<Role> roles = new List<Role>();
-            //        var res = response.Content.ReadAsStringAsync().Result;
-            //        var roleList = JsonConvert.DeserializeObject<dynamic>(res);
+                if (response.IsSuccessStatusCode)
+                {
+                    List<Role> roles = new List<Role>();
+                    var res = response.Content.ReadAsStringAsync().Result;
+                    var roleList = JsonConvert.DeserializeObject<dynamic>(res);
 
-            //        foreach (var dato in roleList)
-            //        {
-            //            Role role = new Role();
+                    foreach (var dato in roleList)
+                    {
+                        Role role = new Role();
 
-            //            role.IdRol = dato.idRol;
-            //            role.Descripcion = dato.descripcion;
+                        role.IdRol = dato.idRol;
+                        role.Descripcion = dato.descripcion;
 
-            //            this.roles.Add(role);
-            //        }
+                        this.roles.Add(role);
+                    }
 
-            //    }
-            //    else
-            //    {
-            //        //message.Content = $"Server error code {response.StatusCode}";
-            //    }
-            //}
-
-            this.roles.Add(new Role { IdRol = 1, Descripcion = "ADMIN" });
-            this.roles.Add(new Role { IdRol = 2, Descripcion = "PRODUCTOR" });
+                }
+                else
+                {
+                    //message.Content = $"Server error code {response.StatusCode}";
+                }
+            }
 
             return this.roles;
         }
 
         private IEnumerable<Status> GetStatus()
         {
-            //var url = "http://localhost:8080/api/pais";
-
-            //using (HttpClient client = new HttpClient())
-
-            //{
-            //    var response = client.GetAsync(url).Result;
-            //    response.EnsureSuccessStatusCode();
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        List<Role> roles = new List<Role>();
-            //        var res = response.Content.ReadAsStringAsync().Result;
-            //        var roleList = JsonConvert.DeserializeObject<dynamic>(res);
-
-            //        foreach (var dato in roleList)
-            //        {
-            //            Role role = new Role();
-
-            //            role.IdRol = dato.idRol;
-            //            role.Descripcion = dato.descripcion;
-
-            //            this.roles.Add(role);
-            //        }
-
-            //    }
-            //    else
-            //    {
-            //        //message.Content = $"Server error code {response.StatusCode}";
-            //    }
-            //}
 
             this.statuses.Add(new Status { IdEstado = 1, Descripcion = "ACTIVADO" });
             this.statuses.Add(new Status { IdEstado = 2, Descripcion = "DESACTIVADO" });
 
             return this.statuses;
         }
+
+        private void getCreateUsers()
+        {
+            CreateUser win_menu = new CreateUser();
+            win_menu.Show();
+        }
+
+        private void ValidateProperty<T>(T value, string name)
+        {
+            Validator.ValidateProperty(value, new ValidationContext(this, null, null)
+            {
+                MemberName = name
+            });
+        }
+
         #endregion
     }
 }

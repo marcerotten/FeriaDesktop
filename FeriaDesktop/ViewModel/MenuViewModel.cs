@@ -1,9 +1,4 @@
-﻿using FeriaDesktop.Commands;
-using FeriaDesktop.View;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using FeriaDesktop.View;
 using System.Windows.Input;
 
 namespace FeriaDesktop.ViewModel
@@ -12,7 +7,7 @@ namespace FeriaDesktop.ViewModel
     {
         
         private ICommand getUsersCommand { get; set; }
-        private ICommand geContractsCommand { get; set; }
+        private ICommand getContractsCommand { get; set; }
 
         public ICommand GetUsersCommand
         {
@@ -24,10 +19,10 @@ namespace FeriaDesktop.ViewModel
         }
         public ICommand GetContractsCommand
         {
-            get { return geContractsCommand; }
+            get { return getContractsCommand; }
             set
             {
-                geContractsCommand = value;
+                getContractsCommand = value;
             }
         }
 

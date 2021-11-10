@@ -22,7 +22,7 @@ namespace FeriaDesktop.Services
             };
             var json = JsonConvert.SerializeObject(userObject);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = "http://localhost:8080/api/auth";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/auth";
 
             using (HttpClient client = new HttpClient())
 
@@ -34,13 +34,22 @@ namespace FeriaDesktop.Services
 
                 //validacion mientras la api responde el cod correcto
                 var usuario_info = userList.idUsuario.ToObject<int>();
+                var usuario_rol = userList.idRol.ToObject<int>();
 
                 //if (response.IsSuccessStatusCode)
                 if (usuario_info != 0)
                 {
+                    if(usuario_rol == 1)
+                    {
+                        Menu win_menu = new Menu();
+                        win_menu.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No es usuario administrador!");
+                    }
                     //message.Content = await response.Content.ReadAsStringAsync();
-                    Menu win_menu = new Menu();
-                    win_menu.Show();
+                    
                 }
                 else
                 {

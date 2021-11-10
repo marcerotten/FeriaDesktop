@@ -1,0 +1,29 @@
+﻿<Window x:Class="FeriaDesktop.View.CreateContract"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FeriaDesktop.View"  xmlns:viewmodel="clr-namespace:FeriaDesktop.ViewModel"
+        mc:Ignorable="d"
+        Title="CreateContract" Height="450" Width="800">
+    <Window.Resources>
+        <viewmodel:CreateContractViewModel x:Key="createContractViewModel"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource createContractViewModel}">
+        <Label Content="CREAR CONTRATO" HorizontalAlignment="Center" Margin="0,27,0,0" VerticalAlignment="Top" Width="196" FontSize="16"/>
+        <Button Content="CREAR" Command="{Binding CreateContractCommand}" CommandParameter="Contract" HorizontalAlignment="Center" Margin="0,359,0,0" VerticalAlignment="Top" Height="47" Width="104" RenderTransformOrigin="0.455,4.287"/>
+        <Label Content="DNI:" HorizontalAlignment="Left" Margin="144,117,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="240,119,0,0" Text="{Binding Dni}" TextWrapping="Wrap" VerticalAlignment="Top" Width="235" Height="23"/>
+        <Button Content="Buscar"  Command="{Binding FindClientCommand}" HorizontalAlignment="Left" Margin="516,117,0,0" VerticalAlignment="Top" Width="52" Height="23"/>
+        <Label Content="Cliente:" HorizontalAlignment="Left" Margin="147,154,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Text="{Binding DisplayName}" Margin="240,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="235" IsEnabled="False" Height="23"/>
+        <Label Content="Código:" HorizontalAlignment="Left" Margin="144,185,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.352,0.31"/>
+        <TextBox HorizontalAlignment="Left" Margin="241,185,0,0" Text="{Binding Codigo, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="234" Height="23"/>
+        <Label Content="Emisión:" HorizontalAlignment="Left" Margin="141,216,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839"/>
+        <Label Content="Vencimiento:" HorizontalAlignment="Left" Margin="141,247,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.613,-1.839"/>
+        <DatePicker DisplayDateStart="{x:Static sys:DateTime.Today}" Text="{Binding FechaFin, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" HorizontalAlignment="Left" Margin="241,247,0,0" VerticalAlignment="Top" Width="235"/>
+        <DatePicker DisplayDateEnd="{x:Static sys:DateTime.Today}" Text="{Binding FechaIni, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" HorizontalAlignment="Left" Margin="240,217,0,0" VerticalAlignment="Top" Width="234"/>
+
+    </Grid>
+</Window>
