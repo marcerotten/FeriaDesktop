@@ -28,7 +28,13 @@ namespace FeriaDesktop.ViewModel
         public int idContrato;
         public int firmado;
         public int idUsuario;
+        public int idSolProd;
+
+        public int idTipoSol;
+        public int idEstadoSol
         private ObservableCollection<User_info> users = new ObservableCollection<User_info>();
+
+        
         #endregion
 
         #region Properties
@@ -66,11 +72,14 @@ namespace FeriaDesktop.ViewModel
                 selectedIndex = value;
                 OnPropertyChanged("SelectedIndexOfCollection");
 
-                OnPropertyChanged("Dni");
+                //OnPropertyChanged("Dni");
+                OnPropertyChanged("IdSolProd");
                 OnPropertyChanged("Codigo");
-                OnPropertyChanged("DisplayName");
+                OnPropertyChanged("IdUsuario");
                 OnPropertyChanged("FechaIni");
                 OnPropertyChanged("FechaFin");
+
+                
             }
         }
         public string Dni
@@ -288,6 +297,85 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("IdUsuario");
             }
         }
+
+        public int IdSolProd
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].IdSolProd;
+                }
+                else
+                {
+                    return idSolProd;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].IdSolProd = value;
+                }
+                else
+                {
+                    idSolProd = value;
+                }
+                OnPropertyChanged("IdSolProd");
+            }
+        }
+        public int IdTipoSol
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].IdTipoSol;
+                }
+                else
+                {
+                    return idTipoSol;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].IdTipoSol = value;
+                }
+                else
+                {
+                    idTipoSol = value;
+                }
+                OnPropertyChanged("IdTipoSol");
+            }
+        }
+        public int IdEstadoSol
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].IdEstadoSol;
+                }
+                else
+                {
+                    return idEstadoSol;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].IdEstadoSol = value;
+                }
+                else
+                {
+                    idEstadoSol = value;
+                }
+                OnPropertyChanged("IdEstadoSol");
+            }
+        }
         public IEnumerable<User_info> Users
         {
             get { return users; }
@@ -321,35 +409,45 @@ namespace FeriaDesktop.ViewModel
         private async void showApplications()
         {
             this.Clear();
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/contrato/3";
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/2";  /*//https://feriavirtual-endpoints.herokuapp.com/api/contrato/3*/
 
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = new HttpClient())        
 
             {
                 var response = client.GetAsync(url).Result;
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
                 {
-                    List<Application> contracts = new List<Application>();
+                    List<Application> applications = new List<Application>();
                     var res = response.Content.ReadAsStringAsync().Result;
                     var applicationList = JsonConvert.DeserializeObject<dynamic>(res);
 
                     foreach (var dato in applicationList)
                     {
                         Application application = new Application();
+                        //id_solicitud_productos  id_usuario id_tipo_solicitud  id_estado_solicitud
 
-                        application.IdContrato = dato.idContrato;
-                        application.IdUsuario = dato.idUsuario;
-                        application.Dni = dato.dni;
-                        string nom = Convert.ToString(dato.nombre);
-                        string app1 = dato.apPaterno;
-                        string app2 = dato.apMaterno;
-                        string disp = nom + " " + app1 + " " + app2;
-                        application.DisplayName = disp;
-                        application.Firmado = dato.firmado;
-                        application.Codigo = dato.codigo;
-                        application.FechaIni = dato.fechaIni;
-                        application.FechaFin = dato.fechaFin;
+                        application.IdSolProd = dato.id_solicitud_productos;
+                        application.IdUsuario = dato.id_usuario;
+                        application.IdTipoSol = dato.id_tipo_solicitud;
+                        application.IdEstadoSol = dato.id_estado_solicitud;
+
+                             //private int idSolProd;
+                             //private int idUsuario;
+                             // private int idTipoSol;
+
+                        //applications.IdContrato = dato.idContrato;
+                        //applications.IdUsuario = dato.idUsuario;
+                        //applications.Dni = dato.dni;
+                        //string nom = Convert.ToString(dato.nombre);
+                        //string app1 = dato.apPaterno;
+                        //string app2 = dato.apMaterno;
+                        //string disp = nom + " " + app1 + " " + app2;
+                        //applications.DisplayName = disp;
+                        //applications.Firmado = dato.firmado;
+                        //applications.Codigo = dato.codigo;
+                        //applications.FechaIni = dato.fechaIni;
+                        //applications.FechaFin = dato.fechaFin;
 
                         this.Add(application);
                     }
@@ -364,21 +462,20 @@ namespace FeriaDesktop.ViewModel
         {
             
             //DateTime date = DateTime.ParseExact(this.FechaIni, "M/dd/yyyy hh:mm:ss tt", null);
-            var id = this.IdContrato;
+            var id = this.IdSolProd;
 
             var userObject = new
             {
-                idUsuario = this.IdUsuario,
-                codigo = this.Codigo,
-                fechaIni = this.FechaIni,
-                fechaFin = this.FechaFin,
-                firmado = this.Firmado
+                id_usuario = this.IdUsuario,
+                id_tipo_solicitud = this.IdTipoSol,
+                id_estado_solicitud = this.IdEstadoSol,
+                
             };
 
 
             var json = JsonConvert.SerializeObject(userObject);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}";
+            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/{id}"; /*https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}*/
 
             using (HttpClient client = new HttpClient())
             {
@@ -397,9 +494,9 @@ namespace FeriaDesktop.ViewModel
 
         private async void delApplication()
         {
-            var id = this.IdContrato;
+            var id = this.IdSolProd;
             
-            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}";
+            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/{id}";
                 
             using (HttpClient client = new HttpClient())
             {
@@ -409,7 +506,7 @@ namespace FeriaDesktop.ViewModel
                 
                 if (response.IsSuccessStatusCode)
 
-                    MessageBox.Show("Contrato Eliminado!");
+                    MessageBox.Show("Solicitud Eliminada!");
                 this.showApplications();
             }
         }
