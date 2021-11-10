@@ -4,8 +4,11 @@ using System.Text;
 
 namespace FeriaDesktop.Model
 {
+
+    
     public class Application : ViewModelBase
     {
+        
         #region Atributes
         private string dni;
         private string displayName;
@@ -16,7 +19,7 @@ namespace FeriaDesktop.Model
 
         private int idProd;
         private int cantProd;
-        
+
         private int idSolProd;
         private int idUsuario;
         private int idTipoSol;
