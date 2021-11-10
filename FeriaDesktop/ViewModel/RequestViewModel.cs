@@ -29,6 +29,7 @@ namespace FeriaDesktop.ViewModel
         private int idSolProd;
         private int idTipoSol;
         private int idEstadoSol;
+        private int cantProd;
         private ObservableCollection<User_info> users = new ObservableCollection<User_info>();      
         #endregion
 
@@ -65,7 +66,7 @@ namespace FeriaDesktop.ViewModel
                 selectedIndex = value;
                 OnPropertyChanged("SelectedIndexOfCollection");
 
-                OnPropertyChanged("Dni");
+                //OnPropertyChanged("Dni");
                 OnPropertyChanged("IdSolProd");
                 OnPropertyChanged("Codigo");
                 OnPropertyChanged("IdUsuario");
@@ -315,6 +316,32 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("IdEstadoSol");
             }
         }
+        public int CantProd
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].CantProd;
+                }
+                else
+                {
+                    return cantProd;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].CantProd = value;
+                }
+                else
+                {
+                    cantProd = value;
+                }
+                OnPropertyChanged("CantProd");
+            }
+        }
         public IEnumerable<User_info> Users
         {
             get { return users; }
@@ -453,7 +480,6 @@ namespace FeriaDesktop.ViewModel
             CreateContract win_menu = new CreateContract();
             win_menu.Show();
         }
-
         private void ValidateProperty<T>(T value, string name)
         {
             Validator.ValidateProperty(value, new ValidationContext(this, null, null)

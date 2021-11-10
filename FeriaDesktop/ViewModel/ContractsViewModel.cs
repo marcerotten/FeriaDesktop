@@ -18,21 +18,20 @@ namespace FeriaDesktop.ViewModel
         #region Atribute
         private ICommand upContractCommand;
         private ICommand delContractCommand;
+        private ICommand getCreateContractCommand;
         private int selectedIndex;
         private string dni;
         private string displayName;
         private string codigo;
         private string fechaIni;
         private string fechaFin;
-        public int idContrato;
-        public int firmado;
-        public int idUsuario;
+        private int idContrato;
+        private int firmado;
+        private int idUsuario;
         private ObservableCollection<User_info> users = new ObservableCollection<User_info>();
         #endregion
 
         #region Properties
-        private ICommand getCreateContractCommand { get; set; }
-
         public ICommand GetCreateContractCommand
         {
             get { return getCreateContractCommand; }
