@@ -15,7 +15,7 @@
             <ColumnDefinition Width="434*"/>
             <ColumnDefinition Width="45*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="INFORMACIÓN DE SOLICITUDES" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
+        <Label Content="INFORMACIÓN DE CONTRATOS" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
         <DataGrid ItemsSource="{StaticResource  ResourceKey=contractsViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="352" Margin="318,76,0,0" VerticalAlignment="Top" Width="621" IsReadOnly="True" Grid.Column="1" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
         <Button Content="MODIFICAR" Command="{Binding UpContractCommand}" HorizontalAlignment="Left" Margin="13,374,0,0" VerticalAlignment="Top" Height="50" Width="103" RenderTransformOrigin="0.455,4.287"/>
         <Label Content="PRODUCTO:" HorizontalAlignment="Left" Margin="13,118,0,0" VerticalAlignment="Top"/>
