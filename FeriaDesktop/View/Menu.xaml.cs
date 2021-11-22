@@ -1,4 +1,7 @@
 ﻿using FeriaDesktop.ViewModel;
+using log4net;
+using System.Linq;
+using System.Reflection;
 using System.Windows;
 
 namespace FeriaDesktop.View
@@ -8,11 +11,18 @@ namespace FeriaDesktop.View
     /// </summary>
     public partial class Menu : Window
     {
+        public ILog Logger { get; set; }
         public Menu()
         {
             InitializeComponent();
             DataContext = new MenuViewModel();
-          
+
+            InitializeComponent();
+
+            this.Logger = LogManager.GetLogger(Assembly.GetExecutingAssembly().GetTypes().First());
+            log4net.Config.XmlConfigurator.Configure();
+
+            this.Logger.Info("Inicio de la app: " + this);
         }
     }
 }
