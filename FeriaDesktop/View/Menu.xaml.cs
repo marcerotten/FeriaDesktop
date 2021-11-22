@@ -14,5 +14,7 @@ namespace FeriaDesktop.View
             DataContext = new MenuViewModel();
           
         }
+
+       
     }
 }
