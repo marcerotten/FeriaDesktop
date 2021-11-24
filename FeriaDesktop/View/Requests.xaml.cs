@@ -16,14 +16,21 @@ namespace FeriaDesktop.View
 
         private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            //if ((string)e.Column.Header == "IdUsuario")
-            //{
-            //    e.Cancel = true;
-            //}
+            if ((string)e.Column.Header == "IdUsuario")
+            {
+                e.Cancel = true;
+            }
             if ((string)e.Column.Header == "IdSolProd")
             {
                 e.Cancel = true;
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+       
     }
 }

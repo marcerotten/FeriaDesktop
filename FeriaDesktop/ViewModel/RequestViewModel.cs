@@ -375,7 +375,7 @@ namespace FeriaDesktop.ViewModel
         private async void showApplications()
         {
             this.Clear();
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/1";  /*//https://feriavirtual-endpoints.herokuapp.com/api/contrato/3*/
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/1";  
 
             using (HttpClient client = new HttpClient())        
 
