@@ -22,7 +22,7 @@ namespace FeriaDesktop.ViewModel
         private ICommand getRequestDataCommand;
         private int selectedIndex;
         //private string dni;
-        //private string displayName;
+        private string displayName;
         //private string codigo;
         //private string fechaIni;
         //private string fechaFin;
@@ -106,32 +106,32 @@ namespace FeriaDesktop.ViewModel
         //        OnPropertyChanged("Dni");
         //    }
         //}
-        //public string DisplayName
-        //{
-        //    get
-        //    {
-        //        if (this.SelectedIndexOfCollection > -1)
-        //        {
-        //            return this.Items[this.SelectedIndexOfCollection].DisplayName;
-        //        }
-        //        else
-        //        {
-        //            return displayName;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        if (this.SelectedIndexOfCollection > -1)
-        //        {
-        //            this.Items[this.SelectedIndexOfCollection].DisplayName = value;
-        //        }
-        //        else
-        //        {
-        //            displayName = value;
-        //        }
-        //        OnPropertyChanged("DisplayName");
-        //    }
-        //}
+        public string DisplayName
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].DisplayName;
+               }
+               else
+               {
+                   return displayName;
+               }
+           }
+           set
+           {
+               if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].DisplayName = value;
+                }
+                else
+                {
+                    displayName = value;
+                }
+                OnPropertyChanged("DisplayName");
+           }
+        }
         //[Required(ErrorMessage = "No debe ir vacío")]
         //[StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         //public string Codigo
@@ -408,44 +408,14 @@ namespace FeriaDesktop.ViewModel
                         RequestData requestdata = new RequestData();
 
 
-                        //request.IdSolProd = dato.idSolicitudProductos;  //idSolicitudProductos campo no aparece segun API
+                        requestdata.IdSolProd = dato.idSolicitudProductos;  //idSolicitudProductos campo no aparece segun API
                         //requestdata.IdUsuario = dato.idUsuario;        //idUsuario campo segun API
                         //requestdata.IdTipoSol = dato.idTipoSolicitud; //idTipoSolicitud campo segun API
-                        requestdata.IdEstadoSol = dato.idSolicitudProductos; //idEstadoSolicitud campo segun API
+                        /*requestdata.IdEstadoSol = dato.idSolicitudProductos;*/ //idEstadoSolicitud campo segun API
                         //requestdata.ProductName = dato.descripcion;
-                        requestdata.CantProd = dato.estado;
-                        //requestdata.Precio = dato.precio;
-                        //                "idSolicitudProductos": 1,
-
+                        //requestdata.CantProd = dato.cantidad;
+                        requestdata.DisplayName = dato.nombre;
                        
-
-                        //"idUsuario": 54,
-                        //"idTipoSolicitud": 1,
-                        //"idEstadoSolicitud": 1,
-                        //"idDetalleSolProductos": 23,
-                        //"idProducto": 21,
-                        //"cantidad": 200,
-                        //"precio": 2500,
-                        //"nombre": "TEST22",
-                        //"apPaterno": "AP_TEST2",
-                        //"apMaterno": "AM_TEST2",
-                        //"descripcion": "PLATANO"
-                        //private int idSolProd;
-                        //private int idUsuario;
-                        // private int idTipoSol;
-
-                        //applications.IdContrato = dato.idContrato;
-                        //applications.IdUsuario = dato.idUsuario;
-                        //applications.Dni = dato.dni;
-                        //string nom = Convert.ToString(dato.nombre);
-                        //string app1 = dato.apPaterno;
-                        //string app2 = dato.apMaterno;
-                        //string disp = nom + " " + app1 + " " + app2;
-                        //applications.DisplayName = disp;
-                        //applications.Firmado = dato.firmado;
-                        //applications.Codigo = dato.codigo;
-                        //applications.FechaIni = dato.fechaIni;
-                        //applications.FechaFin = dato.fechaFin;
 
                         this.Add(requestdata);
                     }
