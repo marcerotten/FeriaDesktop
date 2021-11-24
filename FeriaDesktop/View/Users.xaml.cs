@@ -11,8 +11,6 @@ namespace FeriaDesktop.View
         public Users()
         {
             InitializeComponent();
-            //this.DataContext = new UsersViewModel();
-
         }
 
         private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)

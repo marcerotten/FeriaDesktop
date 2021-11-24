@@ -1,12 +1,15 @@
 ﻿using FeriaDesktop.Model;
 using FeriaDesktop.View;
+using log4net;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -18,20 +21,22 @@ namespace FeriaDesktop.ViewModel
         #region Atribute
         private ICommand upContractCommand;
         private ICommand delContractCommand;
+        private ICommand getCreateContractCommand;
         private int selectedIndex;
         private string dni;
         private string displayName;
         private string codigo;
         private string fechaIni;
         private string fechaFin;
-        public int idContrato;
-        public int firmado;
-        public int idUsuario;
+        private int idContrato;
+        private int firmado;
+        private int idUsuario;
         private ObservableCollection<User_info> users = new ObservableCollection<User_info>();
         #endregion
 
         #region Properties
-        private ICommand getCreateContractCommand { get; set; }
+        public ILog Logger { get; set; }
+        //ILog Logger = LogManager.GetLogger("log-file");
 
         public ICommand GetCreateContractCommand
         {
@@ -297,6 +302,9 @@ namespace FeriaDesktop.ViewModel
         #region Constructors
         public ContractsViewModel()
         {
+            this.Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            log4net.Config.XmlConfigurator.Configure();
+
             this.showContracts();
             UpContractCommand = new RelayCommand(param => this.upContract());
             GetCreateContractCommand = new RelayCommand(param => this.getCreateContract());
@@ -320,97 +328,138 @@ namespace FeriaDesktop.ViewModel
         private async void showContracts()
         {
             this.Clear();
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/contrato/3";
-
-            using (HttpClient client = new HttpClient())
-
+            try
             {
-                var response = client.GetAsync(url).Result;
-                response.EnsureSuccessStatusCode();
-                if (response.IsSuccessStatusCode)
-                {
-                    List<Contract> contracts = new List<Contract>();
-                    var res = response.Content.ReadAsStringAsync().Result;
-                    var contractList = JsonConvert.DeserializeObject<dynamic>(res);
+                this.Logger.Info("showContracts In");
+                var url = "https://feriavirtual-endpoints.herokuapp.com/api/contrato/3";
 
-                    foreach (var dato in contractList)
+                using (HttpClient client = new HttpClient())
+
+                {
+                    var response = client.GetAsync(url).Result;
+                    response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
                     {
-                        Contract contract = new Contract();
+                        List<Contract> contracts = new List<Contract>();
+                        var res = response.Content.ReadAsStringAsync().Result;
+                        var contractList = JsonConvert.DeserializeObject<dynamic>(res);
 
-                        contract.IdContrato = dato.idContrato;
-                        contract.IdUsuario = dato.idUsuario;
-                        contract.Dni = dato.dni;
-                        string nom = Convert.ToString(dato.nombre);
-                        string app1 = dato.apPaterno;
-                        string app2 = dato.apMaterno;
-                        string disp = nom + " " + app1 + " " + app2;
-                        contract.DisplayName = disp;
-                        contract.Firmado = dato.firmado;
-                        contract.Codigo = dato.codigo;
-                        contract.FechaIni = dato.fechaIni;
-                        contract.FechaFin = dato.fechaFin;
+                        foreach (var dato in contractList)
+                        {
+                            Contract contract = new Contract();
 
-                        this.Add(contract);
+                            contract.IdContrato = dato.idContrato;
+                            contract.IdUsuario = dato.idUsuario;
+                            contract.Dni = dato.dni;
+                            string nom = Convert.ToString(dato.nombre);
+                            string app1 = dato.apPaterno;
+                            string app2 = dato.apMaterno;
+                            string disp = nom + " " + app1 + " " + app2;
+                            contract.DisplayName = disp;
+                            contract.Firmado = dato.firmado;
+                            contract.Codigo = dato.codigo;
+                            contract.FechaIni = dato.fechaIni;
+                            contract.FechaFin = dato.fechaFin;
+
+                            this.Add(contract);
+                        }
                     }
+                    else
+                    {
+                        //message.Content = $"Server error code {response.StatusCode}";
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
                 }
-                else
-                {
-                    //message.Content = $"Server error code {response.StatusCode}";
-                }
+                this.Logger.Info("showContracts Out");
+            }
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
             }
         }
         private async void upContract()
         {
-            
-            //DateTime date = DateTime.ParseExact(this.FechaIni, "M/dd/yyyy hh:mm:ss tt", null);
-            var id = this.IdContrato;
-
-            var userObject = new
+            try
             {
-                idUsuario = this.IdUsuario,
-                codigo = this.Codigo,
-                fechaIni = this.FechaIni,
-                fechaFin = this.FechaFin,
-                firmado = this.Firmado
-            };
+                //DateTime date = DateTime.ParseExact(this.FechaIni, "M/dd/yyyy hh:mm:ss tt", null);
+                var id = this.IdContrato;
 
+                var userObject = new
+                {
+                    idUsuario = this.IdUsuario,
+                    codigo = this.Codigo,
+                    fechaIni = this.FechaIni,
+                    fechaFin = this.FechaFin,
+                    firmado = this.Firmado
+                };
 
-            var json = JsonConvert.SerializeObject(userObject);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}";
+                this.Logger.Info("upContract In");
+                var json = JsonConvert.SerializeObject(userObject);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+                var url = $"https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}";
 
-            using (HttpClient client = new HttpClient())
-            {
-                var response = await client.PutAsync(url, data);
-                response.EnsureSuccessStatusCode();
-                var res = await response.Content.ReadAsStringAsync();
-                var userList = JsonConvert.DeserializeObject<dynamic>(res);
-                string message = userList.msg;
-                MessageBox.Show(message);
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = await client.PutAsync(url, data);
+                    response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var res = await response.Content.ReadAsStringAsync();
+                        var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                        string message = userList.msg;
+                        MessageBox.Show(message);
+                    }
+                    else
+                    {
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
+                }
+                this.Logger.Info("upContract Out");
 
+                this.showContracts();
             }
-
-            this.showContracts();
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
+            }
 
         }
 
         private async void delContract()
         {
-            var id = this.IdContrato;
-            
-            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}";
-                
-            using (HttpClient client = new HttpClient())
+            try
             {
-                var response = await client.DeleteAsync(url);
-                response.EnsureSuccessStatusCode();
-                var res = await response.Content.ReadAsStringAsync();
-                
-                if (response.IsSuccessStatusCode)
+                this.Logger.Info("delContract In");
+                var id = this.IdContrato;
+                var url = $"https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}";
 
-                    MessageBox.Show("Contrato Eliminado!");
-                this.showContracts();
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = await client.DeleteAsync(url);
+                    response.EnsureSuccessStatusCode();
+                    var res = await response.Content.ReadAsStringAsync();
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show("Contrato Eliminado!");
+                    }
+                    else
+                    {
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
+
+                    this.showContracts();
+                }
+                this.Logger.Info("delContract Out");
             }
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
+            }
+           
         }
 
         private void getCreateContract()

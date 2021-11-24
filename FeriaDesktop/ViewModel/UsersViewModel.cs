@@ -10,6 +10,9 @@ using System.Windows;
 using System.Linq;
 using FeriaDesktop.View;
 using System.ComponentModel.DataAnnotations;
+using System;
+using log4net;
+using System.Reflection;
 
 namespace FeriaDesktop.ViewModel
 {
@@ -39,7 +42,8 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Properties
-        
+
+        public ILog Logger { get; set; }
 
         public ICommand GetCreateUserCommand
         {
@@ -483,6 +487,9 @@ namespace FeriaDesktop.ViewModel
         #region Constructors
         public UsersViewModel()
         {
+            this.Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            log4net.Config.XmlConfigurator.Configure();
+
             this.GetCountries();
             this.GetRoles();
             this.GetStatus();
@@ -509,53 +516,63 @@ namespace FeriaDesktop.ViewModel
         private async void showUsers()
         {
             this.Clear();
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
-
-            using (HttpClient client = new HttpClient())
-
+            try
             {
-                var response = client.GetAsync(url).Result;
-                response.EnsureSuccessStatusCode();
-                if (response.IsSuccessStatusCode)
-                {
-                    List<User_info> usuarios = new List<User_info>();
-                    var res = response.Content.ReadAsStringAsync().Result;
-                    var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                
+                this.Logger.Info("showUsers In");
+                var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
 
-                    foreach (var dato in userList)
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = client.GetAsync(url).Result;
+                    response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
                     {
-                        User_info usuario = new User_info();
+                        List<User_info> usuarios = new List<User_info>();
+                        var res = response.Content.ReadAsStringAsync().Result;
+                        var userList = JsonConvert.DeserializeObject<dynamic>(res);
 
-                        usuario.IdUsuario = dato.idUsuario;
-                        usuario.Nombre = dato.nombre;
-                        usuario.ApPaterno = dato.apPaterno;
-                        usuario.ApMaterno = dato.apMaterno;
-                        usuario.Dni = dato.dni;
-                        usuario.Direccion = dato.direccion;
-                        usuario.CodPostal = dato.codPostal;
-                        usuario.Correo = dato.correo;
-                        usuario.Usuario = dato.usuario;
-                        string pais = dato.pais;
-                        usuario.Pais = countries.FirstOrDefault(x => x.Descripcion == pais);
-                        usuario.PaisName = usuario.Pais.Descripcion;
-                        string rol = dato.rol;
-                        usuario.Rol = roles.FirstOrDefault(x => x.Descripcion.ToUpper() == rol.ToUpper());
-                        usuario.RolName = usuario.Rol.Descripcion;
-                        string estado = dato.estado;
-                        usuario.Estado = statuses.FirstOrDefault(x => x.Descripcion.ToUpper() == estado.ToUpper());
-                        usuario.EstadoName = usuario.Estado.Descripcion;
-                        usuario.Terms = dato.terminosCondiciones == 0 ? "SI":"NO";
+                        foreach (var dato in userList)
+                        {
+                            User_info usuario = new User_info();
 
-                        this.Add(usuario);
+                            usuario.IdUsuario = dato.idUsuario;
+                            usuario.Nombre = dato.nombre;
+                            usuario.ApPaterno = dato.apPaterno;
+                            usuario.ApMaterno = dato.apMaterno;
+                            usuario.Dni = dato.dni;
+                            usuario.Direccion = dato.direccion;
+                            usuario.CodPostal = dato.codPostal;
+                            usuario.Correo = dato.correo;
+                            usuario.Usuario = dato.usuario;
+                            string pais = dato.pais;
+                            usuario.Pais = countries.FirstOrDefault(x => x.Descripcion == pais);
+                            usuario.PaisName = usuario.Pais.Descripcion;
+                            string rol = dato.rol;
+                            usuario.Rol = roles.FirstOrDefault(x => x.Descripcion.ToUpper() == rol.ToUpper());
+                            usuario.RolName = usuario.Rol.Descripcion;
+                            string estado = dato.estado;
+                            usuario.Estado = statuses.FirstOrDefault(x => x.Descripcion.ToUpper() == estado.ToUpper());
+                            usuario.EstadoName = usuario.Estado.Descripcion;
+                            usuario.Terms = dato.terminosCondiciones == 0 ? "SI" : "NO";
+
+                            this.Add(usuario);
+                        }
+
                     }
-
+                    else
+                    {
+                        //message.Content = $"Server error code {response.StatusCode}";
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
                 }
-                else
-                {
-                    //message.Content = $"Server error code {response.StatusCode}";
-                }
+                this.Logger.Info("showUsers Out");
             }
-
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
+            }
         }
 
         private async void upUser()
@@ -725,6 +742,4 @@ namespace FeriaDesktop.ViewModel
 
         #endregion
     }
-
-
 }

@@ -86,7 +86,6 @@ namespace FeriaDesktop.ViewModel
 
         #region Interface
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
