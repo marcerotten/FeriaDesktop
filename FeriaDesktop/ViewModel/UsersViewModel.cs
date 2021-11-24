@@ -487,7 +487,7 @@ namespace FeriaDesktop.ViewModel
         #region Constructors
         public UsersViewModel()
         {
-            this.Logger = LogManager.GetLogger(Assembly.GetExecutingAssembly().GetTypes().First());
+            this.Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             log4net.Config.XmlConfigurator.Configure();
 
             this.GetCountries();
@@ -519,7 +519,7 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 
-                this.Logger.Info(this + "/showUsers In");
+                this.Logger.Info("showUsers In");
                 var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
 
                 using (HttpClient client = new HttpClient())
@@ -565,9 +565,9 @@ namespace FeriaDesktop.ViewModel
                         //message.Content = $"Server error code {response.StatusCode}";
                         this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
                     }
-                    this.Logger.Warn(url + "/" + response.StatusCode);
+                    this.Logger.Info(url + "/" + response.StatusCode);
                 }
-                this.Logger.Info(this + "/showUsers Out");
+                this.Logger.Info("showUsers Out");
             }
             catch (Exception e)
             {
