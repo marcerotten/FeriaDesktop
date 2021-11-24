@@ -375,7 +375,7 @@ namespace FeriaDesktop.ViewModel
         private async void showApplications()
         {
             this.Clear();
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/2";  /*//https://feriavirtual-endpoints.herokuapp.com/api/contrato/3*/
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/1";  /*//https://feriavirtual-endpoints.herokuapp.com/api/contrato/3*/
 
             using (HttpClient client = new HttpClient())        
 
@@ -393,11 +393,12 @@ namespace FeriaDesktop.ViewModel
                         Request application = new Request();
                         //id_solicitud_productos  id_usuario id_tipo_solicitud  id_estado_solicitud
 
-                        application.IdSolProd = dato.id_solicitud_productos;
-                        application.IdUsuario = dato.id_usuario;
-                        application.IdTipoSol = dato.id_tipo_solicitud;
-                        application.IdEstadoSol = dato.id_estado_solicitud;
+                        //application.IdSolProd = dato.id_solicitud_productos;
+                        application.IdUsuario = dato.idUsuario;
+                        application.IdTipoSol = dato.idTipoSolicitud;
+                        application.IdEstadoSol = dato.idEstadoSolicitud;
 
+                        
                              //private int idSolProd;
                              //private int idUsuario;
                              // private int idTipoSol;

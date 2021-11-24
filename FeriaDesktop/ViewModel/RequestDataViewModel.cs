@@ -71,10 +71,11 @@ namespace FeriaDesktop.ViewModel
 
                 //OnPropertyChanged("Dni");
                 OnPropertyChanged("IdSolProd");
-                OnPropertyChanged("IdUsuario");
-                OnPropertyChanged("IdTipoSol");
-                OnPropertyChanged("EstadoSol");
+                //OnPropertyChanged("IdUsuario");
+                //OnPropertyChanged("IdTipoSol");
+                //OnPropertyChanged("EstadoSol");
                 //OnPropertyChanged("FechaFin");
+                OnPropertyChanged("DisplayName");
 
             }
         }
