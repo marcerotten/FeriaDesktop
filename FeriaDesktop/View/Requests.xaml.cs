@@ -8,12 +8,18 @@ namespace FeriaDesktop.View
     /// </summary>
     public partial class Requests : Window
     {
-        public Requests()
+        public Requests() ///para tener las 2 grid en misma window
+
         {
             InitializeComponent();
-           
+            DataContext = new ViewModel.LinkViewModel()
+            {
+                GridReq = new ViewModel.RequestViewModel(),
+                GridReqData = new ViewModel.RequestDataViewModel()
+            };
         }
 
+        
         private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if ((string)e.Column.Header == "IdUsuario")
@@ -26,10 +32,16 @@ namespace FeriaDesktop.View
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+       
 
+        private void VerSolicitudes_Click(object sender, RoutedEventArgs e)
+        {
+            RequestData win_menu = new RequestData();
+           
+            win_menu.Show();
         }
+
+       
 
        
     }

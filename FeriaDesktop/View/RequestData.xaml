@@ -16,7 +16,7 @@
             <ColumnDefinition Width="45*"/>
         </Grid.ColumnDefinitions>
         <Label Content="DESGLOSE DE SOLICITUDES" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
-        <DataGrid ItemsSource="{StaticResource  ResourceKey=requestDataViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="369" Margin="61,91,0,0" VerticalAlignment="Top" Width="969" IsReadOnly="True" Grid.ColumnSpan="2" SelectionChanged="DataGrid_SelectionChanged"/>
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=requestDataViewModel}"  HorizontalAlignment="Left" Height="369" Margin="61,91,0,0" VerticalAlignment="Top" Width="969" IsReadOnly="True" Grid.ColumnSpan="2" SelectionChanged="DataGrid_SelectionChanged"/>
         <Button Content="    CREAR&#xA; SOLICITUD"  Command="{Binding GetRequestCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="675,486,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
         <Button Content="  ELIMINAR&#xA; SOLICITUD"  Command="{Binding DelRequestCommand}" HorizontalAlignment="Left" Margin="815,486,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
         <Button Content="VOLVER A SOLICITUDES"  Command="{Binding GetRequestCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="61,486,0,0" VerticalAlignment="Top" Height="54" Width="228" RenderTransformOrigin="0.455,4.287" Grid.ColumnSpan="2"/>

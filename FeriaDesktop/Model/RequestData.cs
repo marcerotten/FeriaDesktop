@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace FeriaDesktop.Model
 {
     public class RequestData : ViewModelBase
@@ -38,6 +39,7 @@ namespace FeriaDesktop.Model
             set
             {
                 idSolProd = value;
+                   ; //aca modificar para segunda datagrid popup
                 OnPropertyChanged("IdSolProd");
             }
         }

@@ -10,17 +10,29 @@
         <viewmodel:RequestViewModel x:Key="requestViewModel"/>
 
     </Window.Resources>
-    <Grid DataContext="{StaticResource requestViewModel}" Margin="0,0,-35,4">
+    <Grid DataContext="{Binding GridReq}" Margin="0,0,-35,4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="55*"/>
             <ColumnDefinition Width="434*"/>
             <ColumnDefinition Width="45*"/>
         </Grid.ColumnDefinitions>
         <Label Content="INFORMACIÓN DE SOLICITUDES" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
-        <DataGrid ItemsSource="{StaticResource  ResourceKey=requestViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="352" Margin="45,79,0,0" VerticalAlignment="Top" Width="1062" IsReadOnly="True" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" Grid.ColumnSpan="3" SelectionChanged="DataGrid_SelectionChanged"/>
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=requestViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left"  Height="352" Margin="45,79,0,0" VerticalAlignment="Top" Width="520" IsReadOnly="True" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" Grid.ColumnSpan="2"/>
+       
         <Button Content="    CREAR&#xA; SOLICITUD"  Command="{Binding GetRequestCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="45,470,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.ColumnSpan="2"/>
-        <Button Content="  ELIMINAR&#xA; SOLICITUD"  Command="{Binding DelRequestCommand}" HorizontalAlignment="Left" Margin="59,470,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1" Click="Button_Click_1"/>
-        <Button Content="  VER&#xA; LISTADO"  Command="{Binding DelRequestCommand}" HorizontalAlignment="Left" Margin="555,470,0,0" VerticalAlignment="Top" Height="54" Width="430" RenderTransformOrigin="0.455,4.287" Grid.Column="1" Grid.ColumnSpan="2" Click="Button_Click"/>
+        <Button Content="  ELIMINAR&#xA; SOLICITUD"  Command="{Binding DelRequestCommand}" HorizontalAlignment="Left" Margin="59,470,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
+        <Button x:Name="VerSolicitudes" Content="  VER&#xA; LISTADO"  HorizontalAlignment="Left" Margin="555,470,0,0" VerticalAlignment="Top" Height="54" Width="430" RenderTransformOrigin="0.455,4.287" Grid.Column="1" Grid.ColumnSpan="2" Click="VerSolicitudes_Click"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="243,486,0,0" Text="{Binding Dni, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Validation.ErrorTemplate="{StaticResource errorTemplate}" TextWrapping="Wrap" VerticalAlignment="Top" Width="211" Height="22" Grid.Column="1"/>
+    </Grid>
+
+    <Grid DataContext="{Binding GridReqData}" Margin="0,0,-35,4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="434*"/>
+            <ColumnDefinition Width="45*"/>
+        </Grid.ColumnDefinitions>
+       
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=requestViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left"  Height="352" Margin="45,79,0,0" VerticalAlignment="Top" Width="520" IsReadOnly="True" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>
