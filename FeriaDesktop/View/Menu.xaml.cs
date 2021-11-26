@@ -19,10 +19,10 @@ namespace FeriaDesktop.View
 
             InitializeComponent();
 
-            this.Logger = LogManager.GetLogger(Assembly.GetExecutingAssembly().GetTypes().First());
+            this.Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             log4net.Config.XmlConfigurator.Configure();
 
-            this.Logger.Info("Inicio de la app: " + this);
+            this.Logger.Info("Inicio de la app - Menú");
         }
     }
 }
