@@ -12,6 +12,7 @@ using FeriaDesktop.View;
 using System.ComponentModel.DataAnnotations;
 using System;
 using log4net;
+using System.Configuration;
 
 namespace FeriaDesktop.ViewModel
 {
@@ -518,7 +519,8 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 this.Logger.Info("showUsers In");
-                var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
+                var url = ConfigurationManager.AppSettings[("getUsers")];
+                //"https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
 
                 using (HttpClient client = new HttpClient())
                 {
