@@ -1,4 +1,5 @@
 ﻿using FeriaDesktop.Services;
+using log4net;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Input;
@@ -15,6 +16,7 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Propiedades
+
         [Required(ErrorMessage = "No debe ir vacío")]
         [StringLength(50, MinimumLength = 5, ErrorMessage = "Ingrese al menos 5 carácteres")]
         [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "E-mail no valido")]
@@ -69,19 +71,20 @@ namespace FeriaDesktop.ViewModel
         {
 
             var loginService = new LoginService();
-            var login = loginService.GetLogin(user,password);
+            loginService.GetLogin(user,password);
 
 
         }
         #endregion
 
-        #region Constructores       
-        /*
+        #region Constructores
+        
+       
         public LoginViewModel()
-        {//ILoginService loginService
-            this.loginService = loginService;
-            GetInCommand = new CommandBase(param => this.GetInSesion());
-        }*/
+        {
+            
+        }
+         
         #endregion
 
         #region Interface

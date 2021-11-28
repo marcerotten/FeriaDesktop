@@ -36,7 +36,6 @@ namespace FeriaDesktop.ViewModel
 
         #region Properties
         public ILog Logger { get; set; }
-        //ILog Logger = LogManager.GetLogger("log-file");
 
         public ICommand GetCreateContractCommand
         {
@@ -366,7 +365,6 @@ namespace FeriaDesktop.ViewModel
                     }
                     else
                     {
-                        //message.Content = $"Server error code {response.StatusCode}";
                         this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
                     }
                     this.Logger.Info(url + "/" + response.StatusCode);
@@ -382,7 +380,6 @@ namespace FeriaDesktop.ViewModel
         {
             try
             {
-                //DateTime date = DateTime.ParseExact(this.FechaIni, "M/dd/yyyy hh:mm:ss tt", null);
                 var id = this.IdContrato;
 
                 var userObject = new
@@ -424,7 +421,6 @@ namespace FeriaDesktop.ViewModel
             {
                 this.Logger.Error(e);
             }
-
         }
 
         private async void delContract()
@@ -459,7 +455,6 @@ namespace FeriaDesktop.ViewModel
             {
                 this.Logger.Error(e);
             }
-           
         }
 
         private void getCreateContract()

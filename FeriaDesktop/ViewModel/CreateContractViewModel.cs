@@ -1,4 +1,5 @@
 ﻿using FeriaDesktop.Model;
+using log4net;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Properties
+        public ILog Logger { get; set; }
         public ICommand FindClientCommand
         {
             get { return findClientCommand; }
@@ -111,7 +113,6 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Firmado");
             }
         }
-        //[Required(ErrorMessage = "Requerido          ")]
         public string FechaFin
         {
             get
@@ -126,7 +127,6 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-        //[Required(ErrorMessage = "Requerido          ")]
         public string FechaIni
         {
             get
@@ -141,48 +141,65 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("FechaIni");
             }
         }
-
-
         #endregion
+
+        #region Constructors
         public CreateContractViewModel()
         {
+            this.Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            log4net.Config.XmlConfigurator.Configure();
             FindClientCommand = new RelayCommand(param => this.findClient());
             CreateContractCommand = new RelayCommand(param => this.createContract());
         }
-
+        #endregion
         private async void createContract()
         {
-            
-            var userObject = new
+            try
             {
-                idUsuario = this.IdUsuario,
-                firmado = 1,
-                codigo = this.Codigo,
-                fechaIni = this.FechaIni,
-                fechaFin = this.FechaFin
-            };
-
-            var json = JsonConvert.SerializeObject(userObject);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/contrato";
-
-            using (HttpClient client = new HttpClient())
-
-            {
-                var response = await client.PostAsync(url, data);
-                response.EnsureSuccessStatusCode();
-                var res = await response.Content.ReadAsStringAsync();
-                var userList = JsonConvert.DeserializeObject<dynamic>(res);
-                string message = userList.msg;
-                MessageBox.Show(message);
-                if (message.Contains("correcta"))
+                this.Logger.Info("createContract In");
+                var userObject = new
                 {
-                    //this.ClearAll();
+                    idUsuario = this.IdUsuario,
+                    firmado = 1,
+                    codigo = this.Codigo,
+                    fechaIni = this.FechaIni,
+                    fechaFin = this.FechaFin
+                };
+
+                var json = JsonConvert.SerializeObject(userObject);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+                var url = "https://feriavirtual-endpoints.herokuapp.com/api/contrato";
+
+                using (HttpClient client = new HttpClient())
+
+                {
+                    var response = await client.PostAsync(url, data);
+                    response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var res = await response.Content.ReadAsStringAsync();
+                        var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                        string message = userList.msg;
+                        MessageBox.Show(message);
+                        if (message.Contains("correcta"))
+                        {
+                            //this.ClearAll();
+                        }
+                    }
+                    else
+                    {
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
                 }
+                this.Logger.Info("createContract Out");
 
+                //this.Add(vlClient);
             }
-
-            //this.Add(vlClient);
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
+            }
         }
 
         private void ValidateProperty<T>(T value, string name)
@@ -195,53 +212,57 @@ namespace FeriaDesktop.ViewModel
 
         private User_info findClient()
         {
-            //List<User_info> users = new List<User_info>();
-            //this.Clear();
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
-
-            using (HttpClient client = new HttpClient())
-
+            try
             {
-                var response = client.GetAsync(url).Result;
-                response.EnsureSuccessStatusCode();
-                if (response.IsSuccessStatusCode)
-                {
-                    List<User_info> usuarios = new List<User_info>();
-                    var res = response.Content.ReadAsStringAsync().Result;
-                    var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                this.Logger.Info("findClient In");
+                var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
 
-                    foreach (var dato in userList)
+                using (HttpClient client = new HttpClient())
+
+                {
+                    var response = client.GetAsync(url).Result;
+                    response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
                     {
-                        User_info usuario = new User_info();
-                        //usuario.IdUsuario = dato.idUsuario;
-                        //usuario.Nombre = dato.nombre;
-                        //usuario.ApPaterno = dato.apPaterno;
-                        //usuario.ApMaterno = dato.apMaterno;
-                        usuario.Dni = dato.dni;
-                        
-                        var dni = dato.dni;
-                        if(dni == this.dni)
+                        List<User_info> usuarios = new List<User_info>();
+                        var res = response.Content.ReadAsStringAsync().Result;
+                        var userList = JsonConvert.DeserializeObject<dynamic>(res);
+
+                        foreach (var dato in userList)
                         {
-                            MessageBox.Show("encontrado");
-                            string nom = Convert.ToString(dato.nombre);
-                            string app1 = dato.apPaterno;
-                            string app2 = dato.apMaterno;
-                            string disp = nom + " " + app1 + " " + app2;
-                            this.DisplayName = disp;
-                            this.IdUsuario = dato.idUsuario;
+                            User_info usuario = new User_info();
+                            usuario.Dni = dato.dni;
+
+                            var dni = dato.dni;
+                            if (dni == this.dni)
+                            {
+                                MessageBox.Show("encontrado");
+                                string nom = Convert.ToString(dato.nombre);
+                                string app1 = dato.apPaterno;
+                                string app2 = dato.apMaterno;
+                                string disp = nom + " " + app1 + " " + app2;
+                                this.DisplayName = disp;
+                                this.IdUsuario = dato.idUsuario;
+                            }
+
+                            this.users.Add(usuario);
                         }
 
-                        this.users.Add(usuario);
                     }
-
+                    else
+                    {
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
                 }
-                else
-                {
-                    //message.Content = $"Server error code {response.StatusCode}";
-                }
+                this.Logger.Info("findClient Out");
+                return this.users.FirstOrDefault(x => x.Dni == this.dni);
             }
-
-            return this.users.FirstOrDefault(x => x.Dni == this.dni);
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
+                return null;
+            }
         }
     }
 }

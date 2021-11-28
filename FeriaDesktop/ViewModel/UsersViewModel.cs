@@ -12,7 +12,6 @@ using FeriaDesktop.View;
 using System.ComponentModel.DataAnnotations;
 using System;
 using log4net;
-using System.Reflection;
 
 namespace FeriaDesktop.ViewModel
 {
@@ -518,7 +517,6 @@ namespace FeriaDesktop.ViewModel
             this.Clear();
             try
             {
-                
                 this.Logger.Info("showUsers In");
                 var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
 
@@ -558,11 +556,9 @@ namespace FeriaDesktop.ViewModel
 
                             this.Add(usuario);
                         }
-
                     }
                     else
                     {
-                        //message.Content = $"Server error code {response.StatusCode}";
                         this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
                     }
                     this.Logger.Info(url + "/" + response.StatusCode);
@@ -577,144 +573,200 @@ namespace FeriaDesktop.ViewModel
 
         private async void upUser()
         {
-            var id = this.IdUsuario;
-
-            var userObject = new
+            try
             {
-                nombre = this.Nombre,
-                apPaterno = this.ApPaterno,
-                apMaterno = this.ApMaterno,
-                dni = this.Dni,
-                direccion = this.Direccion,
-                codPostal = this.CodPostal,
-                correo = this.Correo,
-                usuario = this.Usuario,
-                idPais = this.Pais.IdPais,
-                idRol = this.Rol.IdRol,
-                //idEstado = this.Estado.IdEstado,
-                terminosCondiciones = this.Terms == "SI" ? 0 : 1
-        };
+                this.Logger.Info("upUser In");
+                var id = this.IdUsuario;
+
+                var userObject = new
+                {
+                    nombre = this.Nombre,
+                    apPaterno = this.ApPaterno,
+                    apMaterno = this.ApMaterno,
+                    dni = this.Dni,
+                    direccion = this.Direccion,
+                    codPostal = this.CodPostal,
+                    correo = this.Correo,
+                    usuario = this.Usuario,
+                    idPais = this.Pais.IdPais,
+                    idRol = this.Rol.IdRol,
+                    //idEstado = this.Estado.IdEstado,
+                    terminosCondiciones = this.Terms == "SI" ? 0 : 1
+                };
 
 
-            var json = JsonConvert.SerializeObject(userObject);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}";
+                var json = JsonConvert.SerializeObject(userObject);
+                var data = new StringContent(json, Encoding.UTF8, "application/json");
+                var url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}";
 
-            using (HttpClient client = new HttpClient())
-            {
-                var response = await client.PutAsync(url, data);
-                response.EnsureSuccessStatusCode();
-                var res = await response.Content.ReadAsStringAsync();
-                var userList = JsonConvert.DeserializeObject<dynamic>(res);
-                string message = userList.msg;
-                MessageBox.Show(message);
-             
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = await client.PutAsync(url, data);
+                    response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var res = await response.Content.ReadAsStringAsync();
+                        var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                        string message = userList.msg;
+                        MessageBox.Show(message);
+                    }
+                    else
+                    {
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
+                }
+                this.Logger.Info("upUser Out");
+
+                this.showUsers();
             }
-
-            this.showUsers();
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
+            }
 
         }
 
         private async void delUser()
         {
-            var id = this.IdUsuario;
-            var estado = this.Estado.IdEstado;
-            string url;
-            string msg;
+            try
+            {
+                this.Logger.Info("delUser In");
+                var id = this.IdUsuario;
+                var estado = this.Estado.IdEstado;
+                string url;
+                string msg;
 
-            if(estado == 1)
-            {
-                url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}/2";
-                msg = "Usuario Desactivado!";
-            }
-            else
-            {
-                url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}/1";
-                msg = "Usuario Activado!";
-            }
+                if (estado == 1)
+                {
+                    url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}/2";
+                    msg = "Usuario Desactivado!";
+                }
+                else
+                {
+                    url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}/1";
+                    msg = "Usuario Activado!";
+                }
 
-            using (HttpClient client = new HttpClient())
-            {
-                var response = await client.DeleteAsync(url);
-                response.EnsureSuccessStatusCode();
-                var res = await response.Content.ReadAsStringAsync();
-                //var userList = JsonConvert.DeserializeObject<dynamic>(res);
-                if (response.IsSuccessStatusCode)
-                   
-                    MessageBox.Show(msg);
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = await client.DeleteAsync(url);
+                    response.EnsureSuccessStatusCode();
+                    var res = await response.Content.ReadAsStringAsync();
+                    //var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        MessageBox.Show(msg);
+                    }
+                    else
+                    {
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
+
                     this.showUsers();
+                }
+                this.Logger.Info("delUser Out");
+            }
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
             }
         }
 
         private IEnumerable<Country> GetCountries()
         {
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/pais";
-
-            using (HttpClient client = new HttpClient())
-
+            List<Country> countries = new List<Country>();
+            try
             {
-                var response = client.GetAsync(url).Result;
-                response.EnsureSuccessStatusCode();
+                this.Logger.Info("GetCountries In");
+                var url = "https://feriavirtual-endpoints.herokuapp.com/api/pais";
 
-                if (response.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
+
                 {
-                    List<Country> countries = new List<Country>();
-                    var res = response.Content.ReadAsStringAsync().Result;
-                    var countryList = JsonConvert.DeserializeObject<dynamic>(res);
+                    var response = client.GetAsync(url).Result;
+                    response.EnsureSuccessStatusCode();
 
-                    foreach (var dato in countryList)
+                    if (response.IsSuccessStatusCode)
                     {
-                        Country country = new Country();
+                        //List<Country> countries = new List<Country>();
+                        var res = response.Content.ReadAsStringAsync().Result;
+                        var countryList = JsonConvert.DeserializeObject<dynamic>(res);
 
-                        country.IdPais = dato.idPais;
-                        country.Descripcion = dato.descripcion;
+                        foreach (var dato in countryList)
+                        {
+                            Country country = new Country();
 
-                        this.countries.Add(country);
+                            country.IdPais = dato.idPais;
+                            country.Descripcion = dato.descripcion;
+
+                            this.countries.Add(country);
+                        }
+
                     }
-
+                    else
+                    {
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
                 }
-                else
-                {
-                    //message.Content = $"Server error code {response.StatusCode}";
-                }
+                this.Logger.Info("GetCountries Out");
+                return this.countries;
+             
             }
-            return this.countries;
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
+                return this.countries;
+            }
         }
 
         private IEnumerable<Role> GetRoles()
         {
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/rol";
-
-            using (HttpClient client = new HttpClient())
-
+            List<Role> roles = new List<Role>();
+            try
             {
-                var response = client.GetAsync(url).Result;
-                response.EnsureSuccessStatusCode();
+                this.Logger.Info("GetRoles In");
+                var url = "https://feriavirtual-endpoints.herokuapp.com/api/rol";
 
-                if (response.IsSuccessStatusCode)
+                using (HttpClient client = new HttpClient())
+
                 {
-                    List<Role> roles = new List<Role>();
-                    var res = response.Content.ReadAsStringAsync().Result;
-                    var roleList = JsonConvert.DeserializeObject<dynamic>(res);
+                    var response = client.GetAsync(url).Result;
+                    response.EnsureSuccessStatusCode();
 
-                    foreach (var dato in roleList)
+                    if (response.IsSuccessStatusCode)
                     {
-                        Role role = new Role();
+                        //List<Role> roles = new List<Role>();
+                        var res = response.Content.ReadAsStringAsync().Result;
+                        var roleList = JsonConvert.DeserializeObject<dynamic>(res);
 
-                        role.IdRol = dato.idRol;
-                        role.Descripcion = dato.descripcion;
+                        foreach (var dato in roleList)
+                        {
+                            Role role = new Role();
 
-                        this.roles.Add(role);
+                            role.IdRol = dato.idRol;
+                            role.Descripcion = dato.descripcion;
+
+                            this.roles.Add(role);
+                        }
+
                     }
-
+                    else
+                    {
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
                 }
-                else
-                {
-                    //message.Content = $"Server error code {response.StatusCode}";
-                }
+                this.Logger.Info("GetRoles Out");
+                return this.roles;
             }
-
-            return this.roles;
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
+                return this.roles;
+            }
         }
 
         private IEnumerable<Status> GetStatus()

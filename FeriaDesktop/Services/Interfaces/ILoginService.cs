@@ -5,6 +5,6 @@ namespace FeriaDesktop.Services.Interfaces
 {
     public interface ILoginService
     {
-        Task<User> GetLogin(string user, string password);
+        void GetLogin(string user, string password);
     }
 }

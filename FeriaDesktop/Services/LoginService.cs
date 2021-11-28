@@ -1,6 +1,7 @@
 ﻿using FeriaDesktop.Model;
 using FeriaDesktop.Services.Interfaces;
 using FeriaDesktop.View;
+using log4net;
 using Newtonsoft.Json;
 using System;
 using System.Net.Http;
@@ -14,10 +15,19 @@ namespace FeriaDesktop.Services
 {
     public class LoginService
     {
-        public async Task<User> GetLogin(string user, string password)
+        public ILog Logger { get; set; }
+
+        public LoginService()
+        {
+            this.Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            log4net.Config.XmlConfigurator.Configure();
+        }
+
+        public async void GetLogin(string user, string password)
         {
             try
             {
+                this.Logger.Info("GetLogin In");
                 var userObject = new
                 {
                     correo = user,
@@ -32,40 +42,45 @@ namespace FeriaDesktop.Services
                 {
                     var response = await client.PostAsync(url, data);
                     response.EnsureSuccessStatusCode();
-                    var res = await response.Content.ReadAsStringAsync();
-                    var userList = JsonConvert.DeserializeObject<dynamic>(res);
-
-                    //validacion mientras la api responde el cod correcto
-                    var usuario_info = userList.idUsuario.ToObject<int>();
-                    var usuario_rol = userList.idRol.ToObject<int>();
-
-                    //if (response.IsSuccessStatusCode)
-                    if (usuario_info != 0)
+                    if (response.IsSuccessStatusCode)
                     {
-                        if (usuario_rol == 1)
+                        var res = await response.Content.ReadAsStringAsync();
+                        var userList = JsonConvert.DeserializeObject<dynamic>(res);
+
+                        //validacion mientras la api responde el cod correcto
+                        var usuario_info = userList.idUsuario.ToObject<int>();
+                        var usuario_rol = userList.idRol.ToObject<int>();
+
+                        //if (response.IsSuccessStatusCode)
+                        if (usuario_info != 0)
                         {
-                            Menu win_menu = new Menu();
-                            win_menu.Show();
+                            if (usuario_rol == 1)
+                            {
+                                Menu win_menu = new Menu();
+                                win_menu.Show();
+                            }
+                            else
+                            {
+                                MessageBox.Show("No es usuario administrador!");
+                            }
                         }
                         else
                         {
-                            MessageBox.Show("No es usuario administrador!");
+                            MessageBox.Show("Credenciales Inválidas!");
                         }
-                        //message.Content = await response.Content.ReadAsStringAsync();
-
                     }
                     else
                     {
-                        MessageBox.Show("Credenciales Inválidas!");
-                        //message.Content = $"Server error code {response.StatusCode}";
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
                     }
-                    return null;
+                    this.Logger.Info(url + "/" + response.StatusCode);
+                    //return null;
                 }
+                this.Logger.Info("GetLogin Out");
             }
             catch (Exception e)
             {
-                
-                return null;
+                this.Logger.Error(e);
             }
         }
     }
