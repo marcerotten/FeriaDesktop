@@ -36,6 +36,7 @@ namespace FeriaDesktop.ViewModel
         private Role rol;
         private Status estado;
         private string terms;
+        //private string urlBase;
         private ObservableCollection<Role> roles = new ObservableCollection<Role>();
         private ObservableCollection<Country> countries = new ObservableCollection<Country>();
         private ObservableCollection<Status> statuses = new ObservableCollection<Status>();
@@ -91,6 +92,8 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Estado");
             }
         }
+
+        public string urlBase = ConfigurationManager.AppSettings[("urlBase")];
 
         public int IdUsuario
         {
@@ -519,8 +522,8 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 this.Logger.Info("showUsers In");
-                var url = ConfigurationManager.AppSettings[("getUsers")];
-                //"https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
+                var dataGet = ConfigurationManager.AppSettings[("getUsers")];
+                var url = $"{urlBase}{dataGet}";
 
                 using (HttpClient client = new HttpClient())
                 {
@@ -596,11 +599,11 @@ namespace FeriaDesktop.ViewModel
                     terminosCondiciones = this.Terms == "SI" ? 0 : 1
                 };
 
-
                 var json = JsonConvert.SerializeObject(userObject);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
-                var url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}";
-
+                var dataUp = ConfigurationManager.AppSettings[("upUser")];
+                var url = $"{urlBase}{dataUp}{id}";
+                
                 using (HttpClient client = new HttpClient())
                 {
                     var response = await client.PutAsync(url, data);
@@ -638,15 +641,15 @@ namespace FeriaDesktop.ViewModel
                 var estado = this.Estado.IdEstado;
                 string url;
                 string msg;
-
+                var dataDel = ConfigurationManager.AppSettings[("delUser")];
                 if (estado == 1)
                 {
-                    url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}/2";
+                    url = $"{urlBase}{dataDel}{id}/2";
                     msg = "Usuario Desactivado!";
                 }
                 else
                 {
-                    url = $"https://feriavirtual-endpoints.herokuapp.com/api/usuario/{id}/1";
+                    url = $"{urlBase}{dataDel}{id}/1";
                     msg = "Usuario Activado!";
                 }
 

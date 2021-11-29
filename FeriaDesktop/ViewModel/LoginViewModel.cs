@@ -69,16 +69,12 @@ namespace FeriaDesktop.ViewModel
 
         private void GetInCommandExecute()
         {
-
             var loginService = new LoginService();
             loginService.GetLogin(user,password);
-
-
         }
         #endregion
 
         #region Constructores
-        
        
         public LoginViewModel()
         {

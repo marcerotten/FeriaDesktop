@@ -379,6 +379,7 @@ namespace FeriaDesktop.ViewModel
 
         //}
 
+
         private void ValidateProperty<T>(T value, string name)
         {
             Validator.ValidateProperty(value, new ValidationContext(this, null, null)
