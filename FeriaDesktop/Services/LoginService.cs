@@ -4,6 +4,7 @@ using FeriaDesktop.View;
 using log4net;
 using Newtonsoft.Json;
 using System;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace FeriaDesktop.Services
     public class LoginService
     {
         public ILog Logger { get; set; }
+        public string urlBase = ConfigurationManager.AppSettings[("urlBase")];
 
         public LoginService()
         {
@@ -28,6 +30,8 @@ namespace FeriaDesktop.Services
             try
             {
                 this.Logger.Info("GetLogin In");
+                var dataLogin = ConfigurationManager.AppSettings[("GetLogin")];
+                
                 var userObject = new
                 {
                     correo = user,
@@ -35,7 +39,7 @@ namespace FeriaDesktop.Services
                 };
                 var json = JsonConvert.SerializeObject(userObject);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
-                var url = "https://feriavirtual-endpoints.herokuapp.com/api/auth";
+                var url = $"{urlBase}{dataLogin}";
 
                 using (HttpClient client = new HttpClient())
 

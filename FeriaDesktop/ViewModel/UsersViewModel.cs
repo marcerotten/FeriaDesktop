@@ -685,7 +685,8 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 this.Logger.Info("GetCountries In");
-                var url = "https://feriavirtual-endpoints.herokuapp.com/api/pais";
+                var dataCountries = ConfigurationManager.AppSettings[("GetCountries")];
+                var url = $"{urlBase}{dataCountries}";
 
                 using (HttpClient client = new HttpClient())
 
@@ -733,7 +734,8 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 this.Logger.Info("GetRoles In");
-                var url = "https://feriavirtual-endpoints.herokuapp.com/api/rol";
+                var dataRoles = ConfigurationManager.AppSettings[("GetRoles")];
+                var url = $"{urlBase}{dataRoles}";
 
                 using (HttpClient client = new HttpClient())
 
@@ -743,20 +745,16 @@ namespace FeriaDesktop.ViewModel
 
                     if (response.IsSuccessStatusCode)
                     {
-                        //List<Role> roles = new List<Role>();
                         var res = response.Content.ReadAsStringAsync().Result;
                         var roleList = JsonConvert.DeserializeObject<dynamic>(res);
 
                         foreach (var dato in roleList)
                         {
                             Role role = new Role();
-
                             role.IdRol = dato.idRol;
                             role.Descripcion = dato.descripcion;
-
                             this.roles.Add(role);
                         }
-
                     }
                     else
                     {

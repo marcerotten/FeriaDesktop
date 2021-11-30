@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Windows;
@@ -43,6 +44,8 @@ namespace FeriaDesktop.ViewModel
                 createUserCommand = value;
             }
         }
+
+        public string urlBase = ConfigurationManager.AppSettings[("urlBase")];
 
         public int IdUsuario
         {
@@ -265,7 +268,8 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 this.Logger.Info("GetCountries In");
-                var url = "https://feriavirtual-endpoints.herokuapp.com/api/pais";
+                var dataCountries = ConfigurationManager.AppSettings[("GetCountries")];
+                var url = $"{urlBase}{dataCountries}";
 
                 using (HttpClient client = new HttpClient())
 
@@ -311,6 +315,8 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 this.Logger.Info("createUser In");
+                var dataCreate = ConfigurationManager.AppSettings[("createUser")];
+                
                 var userObject = new
                 {
                     nombre = this.Nombre,
@@ -330,7 +336,7 @@ namespace FeriaDesktop.ViewModel
 
                 var json = JsonConvert.SerializeObject(userObject);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
-                var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario";
+                var url = $"{urlBase}{dataCreate}";
 
                 using (HttpClient client = new HttpClient())
 

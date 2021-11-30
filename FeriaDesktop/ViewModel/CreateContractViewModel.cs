@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -48,6 +49,8 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
+        public string urlBase = ConfigurationManager.AppSettings[("urlBase")];
+
         [Required(ErrorMessage = "No debe ir vacío")]
         [StringLength(50, MinimumLength = 8, ErrorMessage = "Ingrese al menos 8 carácteres")]
         public string Dni
@@ -58,6 +61,7 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
+                ValidateProperty(value, "Codigo");
                 dni = value;
                 OnPropertyChanged("Dni");
             }
@@ -157,6 +161,7 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 this.Logger.Info("createContract In");
+                var dataCreate = ConfigurationManager.AppSettings[("createContract")];
                 var userObject = new
                 {
                     idUsuario = this.IdUsuario,
@@ -168,7 +173,7 @@ namespace FeriaDesktop.ViewModel
 
                 var json = JsonConvert.SerializeObject(userObject);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
-                var url = "https://feriavirtual-endpoints.herokuapp.com/api/contrato";
+                var url = $"{urlBase}{dataCreate}";
 
                 using (HttpClient client = new HttpClient())
 
@@ -180,11 +185,19 @@ namespace FeriaDesktop.ViewModel
                         var res = await response.Content.ReadAsStringAsync();
                         var userList = JsonConvert.DeserializeObject<dynamic>(res);
                         string message = userList.msg;
-                        MessageBox.Show(message);
-                        if (message.Contains("correcta"))
+                        if (message is null)
                         {
-                            //this.ClearAll();
+                            MessageBox.Show("Ingrese todos los campos");
                         }
+                        else
+                        {
+                            MessageBox.Show(message);
+                        }
+                        
+                        //if (message.Contains("correcta"))
+                        //{
+                        //    //this.ClearAll();
+                        //}
                     }
                     else
                     {
@@ -215,7 +228,9 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 this.Logger.Info("findClient In");
-                var url = "https://feriavirtual-endpoints.herokuapp.com/api/usuario/3";
+                var dataFind = ConfigurationManager.AppSettings[("findClient")];
+                var url = $"{urlBase}{dataFind}";
+                var find = false;
 
                 using (HttpClient client = new HttpClient())
 
@@ -236,18 +251,26 @@ namespace FeriaDesktop.ViewModel
                             var dni = dato.dni;
                             if (dni == this.dni)
                             {
-                                MessageBox.Show("encontrado");
+                                //MessageBox.Show("Usuario Encontrado");
                                 string nom = Convert.ToString(dato.nombre);
                                 string app1 = dato.apPaterno;
                                 string app2 = dato.apMaterno;
                                 string disp = nom + " " + app1 + " " + app2;
                                 this.DisplayName = disp;
                                 this.IdUsuario = dato.idUsuario;
+                                find = true;
                             }
 
                             this.users.Add(usuario);
                         }
-
+                        if (find == true) 
+                            {
+                            MessageBox.Show("Usuario Encontrado");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Usuario No Encontrado");
+                        } 
                     }
                     else
                     {

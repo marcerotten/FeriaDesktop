@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
@@ -36,6 +37,8 @@ namespace FeriaDesktop.ViewModel
 
         #region Properties
         public ILog Logger { get; set; }
+
+        public string urlBase = ConfigurationManager.AppSettings[("urlBase")];
 
         public ICommand GetCreateContractCommand
         {
@@ -330,7 +333,8 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 this.Logger.Info("showContracts In");
-                var url = "https://feriavirtual-endpoints.herokuapp.com/api/contrato/3";
+                var dataGet = ConfigurationManager.AppSettings[("showContracts")];
+                var url = $"{urlBase}{dataGet}";
 
                 using (HttpClient client = new HttpClient())
 
@@ -392,9 +396,10 @@ namespace FeriaDesktop.ViewModel
                 };
 
                 this.Logger.Info("upContract In");
+                var dataUp = ConfigurationManager.AppSettings[("upContract")];
                 var json = JsonConvert.SerializeObject(userObject);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
-                var url = $"https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}";
+                var url = $"{urlBase}{dataUp}{id}";
 
                 using (HttpClient client = new HttpClient())
                 {
@@ -428,8 +433,9 @@ namespace FeriaDesktop.ViewModel
             try
             {
                 this.Logger.Info("delContract In");
+                var dataDel = ConfigurationManager.AppSettings[("delContract")];
                 var id = this.IdContrato;
-                var url = $"https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}";
+                var url = $"{urlBase}{dataDel}{id}";
 
                 using (HttpClient client = new HttpClient())
                 {
