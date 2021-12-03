@@ -20,10 +20,12 @@
         <Button Content="CLIENTES" Command="{Binding GetUsersCommand}" CommandParameter="Users" RenderTransformOrigin="-1.876,0.649" Margin="174,222,40,14"/>
         <Button Content="CONTRATOS" Command="{Binding GetContractsCommand}" CommandParameter="Contracts" RenderTransformOrigin="-1.876,0.649" Margin="334,222,334,14" Grid.ColumnSpan="2"/>
         <Button Content="SOLICITUDES" Command="{Binding GetRequestsCommand}" CommandParameter="Requests" RenderTransformOrigin="-1.876,0.649" Margin="143,222,176,14" Grid.Column="1"/>
+        <Button Content="REPORTE" Command="{Binding GetSalesDatasCommand}" CommandParameter="SalesDatas" RenderTransformOrigin="-1.876,0.649" Margin="334,31,334,41" Grid.ColumnSpan="2" Grid.Row="1"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="1" Margin="57,0,0,0" Width="0" Grid.RowSpan="2">
             <!--<Button Content="CLIENTES" Height="47" Width="109" Command="{Binding GetUsersCommand}" CommandParameter="Users" RenderTransformOrigin="-1.876,0.649"/>
             <Button Content="CONTRATOS" Height="47" Width="109" Command="{Binding GetContractsCommand}" CommandParameter="Contracts" RenderTransformOrigin="-1.876,0.649"/>-->
 
         </StackPanel>
+       
     </Grid>
 </Window>

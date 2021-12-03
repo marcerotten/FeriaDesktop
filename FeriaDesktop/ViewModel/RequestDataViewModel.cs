@@ -23,12 +23,9 @@ namespace FeriaDesktop.ViewModel
         private ICommand delRequestDataCommand;
         private ICommand getRequestDataCommand;
         private int selectedIndex;
-        //private string dni;
+       
         private string displayName;
-        //private string codigo;
-        //private string fechaIni;
-        //private string fechaFin;
-        //private int idUsuario;
+        
         private int idSolProd;
         private int idUsuario;
         private int idTipoSol;
@@ -78,37 +75,11 @@ namespace FeriaDesktop.ViewModel
                 //OnPropertyChanged("EstadoSol");
                 //OnPropertyChanged("FechaFin");
                 OnPropertyChanged("DisplayName");
-
             }
         }
 
 
-        //public string Dni
-        //{
-        //    get
-        //    {
-        //        if (this.SelectedIndexOfCollection > -1)
-        //        {
-        //            return this.Items[this.SelectedIndexOfCollection].Dni;
-        //        }
-        //        else
-        //        {
-        //            return dni;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        if (this.SelectedIndexOfCollection > -1)
-        //        {
-        //            this.Items[this.SelectedIndexOfCollection].Dni = value;
-        //        }
-        //        else
-        //        {
-        //            dni = value;
-        //        }
-        //        OnPropertyChanged("Dni");
-        //    }
-        //}
+       
         public string DisplayName
         {
             get
@@ -366,13 +337,10 @@ namespace FeriaDesktop.ViewModel
         #region Constructors
         public RequestDataViewModel()
         {
-            //this.ShowRequests();
+           
             this.ShowRequestDatas();
            
 
-            // UpRequestCommand = new RelayCommand(param => this.upRequest());
-            //GetRequestCommand = new RelayCommand(param => this.getCreateRequest());
-            //DelRequestCommand = new RelayCommand(param => this.delRequest());
         }
         #endregion
 

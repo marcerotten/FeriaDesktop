@@ -16,7 +16,7 @@ namespace FeriaDesktop.View
     /// <summary>
     /// Interaction logic for SalesData.xaml
     /// </summary>
-    public partial class SalesData : Page
+    public partial class SalesData : Window
     {
         public SalesData()
         {

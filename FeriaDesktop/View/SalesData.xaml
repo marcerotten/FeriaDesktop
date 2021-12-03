@@ -7,18 +7,18 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SalesData">
-      <Window.Resources>
-      <viewmodel:SalesDataViewModel x:Key="salesDataViewModel"/>
-      </Window.Resources>
-      <Grid DataContext="{Binding salesDataViewModel}" Margin="0,0,-35,4">
-          <Grid.ColumnDefinitions>
-               <ColumnDefinition Width="55*"/>
-               <ColumnDefinition Width="434*"/>
-               <ColumnDefinition Width="45*"/>
-         </Grid.ColumnDefinitions>
-            <Label Content="Resumen de Ventas" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
-            <DataGrid ItemsSource="{StaticResource  ResourceKey=salesDataViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left"  Height="352" Margin="45,79,0,0" VerticalAlignment="Top" Width="520" IsReadOnly="True" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" Grid.ColumnSpan="2" SelectionChanged="DataGrid_SelectionChanged" />
-            <Button x:Name="VerSolicitudes" Content="  VER&#xA; LISTADO"  HorizontalAlignment="Left" Margin="555,470,0,0" VerticalAlignment="Top" Height="54" Width="430" RenderTransformOrigin="0.455,4.287" Grid.Column="1" Grid.ColumnSpan="2" Click="VerSolicitudes_Click"/>
-         </Grid>
-    
+    <Window.Resources>
+        <viewmodel:SalesDataViewModel x:Key="salesDataViewModel"/>
+    </Window.Resources>
+    <Grid DataContext="{Binding salesDataViewModel}" Margin="0,0,-35,4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55*"/>
+            <ColumnDefinition Width="434*"/>
+            <ColumnDefinition Width="45*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Resumen de Ventas" HorizontalAlignment="Left" Margin="183,24,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
+        <DataGrid ItemsSource="{StaticResource  ResourceKey=salesDataViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left"  Height="299" Margin="45,79,0,0" VerticalAlignment="Top" Width="694" IsReadOnly="True" Grid.ColumnSpan="2"/>
+        <Button x:Name="VerSolicitudes" Content="  VER&#xA; LISTADO"  HorizontalAlignment="Left" Margin="555,470,0,0" VerticalAlignment="Top" Height="54" Width="430" RenderTransformOrigin="0.455,4.287" Grid.Column="1" Grid.ColumnSpan="2" />
+    </Grid>
+
 </Window>
