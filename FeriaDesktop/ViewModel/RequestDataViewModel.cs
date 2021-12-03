@@ -381,13 +381,15 @@ namespace FeriaDesktop.ViewModel
 
 
                         requestdata.IdSolProd = dato.idSolicitudProductos;  //idSolicitudProductos campo no aparece segun API
-                        //requestdata.IdUsuario = dato.idUsuario;        //idUsuario campo segun API
+                        requestdata.IdUsuario = dato.idProducto;        //idUsuario campo segun API
                         //requestdata.IdTipoSol = dato.idTipoSolicitud; //idTipoSolicitud campo segun API
                         /*requestdata.IdEstadoSol = dato.idSolicitudProductos;*/ //idEstadoSolicitud campo segun API
                         //requestdata.ProductName = dato.descripcion;
-                        //requestdata.CantProd = dato.cantidad;
+                        requestdata.CantProd = dato.cantidad;
                         requestdata.DisplayName = dato.nombre;
-                       
+
+
+                     
 
                         this.Add(requestdata);
                     }

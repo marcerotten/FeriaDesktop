@@ -1,9 +1,6 @@
 ﻿using FeriaDesktop.Model;
 using FeriaDesktop.View;
 using log4net;
-using FeriaDesktop.Model;
-
-using FeriaDesktop.View;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -265,8 +262,8 @@ namespace FeriaDesktop.ViewModel
 
                         saledata.CantProd = dato.idSolicitudProductos;
                         saledata.PrecProd = dato.idSolicitudProductos;
-                        saledata.IdSolProd = dato.idSolicitudProductos;
-                        saledata.IdUsuario = dato.idSolicitudProductos;
+                        //saledata.IdSolProd = dato.idSolicitudProductos;
+                        //saledata.IdUsuario = dato.idSolicitudProductos;
 
 
 
@@ -292,8 +289,8 @@ namespace FeriaDesktop.ViewModel
                 var userObject = new
                 {
                     id_usuario = this.IdUsuario,
-                    id_tipo_solicitud = this.IdTipoSol,
-                    id_estado_solicitud = this.IdEstadoSol,
+                    //id_tipo_solicitud = this.IdTipoSol,
+                   // id_estado_solicitud = this.IdEstadoSol,
                     id_solicitud_productos = this.IdSolProd,
                 };
 
@@ -313,7 +310,7 @@ namespace FeriaDesktop.ViewModel
 
                 }
 
-                this.ShowRequestDatas();
+                this.ShowSalesDatas();
             }
             private async void delRequest()
             {
@@ -330,7 +327,7 @@ namespace FeriaDesktop.ViewModel
                     if (response.IsSuccessStatusCode)
 
                         MessageBox.Show("Solicitud Eliminada!");
-                    this.ShowRequestDatas();
+                    this.ShowSalesDatas();
                 }
             }
 

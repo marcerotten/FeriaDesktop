@@ -79,7 +79,6 @@ namespace FeriaDesktop.Model
                 OnPropertyChanged("IdEstadoSol");
             }
         }
-
         public string DisplayName
         {
             get
