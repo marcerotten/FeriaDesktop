@@ -50,7 +50,7 @@ namespace FeriaDesktop.ViewModel
             GetUsersCommand = new RelayCommand(param => this.getUsers());
             GetContractsCommand = new RelayCommand(param => this.getContracts());
             GetRequestsCommand = new RelayCommand(param => this.getRequests());
-            GetRequestsCommand = new RelayCommand(param => this.getSalesDatas());
+            GetSalesDataCommand = new RelayCommand(param => this.getSalesDatas());
         }
 
         private void getUsers()

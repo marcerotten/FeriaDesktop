@@ -260,16 +260,19 @@ namespace FeriaDesktop.ViewModel
                         SalesData saledata = new SalesData();
 
 
-                        saledata.CantProd = dato.idSolicitudProductos;
-                        saledata.PrecProd = dato.idSolicitudProductos;
-                        //saledata.IdSolProd = dato.idSolicitudProductos;
+                        saledata.CantProd = dato.cantidad;
+                        saledata.PrecProd = dato.precio;
+                        saledata.IdSolProd = dato.idSubasta;
                         //saledata.IdUsuario = dato.idSolicitudProductos;
 
 
 
-                        //salesdata.idProd = dato.idProductos
+                        //salesdata.IdUsuario = dato.idProducto;
                         //salesdata.DisplayName = dato.nombre;
-                         
+
+                       
+
+
 
                             this.Add(saledata);
                         }
