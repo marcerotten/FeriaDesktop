@@ -1,4 +1,5 @@
 ﻿using FeriaDesktop.Model;
+
 using FeriaDesktop.View;
 using Newtonsoft.Json;
 using System;
@@ -17,6 +18,7 @@ namespace FeriaDesktop.ViewModel
     public class RequestDataViewModel : ObservableCollection<RequestData>, INotifyPropertyChanged
     {
         #region Atribute
+        
         private ICommand upRequestDataCommand;
         private ICommand delRequestDataCommand;
         private ICommand getRequestDataCommand;
@@ -358,7 +360,7 @@ namespace FeriaDesktop.ViewModel
         //{
         //    get { return users; }
         //}
-
+       
         #endregion
 
         #region Constructors
@@ -366,6 +368,7 @@ namespace FeriaDesktop.ViewModel
         {
             //this.ShowRequests();
             this.ShowRequestDatas();
+           
 
             // UpRequestCommand = new RelayCommand(param => this.upRequest());
             //GetRequestCommand = new RelayCommand(param => this.getCreateRequest());
@@ -387,7 +390,7 @@ namespace FeriaDesktop.ViewModel
 
         #region Methods and functions
 
-
+        
         private async void ShowRequestDatas()
         {
             this.Clear();

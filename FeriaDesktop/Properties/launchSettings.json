@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "FeriaDesktop": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\FeriaDesktop\\FeriaDesktop\\obj\\Debug\\netcoreapp3.1"
+    },
+    "xxx": {
+      "commandName": "Project"
+    }
+  }
+}

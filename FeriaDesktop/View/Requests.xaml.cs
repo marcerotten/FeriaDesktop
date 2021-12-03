@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace FeriaDesktop.View
@@ -8,18 +10,21 @@ namespace FeriaDesktop.View
     /// </summary>
     public partial class Requests : Window
     {
-        public Requests() ///para tener las 2 grid en misma window
+        public Requests() 
 
         {
             InitializeComponent();
-            DataContext = new ViewModel.LinkViewModel()
-            {
-                GridReq = new ViewModel.RequestViewModel(),
-                GridReqData = new ViewModel.RequestDataViewModel()
-            };
+
+            
         }
 
-        
+       
+
+        private void OnPropertyChanged(string displayName)
+        {
+            throw new NotImplementedException();
+        }
+
         private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if ((string)e.Column.Header == "IdUsuario")
@@ -33,16 +38,33 @@ namespace FeriaDesktop.View
         }
 
        
-
         private void VerSolicitudes_Click(object sender, RoutedEventArgs e)
         {
+            
             RequestData win_menu = new RequestData();
-           
             win_menu.Show();
+
         }
 
-       
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
-       
+        }
+
+
+        public string displayName { get; set; }
+
+        public string DisplayName
+        {
+            get
+            {
+                return displayName;
+            }
+            set
+            {
+                displayName = "ADRIAN3";
+
+            }
+        }
     }
 }
