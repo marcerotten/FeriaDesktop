@@ -262,7 +262,7 @@ namespace FeriaDesktop.ViewModel
 
                         saledata.CantProd = dato.cantidad;
                         saledata.PrecProd = dato.precio;
-                        saledata.IdSolProd = dato.idSubasta;
+                        //saledata.IdSolProd = dato.idSubasta;
                         //saledata.IdUsuario = dato.idSolicitudProductos;
 
 

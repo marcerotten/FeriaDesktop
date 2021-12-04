@@ -18,13 +18,12 @@
         </Grid.ColumnDefinitions>
         <Label Content="REPORTE DE VENTAS" HorizontalAlignment="Left" Margin="207,29,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
         <DataGrid ItemsSource="{StaticResource  ResourceKey=salesDataViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left"  Height="212" Margin="43,144,0,0" VerticalAlignment="Top" Width="694" IsReadOnly="True" Grid.ColumnSpan="2"/>
-        <Button x:Name="VerSolicitudes" Content="  VER&#xA; LISTADO"  HorizontalAlignment="Left" Margin="555,470,0,0" VerticalAlignment="Top" Height="54" Width="430" RenderTransformOrigin="0.455,4.287" Grid.Column="1" Grid.ColumnSpan="2" />
-        <Button Content="Enviar reporte" Grid.Column="1" HorizontalAlignment="Left" Margin="509,375,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="140">
+        <Button Content="Enviar reporte" Grid.Column="1" HorizontalAlignment="Left" Margin="406,375,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="140" Click="Button_Click">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
-                    <RotateTransform Angle="1.118"/>
+                    <RotateTransform Angle="-0.794"/>
                     <TranslateTransform/>
                 </TransformGroup>
             </Button.RenderTransform>
