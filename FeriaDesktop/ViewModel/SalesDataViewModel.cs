@@ -27,7 +27,7 @@ namespace FeriaDesktop.ViewModel
             private string displayName;
             private int cantProd;
             private int precProd;
-            private int idSolProd;
+            private string descProd;
             private int idUsuario;
             private ObservableCollection<SalesData> Sales = new ObservableCollection<SalesData>();
 
@@ -67,10 +67,9 @@ namespace FeriaDesktop.ViewModel
                     OnPropertyChanged("SelectedIndexOfCollection");
 
                     OnPropertyChanged("DisplayName");
-                    OnPropertyChanged("IdProd");
                     OnPropertyChanged("CantProd");
                     OnPropertyChanged("PrecProd");
-                    OnPropertyChanged("IdSolProd");
+                    OnPropertyChanged("DescProd");
                     OnPropertyChanged("IdUsuario");
 
 
@@ -159,34 +158,34 @@ namespace FeriaDesktop.ViewModel
             }
         }
 
-            public int IdSolProd
-        {
+        public string DescProd
+         {
             get
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    return this.Items[this.SelectedIndexOfCollection].IdSolProd;
+                    return this.Items[this.SelectedIndexOfCollection].DescProd;
                 }
                 else
                 {
-                    return idSolProd;
+                    return descProd;
                 }
             }
             set
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    this.Items[this.SelectedIndexOfCollection].IdSolProd = value;
+                    this.Items[this.SelectedIndexOfCollection].DescProd = value;
                 }
                 else
                 {
-                    idSolProd = value;
+                    descProd = value;
                 }
-                OnPropertyChanged("IdSolProd");
+                OnPropertyChanged("DescProd");
             }
         }
 
-            public int IdUsuario
+        public int IdUsuario
         {
             get
             {
@@ -262,7 +261,7 @@ namespace FeriaDesktop.ViewModel
 
                         saledata.CantProd = dato.cantidad;
                         saledata.PrecProd = dato.precio;
-                        //saledata.IdSolProd = dato.idSubasta;
+                        //saledata.IdProd = dato.descripcion;
                         //saledata.IdUsuario = dato.idSolicitudProductos;
 
 
@@ -294,7 +293,7 @@ namespace FeriaDesktop.ViewModel
                     id_usuario = this.IdUsuario,
                     //id_tipo_solicitud = this.IdTipoSol,
                    // id_estado_solicitud = this.IdEstadoSol,
-                    id_solicitud_productos = this.IdSolProd,
+                    //id_solicitud_productos = this.IdProd,
                 };
 
 

@@ -13,7 +13,7 @@ namespace FeriaDesktop.Model
         private int idProd;
         private int cantProd;
         private int precProd;
-        public int idSolProd;
+        public string descProd;
         private int idUsuario;
 
        
@@ -69,16 +69,16 @@ namespace FeriaDesktop.Model
                 OnPropertyChanged("PrecProd");
             }
         }
-        public int IdSolProd
+        public string DescProd
         {
             get
             {
-                return idSolProd;
+                return descProd;
             }
             set
             {
-                idSolProd = value;
-                OnPropertyChanged("IdSolProd");
+                descProd = value;
+                OnPropertyChanged("DescProd");
             }
         }
         public int IdUsuario

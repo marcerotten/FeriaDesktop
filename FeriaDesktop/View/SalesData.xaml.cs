@@ -21,6 +21,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using PdfWriter = iTextSharp.text.pdf.PdfWriter;
+using Document = iTextSharp.text.Document;
+using PageSize = iTextSharp.text.PageSize;
 
 namespace FeriaDesktop.View
 {
@@ -39,6 +44,7 @@ namespace FeriaDesktop.View
             //Generacion de PDF
             SaveFileDialog guarda = new SaveFileDialog();
             guarda.FileName = DateTime.Now.ToString("ddMMyyyyHHmmss") + ".pdf";
+            guarda.ShowDialog();
 
             if (guarda.ShowDialog() == DialogResult)
             {
@@ -51,7 +57,13 @@ namespace FeriaDesktop.View
 
                     PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
 
+                    pdfDoc.Open();
+
                     pdfDoc.Add(new Phrase("test pdf"));
+
+                    pdfDoc.Close();
+
+                    stream.Close();
 
 
 
@@ -70,21 +82,22 @@ namespace FeriaDesktop.View
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential()
                 {
-                    UserName = "entretekno@gmail.com",
-                    Password = "abonita2"
+                    UserName = "maipograndereporte@gmail.com",
+                    Password = "feriavirtual"
                 }
 
 
             };
-            MailAddress MailFrom = new MailAddress("entretekno@gmail.com", "Orlando");
-            MailAddress MailTo = new MailAddress("o.labbe@duocuc.cl", "testing");
+            MailAddress MailFrom = new MailAddress("maipograndereporte@gmail.com", "MGReporte");
+            MailAddress MailTo = new MailAddress(mailInput.Text, "testing");
             MailMessage MailMSG = new MailMessage()
             {
                 From = MailFrom,
                 Subject = "hola como estas",
                 Body = "MaipoTest",
+                //Attachments = "La variable que almacene el pdf"
 
-            };
+        };
             MailMSG.To.Add(MailTo);
 
             try

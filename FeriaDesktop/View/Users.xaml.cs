@@ -36,5 +36,10 @@ namespace FeriaDesktop.View
                 e.Cancel = true;
             }
         }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
