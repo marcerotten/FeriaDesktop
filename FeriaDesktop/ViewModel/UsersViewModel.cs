@@ -22,6 +22,7 @@ namespace FeriaDesktop.ViewModel
         private ICommand getCreateUserCommand;
         private ICommand upUserCommand;
         private ICommand delUserCommand;
+        private ICommand refreshUserCommand;
         private int selectedIndex;
         private int idUsuario;
         private string nombre;
@@ -71,7 +72,14 @@ namespace FeriaDesktop.ViewModel
                 delUserCommand = value;
             }
         }
-
+        public ICommand RefreshUserCommand
+        {
+            get { return refreshUserCommand; }
+            set
+            {
+                refreshUserCommand = value;
+            }
+        }
         public int SelectedIndexOfCollection
         {
             get { return selectedIndex; }
@@ -275,6 +283,7 @@ namespace FeriaDesktop.ViewModel
         }
 
         [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Ingrese sólo números")]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string CodPostal
         {
@@ -500,6 +509,7 @@ namespace FeriaDesktop.ViewModel
             UpUserCommand = new RelayCommand(param => this.upUser());
             DelUserCommand = new RelayCommand(param => this.delUser());
             GetCreateUserCommand = new RelayCommand(param => this.getCreateUsers());
+            RefreshUserCommand = new RelayCommand(param => this.refreshUsers());
         }
         #endregion
 
@@ -598,6 +608,8 @@ namespace FeriaDesktop.ViewModel
                     //idEstado = this.Estado.IdEstado,
                     terminosCondiciones = this.Terms == "SI" ? 0 : 1
                 };
+
+                
 
                 var json = JsonConvert.SerializeObject(userObject);
                 var data = new StringContent(json, Encoding.UTF8, "application/json");
@@ -786,7 +798,10 @@ namespace FeriaDesktop.ViewModel
             CreateUser win_menu = new CreateUser();
             win_menu.Show();
         }
-
+        private void refreshUsers()
+        {
+            this.showUsers();
+        }
         private void ValidateProperty<T>(T value, string name)
         {
             Validator.ValidateProperty(value, new ValidationContext(this, null, null)

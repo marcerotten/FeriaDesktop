@@ -30,6 +30,7 @@
         <DatePicker Grid.Column="1" Text="{Binding FechaIni, Mode=TwoWay, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource errorTemplate}" HorizontalAlignment="Left" Margin="17,221,0,0" VerticalAlignment="Top" Width="263"/>
         <Button Content="    CREAR&#xA; CONTRATO"  Command="{Binding GetCreateContractCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="13,18,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287"/>
         <Button Content="  ELIMINAR&#xA; CONTRATO"  Command="{Binding DelContractCommand}" HorizontalAlignment="Left" Margin="187,374,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
+        <Button Content="REFRESCAR" Grid.Column="1" Command="{Binding RefreshContractCommand}" HorizontalAlignment="Left" Margin="846,51,0,0" VerticalAlignment="Top" Height="20" Width="94"/>
 
     </Grid>
 </Window>

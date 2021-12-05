@@ -146,6 +146,7 @@ namespace FeriaDesktop.ViewModel
         }
 
         [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[0-9]+$", ErrorMessage = "Ingrese sólo números")]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string CodPostal
         {
@@ -328,41 +329,49 @@ namespace FeriaDesktop.ViewModel
                     correo = this.Correo,
                     usuario = this.Usuario,
                     contrasena = this.Contrasena,
-                    idPais = this.Pais.IdPais,
+                    idPais = this.Pais == null ? 0: this.Pais.IdPais,
                     idRol = 3,
                     idEstado = 1,
                     terminosCondiciones = 0
                 };
-
-                var json = JsonConvert.SerializeObject(userObject);
-                var data = new StringContent(json, Encoding.UTF8, "application/json");
-                var url = $"{urlBase}{dataCreate}";
-
-                using (HttpClient client = new HttpClient())
-
+                if (nombre == null || apPaterno == null || apMaterno == "" || dni == "" || codPostal == null || correo == null || usuario == null || contrasena == null || this.Pais == null)
                 {
-                    var response = await client.PostAsync(url, data);
-                    response.EnsureSuccessStatusCode();
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var res = await response.Content.ReadAsStringAsync();
-                        var userList = JsonConvert.DeserializeObject<dynamic>(res);
-                        string message = userList.msg;
-                        MessageBox.Show(message);
-                        if (message.Contains("correcta"))
-                        {
-                            //this.ClearAll();
-                        }
-                    }
-                    else
-                    {
-                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
-                    }
-                    this.Logger.Info(url + "/" + response.StatusCode);
+                    MessageBox.Show("Ingrese todos los campos");
                 }
-                this.Logger.Info("createUser Out");
+                else
+                {
+                    var json = JsonConvert.SerializeObject(userObject);
+                    var data = new StringContent(json, Encoding.UTF8, "application/json");
+                    var url = $"{urlBase}{dataCreate}";
 
-                //this.Add(vlClient);
+                    using (HttpClient client = new HttpClient())
+
+                    {
+                        var response = await client.PostAsync(url, data);
+                        response.EnsureSuccessStatusCode();
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var res = await response.Content.ReadAsStringAsync();
+                            var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                            string message = userList.msg;
+                            MessageBox.Show(message);
+                            if (message.Contains("correcta"))
+                            {
+                                //this.ClearAll();
+                            }
+                        }
+                        else
+                        {
+                            this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                        }
+                        this.Logger.Info(url + "/" + response.StatusCode);
+                    }
+                    this.Logger.Info("createUser Out");
+
+                    //this.Add(vlClient);
+                }
+
+
             }
             catch (Exception e)
             {

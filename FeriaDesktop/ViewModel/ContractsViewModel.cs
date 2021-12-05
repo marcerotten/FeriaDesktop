@@ -23,6 +23,7 @@ namespace FeriaDesktop.ViewModel
         private ICommand upContractCommand;
         private ICommand delContractCommand;
         private ICommand getCreateContractCommand;
+        private ICommand refreshContractCommand;
         private int selectedIndex;
         private string dni;
         private string displayName;
@@ -62,6 +63,14 @@ namespace FeriaDesktop.ViewModel
             set
             {
                 delContractCommand = value;
+            }
+        }
+        public ICommand RefreshContractCommand
+        {
+            get { return refreshContractCommand; }
+            set
+            {
+                refreshContractCommand = value;
             }
         }
         public int SelectedIndexOfCollection
@@ -132,6 +141,7 @@ namespace FeriaDesktop.ViewModel
             }
         }
         [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Ingrese sólo letras o números")]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string Codigo
         {
@@ -311,6 +321,7 @@ namespace FeriaDesktop.ViewModel
             UpContractCommand = new RelayCommand(param => this.upContract());
             GetCreateContractCommand = new RelayCommand(param => this.getCreateContract());
             DelContractCommand = new RelayCommand(param => this.delContract());
+            RefreshContractCommand = new RelayCommand(param => this.refreshContract());
         }
         #endregion
 
@@ -468,7 +479,10 @@ namespace FeriaDesktop.ViewModel
             CreateContract win_menu = new CreateContract();
             win_menu.Show();
         }
-
+        private void refreshContract()
+        {
+            this.showContracts();
+        }
         private void ValidateProperty<T>(T value, string name)
         {
             Validator.ValidateProperty(value, new ValidationContext(this, null, null)

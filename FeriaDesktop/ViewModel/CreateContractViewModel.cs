@@ -61,7 +61,7 @@ namespace FeriaDesktop.ViewModel
             }
             set
             {
-                ValidateProperty(value, "Codigo");
+                ValidateProperty(value, "Dni");
                 dni = value;
                 OnPropertyChanged("Dni");
             }
@@ -90,7 +90,9 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("IdUsuario");
             }
         }
+        
         [Required(ErrorMessage = "No debe ir vacío")]
+        [RegularExpression(@"^[a-zA-Z0-9]+$", ErrorMessage = "Ingrese sólo letras o números")]
         [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
         public string Codigo
         {
@@ -171,43 +173,52 @@ namespace FeriaDesktop.ViewModel
                     fechaFin = this.FechaFin
                 };
 
-                var json = JsonConvert.SerializeObject(userObject);
-                var data = new StringContent(json, Encoding.UTF8, "application/json");
-                var url = $"{urlBase}{dataCreate}";
-
-                using (HttpClient client = new HttpClient())
-
+                if (idUsuario == 0 || codigo == null || fechaIni == "" || fechaFin == "")
                 {
-                    var response = await client.PostAsync(url, data);
-                    response.EnsureSuccessStatusCode();
-                    if (response.IsSuccessStatusCode)
+                    MessageBox.Show("Ingrese todos los campos..");
+                }
+                else
+                {
+                    var json = JsonConvert.SerializeObject(userObject);
+                    var data = new StringContent(json, Encoding.UTF8, "application/json");
+                    var url = $"{urlBase}{dataCreate}";
+
+                    using (HttpClient client = new HttpClient())
+
                     {
-                        var res = await response.Content.ReadAsStringAsync();
-                        var userList = JsonConvert.DeserializeObject<dynamic>(res);
-                        string message = userList.msg;
-                        if (message is null)
+                        var response = await client.PostAsync(url, data);
+                        response.EnsureSuccessStatusCode();
+                        if (response.IsSuccessStatusCode)
                         {
-                            MessageBox.Show("Ingrese todos los campos");
+                            var res = await response.Content.ReadAsStringAsync();
+                            var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                            string message = userList.msg;
+                            if (message is null)
+                            {
+                                MessageBox.Show("Ingrese todos los campos");
+                            }
+                            else
+                            {
+                                MessageBox.Show(message);
+                            }
+
+                            //if (message.Contains("correcta"))
+                            //{
+                            //    this.formClean();
+                            //}
                         }
                         else
                         {
-                            MessageBox.Show(message);
+                            this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
                         }
-                        
-                        //if (message.Contains("correcta"))
-                        //{
-                        //    //this.ClearAll();
-                        //}
+                        this.Logger.Info(url + "/" + response.StatusCode);
                     }
-                    else
-                    {
-                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
-                    }
-                    this.Logger.Info(url + "/" + response.StatusCode);
-                }
-                this.Logger.Info("createContract Out");
+                    this.Logger.Info("createContract Out");
 
-                //this.Add(vlClient);
+                    //this.Add(vlClient);
+                }
+
+
             }
             catch (Exception e)
             {
@@ -286,6 +297,12 @@ namespace FeriaDesktop.ViewModel
                 this.Logger.Error(e);
                 return null;
             }
+        }
+
+        private void formClean()
+        {
+            this.Dni = string.Empty;
+            //this.Pais.IdPais = 0;
         }
     }
 }

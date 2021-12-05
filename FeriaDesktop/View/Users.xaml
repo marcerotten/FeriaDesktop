@@ -42,5 +42,6 @@
         <ComboBox ItemsSource="{Binding Statuses}" DisplayMemberPath="Descripcion" SelectedItem="{Binding Estado}" HorizontalAlignment="Left" Margin="102,382,0,0" VerticalAlignment="Top" Width="210" IsEnabled="False" Grid.ColumnSpan="2"/>
         <Label Content="Terms. Cond:" HorizontalAlignment="Left" Margin="18,415,0,0" VerticalAlignment="Top"/>
         <TextBox HorizontalAlignment="Left" Margin="102,417,0,0" Text="{Binding Terms}" TextWrapping="Wrap" VerticalAlignment="Top" Width="210" IsEnabled="False" Grid.ColumnSpan="2" Height="22"/>
+        <Button Content="REFRESCAR" Command="{Binding RefreshUserCommand}" Grid.Column="1" HorizontalAlignment="Left" Margin="1077,34,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Height="24" Width="73"/>
     </Grid>
 </Window>
