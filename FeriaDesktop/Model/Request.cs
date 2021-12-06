@@ -4,7 +4,6 @@ using System.Text;
 
 namespace FeriaDesktop.Model
 {
-
     
     public class Request : ViewModelBase
     {

@@ -18,14 +18,7 @@ namespace FeriaDesktop.View
             
         }
 
-       
-
-        private void OnPropertyChanged(string displayName)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+      private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if ((string)e.Column.Header == "IdUsuario")
             {
@@ -40,9 +33,9 @@ namespace FeriaDesktop.View
        
         private void VerSolicitudes_Click(object sender, RoutedEventArgs e)
         {
-            
-            RequestData win_menu = new RequestData();
-            win_menu.Show();
+            var a = textBoxReq.Text;
+            RequestData requestData = new RequestData(a);
+            requestData.Show();
 
         }
 
@@ -52,19 +45,6 @@ namespace FeriaDesktop.View
         }
 
 
-        public string displayName { get; set; }
-
-        public string DisplayName
-        {
-            get
-            {
-                return displayName;
-            }
-            set
-            {
-                displayName = "ADRIAN3";
-
-            }
-        }
+       
     }
 }

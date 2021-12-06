@@ -25,7 +25,7 @@
         </Button>
         <ComboBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="43,105,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Elija Solicitud" HorizontalAlignment="Left" Margin="43,74,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="120"/>
-        <TextBox x:Name="mailInput" Text="{Binding salesDataViewModel.PrecProd}" HorizontalAlignment="Left" Margin="43,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" Grid.ColumnSpan="2" Height="23" IsEnabled="False" />
+        <TextBox x:Name="mailInput" Text="{Binding salesDataViewModel.PrecProd}" HorizontalAlignment="Left" Margin="43,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" Grid.ColumnSpan="2" Height="23" />
 
 
         <Label Content="Correo electronico" HorizontalAlignment="Left" Margin="43,356,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="120"/>

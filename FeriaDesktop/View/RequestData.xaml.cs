@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FeriaDesktop.Model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -18,14 +19,17 @@ namespace FeriaDesktop.View
     /// </summary>
     public partial class RequestData : Window
     {
-       
 
-        public RequestData()
+        
+        public RequestData(String a)
         {
-            InitializeComponent();
-           
-        }
 
+            MessageBox.Show(a);
+            InitializeComponent();
+            this.textBoxReqData.Text = a;
+
+
+        }
         
 
         private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -42,11 +46,7 @@ namespace FeriaDesktop.View
 
        
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
+      
 
        
     }

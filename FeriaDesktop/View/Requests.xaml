@@ -22,9 +22,13 @@
         <Button Content="    CREAR&#xA; SOLICITUD"  Command="{Binding GetRequestCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="45,470,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.ColumnSpan="2"/>
         <Button Content="  ELIMINAR&#xA; SOLICITUD"  Command="{Binding DelRequestCommand}" HorizontalAlignment="Left" Margin="59,470,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
         <Button x:Name="VerSolicitudes" Content="  VER&#xA; LISTADO"  HorizontalAlignment="Left" Margin="555,470,0,0" VerticalAlignment="Top" Height="54" Width="430" RenderTransformOrigin="0.455,4.287" Grid.Column="1" Grid.ColumnSpan="2" Click="VerSolicitudes_Click"/>
-        <TextBox x:Name="textBoxReq" Text="{Binding IdTipoSol}" HorizontalAlignment="Left" Margin="183,478,0,0"   VerticalAlignment="Top" Width="211" Height="38" Grid.Column="1"/>
-        
-        
+        <TextBox x:Name="textBoxReq" Text="{Binding IdUsuario, Mode=TwoWay}" HorizontalAlignment="Left" Margin="183,478,0,0"   VerticalAlignment="Top" Width="211" Height="38" Grid.Column="1">
+            <TextBox.DataContext>
+                <viewmodel:RequestViewModel/>
+            </TextBox.DataContext>
+        </TextBox>
+
+
     </Grid>
 
 </Window>
