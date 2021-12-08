@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using FeriaDesktop.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
 using System;
 using System.Windows;
 using System.Windows.Controls;

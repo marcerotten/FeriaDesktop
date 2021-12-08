@@ -17,12 +17,10 @@
             <ColumnDefinition Width="45*"/>
         </Grid.ColumnDefinitions>
         <Label Content="INFORMACIÓN DE SOLICITUDES" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
-        <DataGrid ItemsSource="{StaticResource  ResourceKey=requestViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left"  Height="352" Margin="45,79,0,0" VerticalAlignment="Top" Width="520" IsReadOnly="True" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" Grid.ColumnSpan="2" SelectionChanged="DataGrid_SelectionChanged" />
-
-        <Button Content="    CREAR&#xA; SOLICITUD"  Command="{Binding GetRequestCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="45,470,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.ColumnSpan="2"/>
-        <Button Content="  ELIMINAR&#xA; SOLICITUD"  Command="{Binding DelRequestCommand}" HorizontalAlignment="Left" Margin="59,470,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
-        <Button x:Name="VerSolicitudes" Content="  VER&#xA; LISTADO"  HorizontalAlignment="Left" Margin="555,470,0,0" VerticalAlignment="Top" Height="54" Width="430" RenderTransformOrigin="0.455,4.287" Grid.Column="1" Grid.ColumnSpan="2" Click="VerSolicitudes_Click"/>
-        <TextBox x:Name="textBoxReq" Text="{Binding IdUsuario, Mode=TwoWay}" HorizontalAlignment="Left" Margin="183,478,0,0"   VerticalAlignment="Top" Width="211" Height="38" Grid.Column="1">
+        <DataGrid x:Name="DGSol" ItemsSource="{StaticResource  ResourceKey=requestViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left"  Height="352" Margin="45,79,0,0" VerticalAlignment="Top" Width="559" IsReadOnly="True" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" Grid.ColumnSpan="2" SelectionChanged="DataGrid_SelectionChanged" />
+        <Button Content="  ELIMINAR&#xA; SOLICITUD"  Command="{Binding DelRequestCommand}" HorizontalAlignment="Left" Margin="45,470,0,0" VerticalAlignment="Top" Height="54" Width="214" RenderTransformOrigin="0.455,4.287" Grid.ColumnSpan="2"/>
+        <Button x:Name="VerSolicitudes" Content="  VER&#xA; LISTADO"  HorizontalAlignment="Left" Margin="555,470,0,0" VerticalAlignment="Top" Height="54" Width="172" RenderTransformOrigin="0.455,4.287" Grid.Column="1" Click="VerSolicitudes_Click"/>
+        <TextBox x:Name="textBoxReq" Text="{Binding SelectedItem.IdTipoSol, ElementName=DGSol}" HorizontalAlignment="Left" Margin="555,423,0,0"   VerticalAlignment="Top" Width="45" Height="27" Grid.Column="1">
             <TextBox.DataContext>
                 <viewmodel:RequestViewModel/>
             </TextBox.DataContext>

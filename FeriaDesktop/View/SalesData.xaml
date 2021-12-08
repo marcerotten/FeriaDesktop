@@ -17,15 +17,15 @@
             <ColumnDefinition Width="45*"/>
         </Grid.ColumnDefinitions>
         <Label Content="REPORTE DE VENTAS" HorizontalAlignment="Left" Margin="207,29,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
-        <DataGrid ItemsSource="{StaticResource  ResourceKey=salesDataViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left"  Height="212" Margin="43,144,0,0" VerticalAlignment="Top" Width="694" IsReadOnly="True" Grid.ColumnSpan="2"/>
+        <DataGrid x:Name="GridDataSales" ItemsSource="{StaticResource  ResourceKey=salesDataViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left"  Height="212" Margin="43,144,0,0" VerticalAlignment="Top" Width="694" IsReadOnly="True" Grid.ColumnSpan="2"/>
 
 
             <Button Content="Enviar reporte" Grid.Column="1" HorizontalAlignment="Left" Margin="406,375,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="140" Click="Button_Click">
            
         </Button>
-        <ComboBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="43,105,0,0" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Text="{Binding SelectedItem.PrecProd, ElementName=GridDataSales}" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="43,105,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Elija Solicitud" HorizontalAlignment="Left" Margin="43,74,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="120"/>
-        <TextBox x:Name="mailInput" Text="{Binding salesDataViewModel.PrecProd}" HorizontalAlignment="Left" Margin="43,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" Grid.ColumnSpan="2" Height="23" />
+        <TextBox x:Name="mailInput" Text="{Binding SelectedItem.PrecProd, ElementName=GridDataSales}" HorizontalAlignment="Left" Margin="43,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" Grid.ColumnSpan="2" Height="23" />
 
 
         <Label Content="Correo electronico" HorizontalAlignment="Left" Margin="43,356,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="120"/>

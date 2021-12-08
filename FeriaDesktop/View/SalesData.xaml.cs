@@ -26,6 +26,7 @@ using iTextSharp.text.pdf;
 using PdfWriter = iTextSharp.text.pdf.PdfWriter;
 using Document = iTextSharp.text.Document;
 using PageSize = iTextSharp.text.PageSize;
+using FluentEmail.Core.Models;
 
 namespace FeriaDesktop.View
 {
@@ -41,10 +42,10 @@ namespace FeriaDesktop.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //Generacion de PDF
+            //Generacion de PDF INICIO
             SaveFileDialog guarda = new SaveFileDialog();
-            guarda.FileName = "Reporte.PDF"; //DateTime.Now.ToString("ddMMyyyyHHmmss") +
-            
+            guarda.FileName = "reporte.pdf"; //DateTime.Now.ToString("ddMMyyyyHHmmss") +
+
 
             if (guarda.ShowDialog() == DialogResult)
             {
@@ -62,44 +63,10 @@ namespace FeriaDesktop.View
 
                     stream.Close();
 
-
-
-
                 }
             }
 
-            try
-            {
-                MailMessage mail = new MailMessage();
-                SmtpClient smtp = new SmtpClient("smtp.google.com");
-                mail.From = new MailAddress("maipograndereporte@gmail.com");
-                mail.To.Add(mailInput.Text);
-                mail.Subject = "MaipoGrande Reporte";
-                mail.Body = "Saludos y test de maipogrande";
-
-                System.Net.Mail.Attachment attachment;
-                attachment = new System.Net.Mail.Attachment("C:/Git/reporte.pdf");
-                mail.Attachments.Add(new Attachment(@"c:\Git\reporte.pdf"));
-
-                smtp.Port = 587;
-                smtp.Credentials = new System.Net.NetworkCredential("maipograndereporte@gmail.com", "feriavirtual");
-                smtp.EnableSsl = true;
-                smtp.Send(mail);
-                MessageBox.Show("Mail enviado con exito");
-
-
-            }
-            catch (Exception ex) {
-
-                MessageBox.Show(ex.Message);
-            
-            
-            
-            }
-
-
-
-
+            //Generacion de PDF FINAL
 
             //Envio de Correos INICIO
             SmtpClient Client = new SmtpClient()
@@ -117,40 +84,46 @@ namespace FeriaDesktop.View
 
 
             };
+            System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(@"C:\Git\reporte.pdf");
 
            
 
-
             MailAddress MailFrom = new MailAddress("maipograndereporte@gmail.com", "MGReporte");
-            MailAddress MailTo = new MailAddress(mailInput.Text, "testing");
+            MailAddress MailTo = new MailAddress(mailInput.Text, "Receptor Reporte");
             MailMessage MailMSG = new MailMessage()
             {
                 From = MailFrom,
-                Subject = "hola como estas",
-                Body = "MaipoTest",
-                
-            //Attachments = "La variable que almacene el pdf"
+                Subject = "Reporte ventas Maipo Grande",
+                Body = "MaipoGrande",
 
-
-        };
+            };
+            MailMSG.Attachments.Add(attachment);
             MailMSG.To.Add(MailTo);
 
             try
             {
-               
-              
-
                 Client.Send(MailMSG);
-                MessageBox.Show("enviado", "bien");
+                MessageBox.Show("Su archivo ha sido enviado", "Exito");
 
 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("error", "error2");
+                MessageBox.Show("Archivo no enviado", "Error");
 
             }
             //Envio de Correos FINAL
+
+
+            
         }
+
+
+
+
+
+
+
+
     }
 }
