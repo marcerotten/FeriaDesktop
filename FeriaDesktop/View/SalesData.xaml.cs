@@ -27,6 +27,7 @@ using PdfWriter = iTextSharp.text.pdf.PdfWriter;
 using Document = iTextSharp.text.Document;
 using PageSize = iTextSharp.text.PageSize;
 using FluentEmail.Core.Models;
+using Paragraph = iTextSharp.text.Paragraph;
 
 namespace FeriaDesktop.View
 {
@@ -39,35 +40,9 @@ namespace FeriaDesktop.View
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SendMail(string pdfName) 
         {
-            //Generacion de PDF INICIO
-            SaveFileDialog guarda = new SaveFileDialog();
-            guarda.FileName = "reporte.pdf"; //DateTime.Now.ToString("ddMMyyyyHHmmss") +
-
-
-            if (guarda.ShowDialog() == DialogResult)
-            {
-                using (FileStream stream = new FileStream(guarda.FileName, FileMode.Create))
-                {
-                    Document pdfDoc = new Document(PageSize.A4, 25, 25, 25, 25);
-
-                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
-
-                    pdfDoc.Open();
-
-                    pdfDoc.Add(new Phrase("hola"));
-
-                    pdfDoc.Close();
-
-                    stream.Close();
-
-                }
-            }
-
-            //Generacion de PDF FINAL
-
+            
             //Envio de Correos INICIO
             SmtpClient Client = new SmtpClient()
             {
@@ -84,9 +59,9 @@ namespace FeriaDesktop.View
 
 
             };
-            System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(@"C:\Git\reporte.pdf");
+            System.Net.Mail.Attachment attachment = new System.Net.Mail.Attachment(pdfName);
 
-           
+
 
             MailAddress MailFrom = new MailAddress("maipograndereporte@gmail.com", "MGReporte");
             MailAddress MailTo = new MailAddress(mailInput.Text, "Receptor Reporte");
@@ -115,15 +90,92 @@ namespace FeriaDesktop.View
             //Envio de Correos FINAL
 
 
-            
+
         }
 
+        private string GeneratePDF() 
+        {
+            //Generacion de PDF INICIO
+            SaveFileDialog guarda = new SaveFileDialog();
+            guarda.FileName = @"Reporte.pdf";
+            guarda.Filter = "PDF(*.pdf) | *.pdf";
+            guarda.ShowDialog();
+           
+
+            if (guarda.FileName != "")
+            {
+                using (FileStream stream = new FileStream(guarda.FileName, FileMode.Create))
+                {
+                    Document pdfDoc = new Document(PageSize.A4, 25, 25, 25, 25);
+
+                    PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
+
+                    pdfDoc.Open();
+
+                    pdfDoc.Add(new Paragraph("hola")); 
+                    pdfDoc.Add(new Paragraph(this.GridDataSales.Items.Count == 0?"Si":"No"));
+
+                    pdfDoc.Add(new Paragraph(this.GridDataSales.Items.GetItemAt(0).ToString()));
+                    pdfDoc.Add(new Paragraph(this.GridDataSales.Items.ToString()));
+                    pdfDoc.Add(new Paragraph(this.GridDataSales.Items.Count.ToString()));
+
+                    PdfPTable table = new PdfPTable(3);
+
+                    PdfPCell cell = new PdfPCell(new Phrase("Row 1 , Col 1, Col 2 and col 3"));
+                    cell.Colspan = 3;
+                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
+                    table.AddCell(cell);
+
+                    table.AddCell("Row 2, Col 1");
+                    table.AddCell("Row 2, Col 1");
+                    table.AddCell("Row 2, Col 1");
+
+                    table.AddCell("Row 3, Col 1");
+                    cell = new PdfPCell(new Phrase("Row 3, Col 2 and Col3"));
+                    cell.Colspan = 2;
+                    table.AddCell(cell);
+
+                    cell = new PdfPCell(new Phrase("Row 4, Col 1 and Col2"));
+                    cell.Colspan = 2;
+                    table.AddCell(cell);
+                    table.AddCell("Row 4, Col 3");
+
+                    pdfDoc.Add(table);
 
 
+                    pdfDoc.Close();
+
+                    stream.Close();
+
+                }
+                return guarda.FileName;
+            }
+            return null;
+
+            //Generacion de PDF FINAL
+        }
+
+       
+        
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+           
+           
+            var filePass = this.GeneratePDF();
+
+            if (filePass != null)
+            {
+
+                this.SendMail(filePass);
+
+            }
+            else {
+                MessageBox.Show("file nulo");
+            }
 
 
-
-
+            
+        }
 
     }
 }
