@@ -19,7 +19,7 @@
         <Label Content="INFORMACIÓN DE SOLICITUDES" HorizontalAlignment="Left" Margin="318,18,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.Column="1"/>
         <DataGrid ItemsSource="{StaticResource  ResourceKey=requestViewModel}" SelectedIndex="{Binding SelectedIndexOfCollection, Mode=TwoWay}" HorizontalAlignment="Left" Height="352" Margin="129,72,0,0" VerticalAlignment="Top" Width="684" IsReadOnly="True" Grid.Column="1" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"/>
         <Button Content="APROBAR&#xA;SOLICITUD"  Command="{Binding UpRequestCommand}" CommandParameter="CreateContract" HorizontalAlignment="Left" Margin="138,457,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
-        <Button Content=" REHAZAR&#xA; SOLICITUD"  Command="{Binding DelRequestCommand}" HorizontalAlignment="Left" Margin="677,457,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
+        <Button Content=" RECHAZAR&#xA; SOLICITUD"  Command="{Binding DelRequestCommand}" HorizontalAlignment="Left" Margin="677,457,0,0" VerticalAlignment="Top" Height="54" Width="93" RenderTransformOrigin="0.455,4.287" Grid.Column="1"/>
 
     </Grid>
 </Window>
