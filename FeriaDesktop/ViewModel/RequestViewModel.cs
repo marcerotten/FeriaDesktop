@@ -437,7 +437,8 @@ namespace FeriaDesktop.ViewModel
                 idUsuario = this.IdUsuario,
                 idTipoSolicitud = this.IdTipoSol,
                 idEstadoSolicitud = idEstadoSol != this.IdEstadoSol? idEstadoSol:this.IdEstadoSol,
-               
+                fecha = "2021-10-14T21:08:39.000+00:00"
+
             };
 
 
@@ -449,7 +450,7 @@ namespace FeriaDesktop.ViewModel
             {
                 var response = await client.PutAsync(url, data);
                 response.EnsureSuccessStatusCode();
-                var res = await response.Content.ReadAsStringAsync();
+                var res = await response.Content.ReadAsStringAsync(); //ver por que no borra Ejemplo ID: 21
                 MessageBox.Show("Solicitud modificada");
 
             }

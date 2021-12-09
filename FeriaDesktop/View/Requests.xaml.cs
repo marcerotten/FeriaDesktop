@@ -21,10 +21,10 @@ namespace FeriaDesktop.View
 
       private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            //if ((string)e.Column.Header == "IdUsuario")
-            //{
-            //    e.Cancel = true;
-            //}
+            if ((string)e.Column.Header == "IdUsuario")
+            {
+                e.Cancel = true;
+            }
             //if ((string)e.Column.Header == "IdSolProd")
             //{
             //    e.Cancel = true;
@@ -37,7 +37,7 @@ namespace FeriaDesktop.View
             var a = textBoxReq.Text;
             RequestData requestData = new RequestData(a);
             requestData.Show();
-
+            //this.DGSol.SelectedItem
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
