@@ -73,8 +73,6 @@ namespace FeriaDesktop.ViewModel
             {
                 selectedIndex = value;
                 OnPropertyChanged("SelectedIndexOfCollection");
-
-                //OnPropertyChanged("Dni");
                 OnPropertyChanged("idSolicitudProductos");
                 OnPropertyChanged("nombre");
                 OnPropertyChanged("apPaterno");

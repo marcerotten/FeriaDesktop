@@ -9,6 +9,7 @@ namespace FeriaDesktop.ViewModel
         private ICommand getUsersCommand { get; set; }
         private ICommand getContractsCommand { get; set; }
         private ICommand getRequestsCommand { get; set; }
+        private ICommand getReportsCommand { get; set; }
 
         public ICommand GetUsersCommand
         {
@@ -33,6 +34,13 @@ namespace FeriaDesktop.ViewModel
             {
                 getRequestsCommand = value;
             }
+        } public ICommand GetReportsCommand
+        {
+            get { return getReportsCommand; }
+            set
+            {
+                getReportsCommand = value;
+            }
         }
 
         public MenuViewModel()
@@ -40,6 +48,7 @@ namespace FeriaDesktop.ViewModel
             GetUsersCommand = new RelayCommand(param => this.getUsers());
             GetContractsCommand = new RelayCommand(param => this.getContracts());
             GetRequestsCommand = new RelayCommand(param => this.getRequests());
+            GetReportsCommand = new RelayCommand(param => this.getReports());
         }
 
         private void getUsers()
@@ -55,6 +64,10 @@ namespace FeriaDesktop.ViewModel
         private void getRequests()
         {
             Requests win_menu = new Requests();
+            win_menu.Show();
+        }private void getReports()
+        {
+            SalesData win_menu = new SalesData();
             win_menu.Show();
         }
     }
