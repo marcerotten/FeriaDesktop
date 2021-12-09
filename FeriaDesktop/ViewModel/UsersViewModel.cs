@@ -605,7 +605,6 @@ namespace FeriaDesktop.ViewModel
                     usuario = this.Usuario,
                     idPais = this.Pais.IdPais,
                     idRol = this.Rol.IdRol,
-                    //idEstado = this.Estado.IdEstado,
                     terminosCondiciones = this.Terms == "SI" ? 0 : 1
                 };
 

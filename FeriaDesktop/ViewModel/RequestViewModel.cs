@@ -1,11 +1,13 @@
 ﻿using FeriaDesktop.Model;
 using FeriaDesktop.View;
+using log4net;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Windows;
@@ -20,20 +22,17 @@ namespace FeriaDesktop.ViewModel
         private ICommand delRequestCommand;
         private ICommand getRequestCommand;
         private int selectedIndex;
-        private string dni;
-        private string displayName;
-        private string codigo;
-        private string fechaIni;
-        private string fechaFin;
+        private int idSolicitudProductos;
         private int idUsuario;
-        private int idSolProd;
-        private int idTipoSol;
-        private int idEstadoSol;
-        private int cantProd;
-        private ObservableCollection<User_info> users = new ObservableCollection<User_info>();      
+        private int idTipoSolicitud;
+        private int idEstadoSolicitud;
+        private string fecha;
+        private ObservableCollection<Request> requests = new ObservableCollection<Request>();
         #endregion
 
         #region Properties
+
+        public ILog Logger { get; set; }
         public ICommand GetRequestCommand
         {
             get { return getRequestCommand; }
@@ -67,150 +66,45 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("SelectedIndexOfCollection");
 
                 //OnPropertyChanged("Dni");
-                OnPropertyChanged("IdSolProd");
-                OnPropertyChanged("Codigo");
+                OnPropertyChanged("IdSolicitudProductos");
                 OnPropertyChanged("IdUsuario");
-                OnPropertyChanged("FechaIni");
-                OnPropertyChanged("FechaFin");
+                OnPropertyChanged("IdTipoSolicitud");
+                OnPropertyChanged("IdEstadoSolicitud");
+                OnPropertyChanged("Fecha");
             }
         }
-        public string Dni
+
+        public string urlBase = ConfigurationManager.AppSettings[("urlBase")];
+
+
+
+        public int IdSolicitudProductos
         {
             get
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    return this.Items[this.SelectedIndexOfCollection].Dni;
+                    return this.Items[this.SelectedIndexOfCollection].IdSolicitudProductos;
                 }
                 else
                 {
-                    return dni;
+                    return idSolicitudProductos;
                 }
             }
             set
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    this.Items[this.SelectedIndexOfCollection].Dni = value;
+                    this.Items[this.SelectedIndexOfCollection].IdSolicitudProductos = value;
                 }
                 else
                 {
-                    dni = value;
+                    idSolicitudProductos = value;
                 }
-                OnPropertyChanged("Dni");
-            }
-        }
-        public string DisplayName
-        {
-            get
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    return this.Items[this.SelectedIndexOfCollection].DisplayName;
-                }
-                else
-                {
-                    return displayName;
-                }
-            }
-            set
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    this.Items[this.SelectedIndexOfCollection].DisplayName = value;
-                }
-                else
-                {
-                    displayName = value;
-                }
-                OnPropertyChanged("DisplayName");
-            }
-        }
-        [Required(ErrorMessage = "No debe ir vacío")]
-        [StringLength(50, MinimumLength = 4, ErrorMessage = "Ingrese al menos 4 carácteres")]
-        public string Codigo
-        {
-            get
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    return this.Items[this.SelectedIndexOfCollection].Codigo;
-                }
-                else
-                {
-                    return codigo;
-                }
-            }
-            set
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    ValidateProperty(value, "Codigo");
-                    this.Items[this.SelectedIndexOfCollection].Codigo = value;
-                }
-                else
-                {
-                    codigo = value;
-                }
-                OnPropertyChanged("Codigo");
+                OnPropertyChanged("IdSolicitudProductos");
             }
         }
         [Required(ErrorMessage = "Requerido          ")]
-        public string FechaIni
-        {
-            get
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    return this.Items[this.SelectedIndexOfCollection].FechaIni;
-                }
-                else
-                {
-                    return fechaIni;
-                }
-            }
-            set
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    ValidateProperty(value, "FechaIni");
-                    this.Items[this.SelectedIndexOfCollection].FechaIni = value;
-                }
-                else
-                {
-                    fechaIni = value;
-                }
-                OnPropertyChanged("FechaIni");
-            }
-        }
-        [Required(ErrorMessage = "Requerido          ")]
-        public string FechaFin
-        {
-            get
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    return this.Items[this.SelectedIndexOfCollection].FechaFin;
-                }
-                else
-                {
-                    return fechaFin;
-                }
-            }
-            set
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    ValidateProperty(value, "FechaFin");
-                    this.Items[this.SelectedIndexOfCollection].FechaFin = value;
-                }
-                else
-                {
-                    fechaFin = value;
-                }
-                OnPropertyChanged("FechaFin");
-            }
-        }
         public int IdUsuario
         {
             get
@@ -237,114 +131,90 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("IdUsuario");
             }
         }
+        [Required(ErrorMessage = "Requerido          ")]
+        public int IdTipoSolicitud
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].IdTipoSolicitud;
+                }
+                else
+                {
+                    return idTipoSolicitud;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].IdTipoSolicitud = value;
+                }
+                else
+                {
+                    idTipoSolicitud = value;
+                }
+                OnPropertyChanged("IdTipoSolicitud");
+            }
+        }
+        public int IdEstadoSolicitud
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].IdEstadoSolicitud;
+                }
+                else
+                {
+                    return IdEstadoSolicitud;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].IdEstadoSolicitud = value;
+                }
+                else
+                {
+                    idEstadoSolicitud = value;
+                }
+                OnPropertyChanged("IdEstadoSolicitud");
+            }
+        }
 
-        public int IdSolProd
+        public string Fecha
         {
             get
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    return this.Items[this.SelectedIndexOfCollection].IdSolProd;
+                    return this.Items[this.SelectedIndexOfCollection].Fecha;
                 }
                 else
                 {
-                    return idSolProd;
+                    return fecha;
                 }
             }
             set
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    this.Items[this.SelectedIndexOfCollection].IdSolProd = value;
+                    this.Items[this.SelectedIndexOfCollection].Fecha = value;
                 }
                 else
                 {
-                    idSolProd = value;
+                    fecha = value;
                 }
-                OnPropertyChanged("IdSolProd");
+                OnPropertyChanged("Fecha");
             }
         }
-        public int IdTipoSol
+       
+        public IEnumerable<Request> Requests
         {
-            get
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    return this.Items[this.SelectedIndexOfCollection].IdTipoSol;
-                }
-                else
-                {
-                    return idTipoSol;
-                }
-            }
-            set
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    this.Items[this.SelectedIndexOfCollection].IdTipoSol = value;
-                }
-                else
-                {
-                    idTipoSol = value;
-                }
-                OnPropertyChanged("IdTipoSol");
-            }
-        }
-        public int IdEstadoSol
-        {
-            get
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    return this.Items[this.SelectedIndexOfCollection].IdEstadoSol;
-                }
-                else
-                {
-                    return idEstadoSol;
-                }
-            }
-            set
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    this.Items[this.SelectedIndexOfCollection].IdEstadoSol = value;
-                }
-                else
-                {
-                    idEstadoSol = value;
-                }
-                OnPropertyChanged("IdEstadoSol");
-            }
-        }
-        public int CantProd
-        {
-            get
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    return this.Items[this.SelectedIndexOfCollection].CantProd;
-                }
-                else
-                {
-                    return cantProd;
-                }
-            }
-            set
-            {
-                if (this.SelectedIndexOfCollection > -1)
-                {
-                    this.Items[this.SelectedIndexOfCollection].CantProd = value;
-                }
-                else
-                {
-                    cantProd = value;
-                }
-                OnPropertyChanged("CantProd");
-            }
-        }
-        public IEnumerable<User_info> Users
-        {
-            get { return users; }
+            get { return requests; }
         }
 
         #endregion
@@ -352,11 +222,13 @@ namespace FeriaDesktop.ViewModel
         #region Constructors
         public RequestViewModel()
         {
-            this.showApplications();
-            UpRequestCommand = new RelayCommand(param => this.upApplication());
-            GetRequestCommand = new RelayCommand(param => this.getCreateContract());
-            DelRequestCommand = new RelayCommand(param => this.delApplication());
+            this.Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+            log4net.Config.XmlConfigurator.Configure();
+            this.showRequests();
+            UpRequestCommand = new RelayCommand(param => this.upRequest());
+            DelRequestCommand = new RelayCommand(param => this.delRequest());
         }
+
         #endregion
 
         #region Interface
@@ -372,120 +244,173 @@ namespace FeriaDesktop.ViewModel
         #endregion
 
         #region Methods and functions
-        private async void showApplications()
+        private async void showRequests()
         {
-            this.Clear();
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/2";  /*//https://feriavirtual-endpoints.herokuapp.com/api/contrato/3*/
-
-            using (HttpClient client = new HttpClient())        
-
+            try
             {
-                var response = client.GetAsync(url).Result;
-                response.EnsureSuccessStatusCode();
-                if (response.IsSuccessStatusCode)
-                {
-                    List<Request> applications = new List<Request>();
-                    var res = response.Content.ReadAsStringAsync().Result;
-                    var applicationList = JsonConvert.DeserializeObject<dynamic>(res);
+                this.Logger.Info("showRequests In");
+                this.Clear();
+                var dataGet = ConfigurationManager.AppSettings[("getRequest")];
+                var url = $"{urlBase}{dataGet}";
+                using (HttpClient client = new HttpClient())
 
-                    foreach (var dato in applicationList)
+                {
+                    var response = client.GetAsync(url).Result;
+                    response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
                     {
-                        Request application = new Request();
-                        //id_solicitud_productos  id_usuario id_tipo_solicitud  id_estado_solicitud
+                        List<Request> applications = new List<Request>();
+                        var res = response.Content.ReadAsStringAsync().Result;
+                        var applicationList = JsonConvert.DeserializeObject<dynamic>(res);
 
-                        application.IdSolProd = dato.id_solicitud_productos;
-                        application.IdUsuario = dato.id_usuario;
-                        application.IdTipoSol = dato.id_tipo_solicitud;
-                        application.IdEstadoSol = dato.id_estado_solicitud;
+                        foreach (var dato in applicationList)
+                        {
+                            Request application = new Request();
 
-                             //private int idSolProd;
-                             //private int idUsuario;
-                             // private int idTipoSol;
+                            application.IdSolicitudProductos = dato.idSolicitudProductos;
+                            application.IdUsuario = dato.idUsuario;
+                            application.IdTipoSolicitud = dato.idTipoSolicitud;
+                            application.IdEstadoSolicitud = dato.idEstadoSolicitud;
+                            application.Fecha = dato.fecha;
 
-                        //applications.IdContrato = dato.idContrato;
-                        //applications.IdUsuario = dato.idUsuario;
-                        //applications.Dni = dato.dni;
-                        //string nom = Convert.ToString(dato.nombre);
-                        //string app1 = dato.apPaterno;
-                        //string app2 = dato.apMaterno;
-                        //string disp = nom + " " + app1 + " " + app2;
-                        //applications.DisplayName = disp;
-                        //applications.Firmado = dato.firmado;
-                        //applications.Codigo = dato.codigo;
-                        //applications.FechaIni = dato.fechaIni;
-                        //applications.FechaFin = dato.fechaFin;
-
-                        this.Add(application);
+                            this.Add(application);
+                        }
                     }
+                    else
+                    {
+                        this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                    }
+                    this.Logger.Info(url + "/" + response.StatusCode);
                 }
-                else
+                this.Logger.Info("getRequest Out");
+            }
+            catch (Exception e)
+            {
+                this.Logger.Error(e);
+            }
+
+        }
+        private async void upRequest()
+        {
+            {
+                try
                 {
-                    //message.Content = $"Server error code {response.StatusCode}";
+                    this.Logger.Info("upRequest In");
+                    var id = this.IdSolicitudProductos;
+
+                    var userObject = new
+                    {
+                        idUsuario = this.IdUsuario,
+                        idTipoSolicitud = this.IdTipoSolicitud,
+                        idEstadoSolicitud = 21
+                    };
+
+                    var json = JsonConvert.SerializeObject(userObject);
+                    var data = new StringContent(json, Encoding.UTF8, "application/json");
+                    var dataUp = ConfigurationManager.AppSettings[("upRequest")];
+                    var url = $"{urlBase}{dataUp}{id}";
+
+                    using (HttpClient client = new HttpClient())
+                    {
+                        var response = await client.PutAsync(url, data);
+                        response.EnsureSuccessStatusCode();
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var res = await response.Content.ReadAsStringAsync();
+                            var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                            string message = userList.msg;
+                            MessageBox.Show(message);
+
+                            var reqObject = new
+                            {
+                                idUsuario = this.IdUsuario,
+                                idSolicitudProductos = this.IdSolicitudProductos
+                            };
+
+                            var json2 = JsonConvert.SerializeObject(reqObject);
+                            var data2 = new StringContent(json2, Encoding.UTF8, "application/json");
+                            var dataCreate = ConfigurationManager.AppSettings[("createRequest")];
+                            var url_create = $"{urlBase}{dataCreate}";
+                            using (HttpClient create = new HttpClient())
+                            {
+                                var response_create = await create.PostAsync(url_create, data2);
+                                response_create.EnsureSuccessStatusCode();
+                                if (response_create.IsSuccessStatusCode)
+                                {
+                                    var res2 = await response.Content.ReadAsStringAsync();
+                                    var reqList = JsonConvert.DeserializeObject<dynamic>(res2);
+                                    string message2 = reqList.msg;
+                                    if (message2.Contains("editado"))
+                                    {
+                                        MessageBox.Show("Subasta creada");
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                        }
+                        this.Logger.Info(url + "/" + response.StatusCode);
+                    }
+                    this.Logger.Info("upRequest Out");
+
+                    this.showRequests();
+                }
+                catch (Exception e)
+                {
+                    this.Logger.Error(e);
                 }
             }
+
         }
-        private async void upApplication()
+
+        private async void delRequest()
         {
-            
-            //DateTime date = DateTime.ParseExact(this.FechaIni, "M/dd/yyyy hh:mm:ss tt", null);
-            var id = this.IdSolProd;
-
-            var userObject = new
             {
-                id_usuario = this.IdUsuario,
-                id_tipo_solicitud = this.IdTipoSol,
-                id_estado_solicitud = this.IdEstadoSol,
-                
-            };
+                try
+                {
+                    this.Logger.Info("delRequest In");
+                    var id = this.IdSolicitudProductos;
 
+                    var userObject = new
+                    {
+                        idUsuario = this.IdUsuario,
+                        idTipoSolicitud = this.IdTipoSolicitud,
+                        idEstadoSolicitud = 22
+                    };
 
-            var json = JsonConvert.SerializeObject(userObject);
-            var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/{id}"; /*https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}*/
+                    var json = JsonConvert.SerializeObject(userObject);
+                    var data = new StringContent(json, Encoding.UTF8, "application/json");
+                    var dataUp = ConfigurationManager.AppSettings[("upRequest")];
+                    var url = $"{urlBase}{dataUp}{id}";
 
-            using (HttpClient client = new HttpClient())
-            {
-                var response = await client.PutAsync(url, data);
-                response.EnsureSuccessStatusCode();
-                var res = await response.Content.ReadAsStringAsync();
-                var userList = JsonConvert.DeserializeObject<dynamic>(res);
-                string message = userList.msg;
-                MessageBox.Show(message);
+                    using (HttpClient client = new HttpClient())
+                    {
+                        var response = await client.PutAsync(url, data);
+                        response.EnsureSuccessStatusCode();
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var res = await response.Content.ReadAsStringAsync();
+                            var userList = JsonConvert.DeserializeObject<dynamic>(res);
+                            string message = userList.msg;
+                            MessageBox.Show(message);
+                        }
+                        else
+                        {
+                            this.Logger.Warn(url + "/Server error code: " + response.StatusCode);
+                        }
+                        this.Logger.Info(url + "/" + response.StatusCode);
+                    }
+                    this.Logger.Info("delRequest Out");
 
+                    this.showRequests();
+                }
+                catch (Exception e)
+                {
+                    this.Logger.Error(e);
+                }
             }
-
-            this.showApplications();
-        }
-        private async void delApplication()
-        {
-            var id = this.IdSolProd;
-            
-            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/{id}";
-                
-            using (HttpClient client = new HttpClient())
-            {
-                var response = await client.DeleteAsync(url);
-                response.EnsureSuccessStatusCode();
-                var res = await response.Content.ReadAsStringAsync();
-                
-                if (response.IsSuccessStatusCode)
-
-                    MessageBox.Show("Solicitud Eliminada!");
-                this.showApplications();
-            }
-        }
-
-        private void getCreateContract() //ver si aplica modificacion para Solicitudes
-        {
-            CreateContract win_menu = new CreateContract();
-            win_menu.Show();
-        }
-        private void ValidateProperty<T>(T value, string name)
-        {
-            Validator.ValidateProperty(value, new ValidationContext(this, null, null)
-            {
-                MemberName = name
-            });
         }
         #endregion
     } 
