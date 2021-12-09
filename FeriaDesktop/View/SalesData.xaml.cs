@@ -17,6 +17,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -28,6 +29,7 @@ using Document = iTextSharp.text.Document;
 using PageSize = iTextSharp.text.PageSize;
 using FluentEmail.Core.Models;
 using Paragraph = iTextSharp.text.Paragraph;
+using System.Reflection;
 
 namespace FeriaDesktop.View
 {
@@ -40,6 +42,7 @@ namespace FeriaDesktop.View
         {
             InitializeComponent();
         }
+       
         private void SendMail(string pdfName) 
         {
             
@@ -112,36 +115,46 @@ namespace FeriaDesktop.View
 
                     pdfDoc.Open();
 
-                    pdfDoc.Add(new Paragraph("hola")); 
-                    pdfDoc.Add(new Paragraph(this.GridDataSales.Items.Count == 0?"Si":"No"));
+                    pdfDoc.Add(new Paragraph("Reporte Maipo Grande"));
+                    pdfDoc.Add(new Paragraph("   "));
+                    pdfDoc.Add(new Paragraph("   "));
+                    //pdfDoc.Add(new Paragraph(this.GridDataSales.Items.Count == 0?"Si":"No"));
 
-                    pdfDoc.Add(new Paragraph(this.GridDataSales.Items.GetItemAt(0).ToString()));
-                    pdfDoc.Add(new Paragraph(this.GridDataSales.Items.ToString()));
-                    pdfDoc.Add(new Paragraph(this.GridDataSales.Items.Count.ToString()));
+                    //pdfDoc.Add(new Paragraph(this.GridDataSales.Items.GetItemAt(0).ToString()));
+                    //pdfDoc.Add(new Paragraph(this.GridDataSales.Items.ToString()));
+                    //pdfDoc.Add(new Paragraph(this.GridDataSales.Items.Count.ToString()));
 
-                    PdfPTable table = new PdfPTable(3);
 
-                    PdfPCell cell = new PdfPCell(new Phrase("Row 1 , Col 1, Col 2 and col 3"));
-                    cell.Colspan = 3;
-                    cell.HorizontalAlignment = Element.ALIGN_CENTER;
-                    table.AddCell(cell);
+                    var dataGridSales = this.GridDataSales;
+                    //Creating iTextSharp Table from the DataTable data
+                    PdfPTable pdfTable = new PdfPTable(dataGridSales.Columns.Count);
 
-                    table.AddCell("Row 2, Col 1");
-                    table.AddCell("Row 2, Col 1");
-                    table.AddCell("Row 2, Col 1");
+                    //Adding Header row
+                    foreach (DataGridColumn column in dataGridSales.Columns)
+                    {
+                        PdfPCell cell = new PdfPCell(new Phrase(column.Header.ToString()));
+                        pdfTable.AddCell(cell);
+                    }
 
-                    table.AddCell("Row 3, Col 1");
-                    cell = new PdfPCell(new Phrase("Row 3, Col 2 and Col3"));
-                    cell.Colspan = 2;
-                    table.AddCell(cell);
+                    int row = dataGridSales.Items.Count;
+                    int cell2 = dataGridSales.Columns.Count;
+                    
+                    for (int i = 0; i < row - 1; i++)
+                    {
+                        var item = dataGridSales.Items[i];
+                        foreach (PropertyInfo prop in item.GetType().GetProperties())
+                        {
+                            var type = item.GetType();
+                            var property = type.GetProperty(prop.Name);
+                            var value = property.GetValue(item, null);
+                            var tostring = value == null?"":value.ToString();
 
-                    cell = new PdfPCell(new Phrase("Row 4, Col 1 and Col2"));
-                    cell.Colspan = 2;
-                    table.AddCell(cell);
-                    table.AddCell("Row 4, Col 3");
+                                pdfTable.AddCell(tostring);
+                            
+                        }
+                    }
 
-                    pdfDoc.Add(table);
-
+                    pdfDoc.Add(pdfTable);
 
                     pdfDoc.Close();
 
@@ -155,8 +168,7 @@ namespace FeriaDesktop.View
             //Generacion de PDF FINAL
         }
 
-       
-        
+          
         private void Button_Click(object sender, RoutedEventArgs e)
         {
            

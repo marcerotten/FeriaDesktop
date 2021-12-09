@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -30,7 +31,7 @@ namespace FeriaDesktop.ViewModel
         private int idTipoSol;
         private int idEstadoSol;
         private int cantProd;
-        private ObservableCollection<User_info> users = new ObservableCollection<User_info>();      
+        private ObservableCollection<User_info> users = new ObservableCollection<User_info>();
         #endregion
 
         #region Properties
@@ -145,7 +146,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    ValidateProperty(value, "Codigo");
+                    //ValidateProperty(value, "Codigo");
                     this.Items[this.SelectedIndexOfCollection].Codigo = value;
                 }
                 else
@@ -173,7 +174,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    ValidateProperty(value, "FechaIni");
+                    //ValidateProperty(value, "FechaIni");
                     this.Items[this.SelectedIndexOfCollection].FechaIni = value;
                 }
                 else
@@ -201,7 +202,7 @@ namespace FeriaDesktop.ViewModel
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    ValidateProperty(value, "FechaFin");
+                    //ValidateProperty(value, "FechaFin");
                     this.Items[this.SelectedIndexOfCollection].FechaFin = value;
                 }
                 else
@@ -353,9 +354,9 @@ namespace FeriaDesktop.ViewModel
         public RequestViewModel()
         {
             this.showApplications();
-            UpRequestCommand = new RelayCommand(param => this.upApplication());
-            GetRequestCommand = new RelayCommand(param => this.getCreateContract());
-            DelRequestCommand = new RelayCommand(param => this.delApplication());
+           // UpRequestCommand = new RelayCommand(param => this.upApplication());
+            //GetRequestCommand = new RelayCommand(param => this.getCreateContract());
+            DelRequestCommand = new RelayCommand(param => this.asd());
         }
         #endregion
 
@@ -375,9 +376,9 @@ namespace FeriaDesktop.ViewModel
         private async void showApplications()
         {
             this.Clear();
-            var url = "https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/1";  
+            var url = "https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/1";
 
-            using (HttpClient client = new HttpClient())        
+            using (HttpClient client = new HttpClient())
 
             {
                 var response = client.GetAsync(url).Result;
@@ -397,11 +398,11 @@ namespace FeriaDesktop.ViewModel
                         application.IdUsuario = dato.idUsuario;
                         application.IdTipoSol = dato.idTipoSolicitud;
                         application.IdEstadoSol = dato.idEstadoSolicitud;
+                        application.IdSolProd = dato.idSolicitudProductos;
 
-                        
-                             //private int idSolProd;
-                             //private int idUsuario;
-                             // private int idTipoSol;
+                        //private int idSolProd;
+                        //private int idUsuario;
+                        // private int idTipoSol;
 
                         //applications.IdContrato = dato.idContrato;
                         //applications.IdUsuario = dato.idUsuario;
@@ -425,33 +426,31 @@ namespace FeriaDesktop.ViewModel
                 }
             }
         }
-        private async void upApplication()
+        private async void upApplication(int idEstadoSol)
         {
-            
+
             //DateTime date = DateTime.ParseExact(this.FechaIni, "M/dd/yyyy hh:mm:ss tt", null);
             var id = this.IdSolProd;
 
-            var userObject = new
+            var ApplyObject = new
             {
-                id_usuario = this.IdUsuario,
-                id_tipo_solicitud = this.IdTipoSol,
-                id_estado_solicitud = this.IdEstadoSol,
-                
+                idUsuario = this.IdUsuario,
+                idTipoSolicitud = this.IdTipoSol,
+                idEstadoSolicitud = idEstadoSol != this.IdEstadoSol? idEstadoSol:this.IdEstadoSol,
+               
             };
 
 
-            var json = JsonConvert.SerializeObject(userObject);
+            var json = JsonConvert.SerializeObject(ApplyObject);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
-            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/{id}"; /*https://feriavirtual-endpoints.herokuapp.com/api/contrato/{id}*/
+            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/{id}"; 
 
             using (HttpClient client = new HttpClient())
             {
                 var response = await client.PutAsync(url, data);
                 response.EnsureSuccessStatusCode();
                 var res = await response.Content.ReadAsStringAsync();
-                var userList = JsonConvert.DeserializeObject<dynamic>(res);
-                string message = userList.msg;
-                MessageBox.Show(message);
+                MessageBox.Show("Solicitud modificada");
 
             }
 
@@ -459,35 +458,69 @@ namespace FeriaDesktop.ViewModel
         }
         private async void delApplication()
         {
-            var id = this.IdSolProd;
-            
-            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/{id}";
-                
+            this.upApplication(2);
+            //var id = this.IdSolProd;
+            //MessageBox.Show(id.ToString());
+
+
+            //var url = $"https://feriavirtual-endpoints.herokuapp.com/api/sol-prod/{id}";
+
+            //MessageBox.Show(url);
+
+
+            //using (HttpClient client = new HttpClient())
+            //{
+            //    var response = await client.PutAsync(url, data); 
+            //    response.EnsureSuccessStatusCode();
+            //    var res = await response.Content.ReadAsStringAsync();
+
+            //    if (response.IsSuccessStatusCode)
+            //        MessageBox.Show("Solicitud Eliminada!");
+            //    this.showApplications();
+            //}
+        }
+
+        private async Task<Boolean> UpAuction()
+        {
+
+
+            var auctionObject = new
+            {
+                idUsuario = this.IdUsuario,
+
+                idSolicitudProductos = this.IdSolProd
+
+            };
+
+
+            var json = JsonConvert.SerializeObject(auctionObject);
+            var data = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = $"https://feriavirtual-endpoints.herokuapp.com/api/subastas"; //url de subastas
+
             using (HttpClient client = new HttpClient())
             {
-                var response = await client.DeleteAsync(url);
+                var response = await client.PostAsync(url, data); //modificado a post
                 response.EnsureSuccessStatusCode();
                 var res = await response.Content.ReadAsStringAsync();
-                
-                if (response.IsSuccessStatusCode)
 
-                    MessageBox.Show("Solicitud Eliminada!");
-                this.showApplications();
+                MessageBox.Show("Subasta creada");
+                return true;
+            }
+            return false;
+            //this.showApplications();
+
+        }
+        public async void asd()
+        {
+            this.IdSolProd = 21;
+            this.IdUsuario = 163;
+            var status = await this.UpAuction();
+            
+            if (status)// {
+            this.delApplication();
             }
         }
 
-        private void getCreateContract() //ver si aplica modificacion para Solicitudes
-        {
-            CreateContract win_menu = new CreateContract();
-            win_menu.Show();
-        }
-        private void ValidateProperty<T>(T value, string name)
-        {
-            Validator.ValidateProperty(value, new ValidationContext(this, null, null)
-            {
-                MemberName = name
-            });
-        }
         #endregion
-    } 
-}
+    }    
+

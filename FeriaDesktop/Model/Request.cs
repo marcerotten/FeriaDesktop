@@ -19,7 +19,7 @@ namespace FeriaDesktop.Model
         private int idProd;
         private int cantProd;
 
-        public int idSolProd;
+        private int idSolProd;
         private int idUsuario;
         private int idTipoSol;
         private int idEstadoSol;

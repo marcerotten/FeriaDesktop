@@ -38,10 +38,10 @@ namespace FeriaDesktop.View
             //{
             //    e.Cancel = true;
             //}
-            if ((string)e.Column.Header == "IdSolProd")
-            {
-                e.Cancel = true;
-            }
+            //if ((string)e.Column.Header == "IdSolProd")
+            //{
+            //    e.Cancel = true;
+            //}
         }
 
        
