@@ -12,10 +12,16 @@ namespace FeriaDesktop.Model
         #region Atributes
       
         private int idSolicitudProductos;
-        private int idUsuario;
-        private int idTipoSolicitud;
-        private int idEstadoSolicitud;
+        private string nombre;
+        private string apPaterno;
+        private string dni;
+        private RequestType solicitud;
+        private int solTypeId;
+        private string solName;
+        private string estado;
         private string fecha;
+        private int cantidad;
+        private int idUsuario;
         #endregion
 
         #region Properties
@@ -31,42 +37,103 @@ namespace FeriaDesktop.Model
                 OnPropertyChanged("IdSolicitudProductos");
             }
         }
-        public int IdUsuario
+        public string Nombre
         {
             get
             {
-                return idUsuario;
+                return nombre;
             }
             set
             {
-                idUsuario = value;
-                OnPropertyChanged("idUsuario");
+                nombre = value;
+                OnPropertyChanged("Nombre");
             }
         }
-        public int IdTipoSolicitud
+        public string ApPaterno
         {
             get
             {
-                return idTipoSolicitud;
+                return apPaterno;
             }
             set
             {
-                idTipoSolicitud = value;
-                OnPropertyChanged("IdTipoSolicitud");
+                apPaterno = value;
+                OnPropertyChanged("ApPaterno");
             }
         }
-        public int IdEstadoSolicitud
+        public string Dni
         {
             get
             {
-                return idEstadoSolicitud;
+                return dni;
             }
             set
             {
-                idEstadoSolicitud = value;
-                OnPropertyChanged("IdEstadoSolicitud");
+                dni = value;
+                OnPropertyChanged("Dni");
             }
         }
+        public RequestType Solicitud
+        {
+            get
+            {
+                return solicitud;
+            }
+            set
+            {
+                solicitud = value;
+                OnPropertyChanged("Solicitud");
+            }
+        }
+        public int SolTypeId
+        {
+            get
+            {
+                return solTypeId;
+            }
+            set
+            {
+                solTypeId = value;
+                OnPropertyChanged("SolTypeId");
+            }
+        }public string SolName
+        {
+            get
+            {
+                return solName;
+            }
+            set
+            {
+                solName = value;
+                OnPropertyChanged("SolName");
+            }
+        }
+        public string Estado
+        {
+            get
+            {
+                return estado;
+            }
+            set
+            {
+                estado = value;
+                OnPropertyChanged("Estado");
+            }
+        }
+        
+        public int Cantidad
+        {
+            get
+            {
+                return cantidad;
+            }
+            set
+            {
+                cantidad = value;
+                OnPropertyChanged("Cantidad");
+            }
+        }
+       
         public string Fecha
         {
             get
@@ -80,6 +147,18 @@ namespace FeriaDesktop.Model
             }
         }
 
+        public int IdUsuario
+        {
+            get
+            {
+                return idUsuario;
+            }
+            set
+            {
+                idUsuario = value;
+                OnPropertyChanged("idUsuario");
+            }
+        }
 
         #endregion
     }

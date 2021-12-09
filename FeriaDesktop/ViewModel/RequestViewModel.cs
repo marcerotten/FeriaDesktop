@@ -8,6 +8,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
+using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Windows;
@@ -23,11 +25,18 @@ namespace FeriaDesktop.ViewModel
         private ICommand getRequestCommand;
         private int selectedIndex;
         private int idSolicitudProductos;
-        private int idUsuario;
-        private int idTipoSolicitud;
-        private int idEstadoSolicitud;
+        private string nombre;
+        private string apPaterno;
+        private string dni;
+        private RequestType solicitud;
+        private int solTypeId;
+        private string solName;
+        private string estado;
         private string fecha;
+        private int cantidad;
+        private int idUsuario;
         private ObservableCollection<Request> requests = new ObservableCollection<Request>();
+        private ObservableCollection<RequestType> statuses = new ObservableCollection<RequestType>();
         #endregion
 
         #region Properties
@@ -66,11 +75,15 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("SelectedIndexOfCollection");
 
                 //OnPropertyChanged("Dni");
-                OnPropertyChanged("IdSolicitudProductos");
-                OnPropertyChanged("IdUsuario");
-                OnPropertyChanged("IdTipoSolicitud");
-                OnPropertyChanged("IdEstadoSolicitud");
-                OnPropertyChanged("Fecha");
+                OnPropertyChanged("idSolicitudProductos");
+                OnPropertyChanged("nombre");
+                OnPropertyChanged("apPaterno");
+                OnPropertyChanged("dni");
+                OnPropertyChanged("solicitud");
+                OnPropertyChanged("estado");
+                OnPropertyChanged("cantidad");
+                OnPropertyChanged("fecha");
+                OnPropertyChanged("idUsuario");
             }
         }
 
@@ -104,87 +117,214 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("IdSolicitudProductos");
             }
         }
-        [Required(ErrorMessage = "Requerido          ")]
-        public int IdUsuario
+        public string Nombre
         {
             get
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    return this.Items[this.SelectedIndexOfCollection].IdUsuario;
+                    return this.Items[this.SelectedIndexOfCollection].Nombre;
                 }
                 else
                 {
-                    return idUsuario;
+                    return nombre;
                 }
             }
             set
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    this.Items[this.SelectedIndexOfCollection].IdUsuario = value;
+                    this.Items[this.SelectedIndexOfCollection].Nombre = value;
                 }
                 else
                 {
-                    idUsuario = value;
+                    nombre = value;
                 }
-                OnPropertyChanged("IdUsuario");
+                OnPropertyChanged("Nombre");
             }
         }
-        [Required(ErrorMessage = "Requerido          ")]
-        public int IdTipoSolicitud
+        public string ApPaterno
         {
             get
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    return this.Items[this.SelectedIndexOfCollection].IdTipoSolicitud;
+                    return this.Items[this.SelectedIndexOfCollection].ApPaterno;
                 }
                 else
                 {
-                    return idTipoSolicitud;
+                    return apPaterno;
                 }
             }
             set
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    this.Items[this.SelectedIndexOfCollection].IdTipoSolicitud = value;
+                    this.Items[this.SelectedIndexOfCollection].ApPaterno = value;
                 }
                 else
                 {
-                    idTipoSolicitud = value;
+                    apPaterno = value;
                 }
-                OnPropertyChanged("IdTipoSolicitud");
+                OnPropertyChanged("ApPaterno");
             }
         }
-        public int IdEstadoSolicitud
+        public string Dni
         {
             get
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    return this.Items[this.SelectedIndexOfCollection].IdEstadoSolicitud;
+                    return this.Items[this.SelectedIndexOfCollection].Dni;
                 }
                 else
                 {
-                    return IdEstadoSolicitud;
+                    return dni;
                 }
             }
             set
             {
                 if (this.SelectedIndexOfCollection > -1)
                 {
-                    this.Items[this.SelectedIndexOfCollection].IdEstadoSolicitud = value;
+                    this.Items[this.SelectedIndexOfCollection].Dni = value;
                 }
                 else
                 {
-                    idEstadoSolicitud = value;
+                    dni = value;
                 }
-                OnPropertyChanged("IdEstadoSolicitud");
+                OnPropertyChanged("Dni");
             }
         }
-
+        public RequestType Solicitud
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].Solicitud;
+                }
+                else
+                {
+                    return solicitud;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].Solicitud = value;
+                }
+                else
+                {
+                    solicitud = value;
+                }
+                OnPropertyChanged("Solicitud");
+            }
+        }
+        public int SolTypeId
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].SolTypeId;
+                }
+                else
+                {
+                    return solTypeId;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].SolTypeId = value;
+                }
+                else
+                {
+                    solTypeId = value;
+                }
+                OnPropertyChanged("SolTypeId");
+            }
+        }
+        public string SolName
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].SolName;
+                }
+                else
+                {
+                    return solName;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].SolName = value;
+                }
+                else
+                {
+                    solName = value;
+                }
+                OnPropertyChanged("SolName");
+            }
+        }
+        public string Estado
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].Estado;
+                }
+                else
+                {
+                    return estado;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].Estado = value;
+                }
+                else
+                {
+                    estado = value;
+                }
+                OnPropertyChanged("Estado");
+            }
+        }
+        public int Cantidad
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].Cantidad;
+                }
+                else
+                {
+                    return cantidad;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].Cantidad = value;
+                }
+                else
+                {
+                    cantidad = value;
+                }
+                OnPropertyChanged("Cantidad");
+            }
+        }
         public string Fecha
         {
             get
@@ -211,12 +351,41 @@ namespace FeriaDesktop.ViewModel
                 OnPropertyChanged("Fecha");
             }
         }
-       
+        public int IdUsuario
+        {
+            get
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    return this.Items[this.SelectedIndexOfCollection].IdUsuario;
+                }
+                else
+                {
+                    return idUsuario;
+                }
+            }
+            set
+            {
+                if (this.SelectedIndexOfCollection > -1)
+                {
+                    this.Items[this.SelectedIndexOfCollection].IdUsuario = value;
+                }
+                else
+                {
+                    idUsuario = value;
+                }
+                OnPropertyChanged("IdUsuario");
+            }
+        }
+
         public IEnumerable<Request> Requests
         {
             get { return requests; }
         }
-
+        public IEnumerable<RequestType> Statuses
+        {
+            get { return statuses; }
+        }
         #endregion
 
         #region Constructors
@@ -224,7 +393,9 @@ namespace FeriaDesktop.ViewModel
         {
             this.Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
             log4net.Config.XmlConfigurator.Configure();
+            this.GetStatus();
             this.showRequests();
+            
             UpRequestCommand = new RelayCommand(param => this.upRequest());
             DelRequestCommand = new RelayCommand(param => this.delRequest());
         }
@@ -268,10 +439,17 @@ namespace FeriaDesktop.ViewModel
                             Request application = new Request();
 
                             application.IdSolicitudProductos = dato.idSolicitudProductos;
-                            application.IdUsuario = dato.idUsuario;
-                            application.IdTipoSolicitud = dato.idTipoSolicitud;
-                            application.IdEstadoSolicitud = dato.idEstadoSolicitud;
+                            application.Nombre = dato.nombre;
+                            application.ApPaterno = dato.apPaterno;
+                            application.Dni = dato.dni;
+                            application.SolName = dato.solicitud;
+                            string solicitud = dato.solicitud;
+                            application.Solicitud = statuses.FirstOrDefault(x => x.Descripcion.ToUpper() == solicitud.ToUpper());
+                            application.SolTypeId = application.Solicitud.IdTipoSol;
+                            application.Estado = dato.estado;
+                            application.Cantidad = dato.cantidad;
                             application.Fecha = dato.fecha;
+                            application.IdUsuario = dato.idUsuario;
 
                             this.Add(application);
                         }
@@ -301,7 +479,7 @@ namespace FeriaDesktop.ViewModel
                     var userObject = new
                     {
                         idUsuario = this.IdUsuario,
-                        idTipoSolicitud = this.IdTipoSolicitud,
+                        idTipoSolicitud = this.Solicitud.IdTipoSol,
                         idEstadoSolicitud = 21
                     };
 
@@ -376,7 +554,7 @@ namespace FeriaDesktop.ViewModel
                     var userObject = new
                     {
                         idUsuario = this.IdUsuario,
-                        idTipoSolicitud = this.IdTipoSolicitud,
+                        idTipoSolicitud = this.Solicitud.IdTipoSol,
                         idEstadoSolicitud = 22
                     };
 
@@ -412,6 +590,16 @@ namespace FeriaDesktop.ViewModel
                 }
             }
         }
+
+        private IEnumerable<RequestType> GetStatus()
+        {
+
+            this.statuses.Add(new RequestType { IdTipoSol = 1, Descripcion = "LOCAL" });
+            this.statuses.Add(new RequestType { IdTipoSol = 2, Descripcion = "EXTERNA" });
+
+            return this.statuses;
+        }
+
         #endregion
     } 
 }
