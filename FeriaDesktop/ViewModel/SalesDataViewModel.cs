@@ -21,9 +21,6 @@ namespace FeriaDesktop.ViewModel
     {
         #region Atribute
 
-        private ICommand upSalesDataCommand;
-        private ICommand delSalesDataCommand;
-        private ICommand getSalesDataCommand;
         private int selectedIndex;
         private int cantProd;
         private int precProd;
@@ -34,30 +31,6 @@ namespace FeriaDesktop.ViewModel
 
         #region Properties
         public ILog Logger { get; set; }
-        public ICommand GetSalesDataCommand
-        {
-            get { return getSalesDataCommand; }
-            set
-            {
-                getSalesDataCommand = value;
-            }
-        }
-        public ICommand UpSalesDataCommand
-        {
-            get { return upSalesDataCommand; }
-            set
-            {
-                upSalesDataCommand = value;
-            }
-        }
-        public ICommand DelSalesDataCommand
-        {
-            get { return delSalesDataCommand; }
-            set
-            {
-                delSalesDataCommand = value;
-            }
-        }
         public int SelectedIndexOfCollection
         {
             get { return selectedIndex; }

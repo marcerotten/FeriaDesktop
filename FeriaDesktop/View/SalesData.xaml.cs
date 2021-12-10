@@ -133,7 +133,7 @@ namespace FeriaDesktop.View
                     int row = dataGridSales.Items.Count;
                     int cell2 = dataGridSales.Columns.Count;
 
-                    for (int i = 0; i < row - 1; i++)
+                    for (int i = 0; i < row; i++)
                     {
                         var item = dataGridSales.Items[i];
                         foreach (PropertyInfo prop in item.GetType().GetProperties())
